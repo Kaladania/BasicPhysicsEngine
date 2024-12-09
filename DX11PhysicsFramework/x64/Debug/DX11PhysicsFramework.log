@@ -1,0 +1,20 @@
+﻿  DX11PhysicsFramework.cpp
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\DX11PhysicsFramework.cpp(84,75): warning C4100: 'nCmdShow': unreferenced formal parameter
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\DX11PhysicsFramework.cpp(441,31): warning C4305: '=': truncation from 'int' to 'FLOAT'
+  Camera.cpp
+  DDSTextureLoader.cpp
+  Main.cpp
+  GameObject.cpp
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\GameObject.cpp(21,31): warning C4100: 'dt': unreferenced formal parameter
+  OBJLoader.cpp
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\OBJLoader.cpp(32,18): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\OBJLoader.cpp(145,17): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\OBJLoader.cpp(146,23): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\OBJLoader.cpp(174,28): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\OBJLoader.cpp(198,33): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\OBJLoader.cpp(213,40): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\OBJLoader.cpp(228,32): warning C4267: 'initializing': conversion from 'size_t' to 'unsigned int', possible loss of data
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\OBJLoader.cpp(246,32): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\OBJLoader.cpp(254,42): warning C4267: '=': conversion from 'size_t' to 'UINT', possible loss of data
+  Generating Code...
+  DX11PhysicsFramework.vcxproj -> C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\x64\Debug\DX11PhysicsFramework.exe
