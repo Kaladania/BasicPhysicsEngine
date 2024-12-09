@@ -3,6 +3,7 @@ C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\Camer
 C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\DDSTextureLoader.cpp;C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\x64\Debug\DDSTextureLoader.obj
 C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\Main.cpp;C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\x64\Debug\Main.obj
 C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\GameObject.cpp;C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\x64\Debug\GameObject.obj
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\Movement.cpp;C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\x64\Debug\Movement.obj
 C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\OBJLoader.cpp;C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\x64\Debug\OBJLoader.obj
 C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\Renderer.cpp;C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\x64\Debug\Renderer.obj
 C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\Transform.cpp;C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\x64\Debug\Transform.obj

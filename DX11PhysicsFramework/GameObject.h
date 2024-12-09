@@ -7,6 +7,7 @@
 //components
 #include "Transform.h"
 #include "Renderer.h"
+#include "Movement.h"
 
 using namespace DirectX;
 //using namespace std;
@@ -14,7 +15,8 @@ using namespace DirectX;
 enum Components
 {
 	TransformComponent,
-	RendererComponent
+	RendererComponent,
+	MovementComponent
 };
 
 
@@ -27,6 +29,7 @@ private:
 	//components
 	Transform* _transform = nullptr; //stores a reference to the object's transform information
 	Renderer* _renderer = nullptr; //stores a reference to the object's renderer
+	Movement* _movement = nullptr; //stores a reference to the object's movement component
 	
 	//holds object type
 	std::string _type;
@@ -44,6 +47,7 @@ public:
 	//Gets components
 	Transform* GetTransform() const { return _transform; }
 	Renderer* GetRenderer() const { return _renderer; }
+	Movement* GetMovement() const { return _movement; }
 
 
 	

@@ -9,7 +9,6 @@
 GameObject::GameObject(std::string type)
 {
 	_parent = nullptr;
-
 	_type = type;
 
 }
@@ -22,9 +21,12 @@ GameObject::~GameObject()
 	_parent = nullptr;
 
 	delete _transform;
+	delete _renderer;
+	delete _movement;
 
 	_transform = nullptr;
 	_renderer = nullptr;
+	_movement = nullptr;
 	
 }
 
@@ -94,6 +96,10 @@ void GameObject::AddComponent(Components componentType)
 		_renderer = new Renderer;
 
 		break;
+
+	case MovementComponent:
+
+		_movement = new Movement;
 
 	default:
 		break;

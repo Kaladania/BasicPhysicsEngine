@@ -522,6 +522,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	objectTransform->SetScale(15.0f, 15.0f, 15.0f);
 	objectTransform->SetRotation(XMConvertToRadians(90.0f), 0.0f, 0.0f);
 
+	//adds and populates render information
 	gameObject->AddComponent(RendererComponent);
 	Renderer* objectRenderer = gameObject->GetRenderer();
 	objectRenderer->SetGeometry(planeGeometry);
@@ -529,6 +530,8 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	objectRenderer->SetTextureRV(_GroundTextureRV);
 
 	_gameObjects.push_back(gameObject);
+
+	Movement* objectMovement = nullptr;
 
 	for (auto i = 0; i < 4; i++)
 	{
@@ -540,11 +543,18 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		objectTransform->SetScale(1.0f, 1.0f, 1.0f);
 		objectTransform->SetPosition(-2.0f + (i * 2.5f), 1.0f, 10.0f);
 
+		//adds and populates render information
 		gameObject->AddComponent(RendererComponent);
 		objectRenderer = gameObject->GetRenderer();
 		objectRenderer->SetGeometry(cubeGeometry);
 		objectRenderer->SetMaterial(shinyMaterial);
 		objectRenderer->SetTextureRV(_StoneTextureRV);
+
+		//adds and populates movement information
+		gameObject->AddComponent(MovementComponent);
+		objectMovement = gameObject->GetMovement();
+		objectMovement->SetMovementSpeed(0.02f);
+		objectMovement->SetTransform(objectTransform); //ties movement component to the object's transformation
 
 		_gameObjects.push_back(gameObject);
 	}
@@ -558,6 +568,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	objectTransform->SetScale(1.0f, 1.0f, 1.0f);
 	objectTransform->SetPosition(-5.0f, 0.5f, 10.0f);
 
+	//adds and populates render information
 	gameObject->AddComponent(RendererComponent);
 	objectRenderer = gameObject->GetRenderer();
 	objectRenderer->SetGeometry(herculesGeometry);
@@ -625,19 +636,19 @@ void DX11PhysicsFramework::Update()
 	// Move gameobjects
 	if (GetAsyncKeyState('1'))
 	{
-		_gameObjects[1]->Move(XMFLOAT3(0, 0, -0.02f));
+		_gameObjects[1]->GetMovement()->MoveTransform(Forwards);
 	}
 	if (GetAsyncKeyState('2'))
 	{
-		_gameObjects[1]->Move(XMFLOAT3(0, 0, 0.02f));
+		_gameObjects[1]->GetMovement()->MoveTransform(Backwards);
 	}
 	if (GetAsyncKeyState('3'))
 	{
-		_gameObjects[2]->Move(XMFLOAT3(0, 0, -0.02f));
+		_gameObjects[2]->GetMovement()->MoveTransform(Forwards);
 	}
 	if (GetAsyncKeyState('4'))
 	{
-		_gameObjects[2]->Move(XMFLOAT3(0, 0, 0.02f));
+		_gameObjects[2]->GetMovement()->MoveTransform(Backwards);
 	}
 	// Update camera
 	float angleAroundZ = XMConvertToRadians(_cameraOrbitAngleXZ);

@@ -42,6 +42,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Movement.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX11PhysicsFramework.cpp" />
@@ -56,6 +57,7 @@
     </ClCompile>
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Movement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
