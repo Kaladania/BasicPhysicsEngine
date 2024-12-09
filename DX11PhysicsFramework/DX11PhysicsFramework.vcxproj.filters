@@ -15,19 +15,33 @@
     <Filter Include="Helpers">
       <UniqueIdentifier>{9c796f30-1066-4157-a18b-1202b10ee0ac}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{e65e1339-109b-499c-84c0-28387af934ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="DX11PhysicsFramework.h" />
-    <ClInclude Include="GameObject.h" />
-    <ClInclude Include="Camera.h" />
-    <ClInclude Include="Structures.h" />
     <ClInclude Include="OBJLoader.h">
       <Filter>Helpers</Filter>
     </ClInclude>
     <ClInclude Include="DDSTextureLoader.h">
       <Filter>Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="Transform.h" />
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Structures.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DX11PhysicsFramework.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX11PhysicsFramework.cpp" />
@@ -41,6 +55,7 @@
       <Filter>Helpers</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

@@ -6,12 +6,12 @@
 /// <param name="type">object type</param>
 /// <param name="geometry"></param>
 /// <param name="material"></param>
-GameObject::GameObject(std::string type, Geometry geometry, Material material) : _geometry(geometry), _type(type), _material(material)
+GameObject::GameObject(std::string type)
 {
 	_parent = nullptr;
-	
 
-	_textureRV = nullptr;
+	_type = type;
+
 }
 
 /// <summary>
@@ -24,11 +24,7 @@ GameObject::~GameObject()
 	delete _transform;
 
 	_transform = nullptr;
-
-
-	_textureRV = nullptr;
-	_geometry.indexBuffer = nullptr;
-	_geometry.vertexBuffer = nullptr;
+	_renderer = nullptr;
 	
 }
 
@@ -76,12 +72,7 @@ void GameObject::Move(XMFLOAT3 direction)
 void GameObject::Draw(ID3D11DeviceContext * pImmediateContext)
 {
 
-	// Set vertex and index buffers
-	pImmediateContext->IASetVertexBuffers(0, 1, &_geometry.vertexBuffer, &_geometry.vertexBufferStride, &_geometry.vertexBufferOffset);
-	pImmediateContext->IASetIndexBuffer(_geometry.indexBuffer, DXGI_FORMAT_R16_UINT, 0);
-
-	//Draw object
-	pImmediateContext->DrawIndexed(_geometry.numberOfIndices, 0, 0);
+	_renderer->Draw(pImmediateContext);
 }
 
 /// <summary>
@@ -97,6 +88,13 @@ void GameObject::AddComponent(Components componentType)
 		_transform = new Transform;
 
 		break;
+
+	case RendererComponent:
+
+		_renderer = new Renderer;
+
+		break;
+
 	default:
 		break;
 	}

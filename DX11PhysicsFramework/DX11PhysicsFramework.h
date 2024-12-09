@@ -15,6 +15,7 @@
 
 #include "GameObject.h"
 #include "Transform.h"
+#include "Renderer.h"
 
 using namespace DirectX;
 
