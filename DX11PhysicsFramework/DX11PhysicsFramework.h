@@ -14,6 +14,8 @@
 #include <vector>
 
 #include "GameObject.h"
+#include "Transform.h"
+#include "Renderer.h"
 
 using namespace DirectX;
 
@@ -56,7 +58,7 @@ private:
 	Light basicLight;
 
 	MeshData _objMeshData;
-	vector<GameObject*> _gameObjects;
+	std::vector<GameObject*> _gameObjects;
 
 	Camera * _camera = nullptr;
 	float _cameraOrbitRadius = 7.0f;

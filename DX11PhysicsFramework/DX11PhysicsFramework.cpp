@@ -513,28 +513,68 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	noSpecMaterial.diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	noSpecMaterial.specular = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 
-	GameObject* gameObject = new GameObject("Floor", planeGeometry, noSpecMaterial);
-	gameObject->SetPosition(0.0f, 0.0f, 0.0f);
-	gameObject->SetScale(15.0f, 15.0f, 15.0f);
-	gameObject->SetRotation(XMConvertToRadians(90.0f), 0.0f, 0.0f);
-	gameObject->SetTextureRV(_GroundTextureRV);
+	GameObject* gameObject = new GameObject("Floor");
+
+	//adds and populates transformation component
+	gameObject->AddComponent(TransformComponent);
+	Transform* objectTransform = gameObject->GetTransform();
+	objectTransform->SetPosition(0.0f, 0.0f, 0.0f);
+	objectTransform->SetScale(15.0f, 15.0f, 15.0f);
+	objectTransform->SetRotation(XMConvertToRadians(90.0f), 0.0f, 0.0f);
+
+	//adds and populates render information
+	gameObject->AddComponent(RendererComponent);
+	Renderer* objectRenderer = gameObject->GetRenderer();
+	objectRenderer->SetGeometry(planeGeometry);
+	objectRenderer->SetMaterial(noSpecMaterial);
+	objectRenderer->SetTextureRV(_GroundTextureRV);
 
 	_gameObjects.push_back(gameObject);
 
+	Movement* objectMovement = nullptr;
+
 	for (auto i = 0; i < 4; i++)
 	{
-		gameObject = new GameObject("Cube " + i, cubeGeometry, shinyMaterial);
-		gameObject->SetScale(1.0f, 1.0f, 1.0f);
-		gameObject->SetPosition(-2.0f + (i * 2.5f), 1.0f, 10.0f);
-		gameObject->SetTextureRV(_StoneTextureRV);
+		gameObject = new GameObject("Cube " + i);
+
+		//adds and populates transformation component
+		gameObject->AddComponent(TransformComponent);
+		objectTransform = gameObject->GetTransform();
+		objectTransform->SetScale(1.0f, 1.0f, 1.0f);
+		objectTransform->SetPosition(-2.0f + (i * 2.5f), 1.0f, 10.0f);
+
+		//adds and populates render information
+		gameObject->AddComponent(RendererComponent);
+		objectRenderer = gameObject->GetRenderer();
+		objectRenderer->SetGeometry(cubeGeometry);
+		objectRenderer->SetMaterial(shinyMaterial);
+		objectRenderer->SetTextureRV(_StoneTextureRV);
+
+		//adds and populates movement information
+		gameObject->AddComponent(MovementComponent);
+		objectMovement = gameObject->GetMovement();
+		objectMovement->SetMovementSpeed(0.02f);
+		objectMovement->SetTransform(objectTransform); //ties movement component to the object's transformation
 
 		_gameObjects.push_back(gameObject);
 	}
 
-	gameObject = new GameObject("Donut", herculesGeometry, shinyMaterial);
-	gameObject->SetScale(1.0f, 1.0f, 1.0f);
-	gameObject->SetPosition(-5.0f, 0.5f, 10.0f);
-	gameObject->SetTextureRV(_StoneTextureRV);
+	
+	gameObject = new GameObject("Donut");
+
+	//adds and populates transformation component
+	gameObject->AddComponent(TransformComponent);
+	objectTransform = gameObject->GetTransform();
+	objectTransform->SetScale(1.0f, 1.0f, 1.0f);
+	objectTransform->SetPosition(-5.0f, 0.5f, 10.0f);
+
+	//adds and populates render information
+	gameObject->AddComponent(RendererComponent);
+	objectRenderer = gameObject->GetRenderer();
+	objectRenderer->SetGeometry(herculesGeometry);
+	objectRenderer->SetMaterial(shinyMaterial);
+	objectRenderer->SetTextureRV(_StoneTextureRV);
+
 	_gameObjects.push_back(gameObject);
 
 	return S_OK;
@@ -596,19 +636,19 @@ void DX11PhysicsFramework::Update()
 	// Move gameobjects
 	if (GetAsyncKeyState('1'))
 	{
-		_gameObjects[1]->Move(XMFLOAT3(0, 0, -0.02f));
+		_gameObjects[1]->GetMovement()->MoveTransform(Forwards);
 	}
 	if (GetAsyncKeyState('2'))
 	{
-		_gameObjects[1]->Move(XMFLOAT3(0, 0, 0.02f));
+		_gameObjects[1]->GetMovement()->MoveTransform(Backwards);
 	}
 	if (GetAsyncKeyState('3'))
 	{
-		_gameObjects[2]->Move(XMFLOAT3(0, 0, -0.02f));
+		_gameObjects[2]->GetMovement()->MoveTransform(Forwards);
 	}
 	if (GetAsyncKeyState('4'))
 	{
-		_gameObjects[2]->Move(XMFLOAT3(0, 0, 0.02f));
+		_gameObjects[2]->GetMovement()->MoveTransform(Backwards);
 	}
 	// Update camera
 	float angleAroundZ = XMConvertToRadians(_cameraOrbitAngleXZ);
@@ -662,11 +702,15 @@ void DX11PhysicsFramework::Draw()
 	_cbData.light = basicLight;
 	_cbData.EyePosW = _camera->GetPosition();
 
+	Renderer* objectRenderer = nullptr; //holds a reference to the current object's renderer
+
 	// Render all scene objects
 	for (auto gameObject : _gameObjects)
 	{
+		objectRenderer = gameObject->GetRenderer(); //gets current renderer
+
 		// Get render material
-		Material material = gameObject->GetMaterial();
+		Material material = objectRenderer->GetMaterial();
 
 		// Copy material to shader
 		_cbData.surface.AmbientMtrl = material.ambient;
@@ -677,9 +721,9 @@ void DX11PhysicsFramework::Draw()
 		_cbData.World = XMMatrixTranspose(gameObject->GetWorldMatrix());
 
 		// Set texture
-		if (gameObject->HasTexture())
+		if (objectRenderer->HasTexture())
 		{
-			_immediateContext->PSSetShaderResources(0, 1, gameObject->GetTextureRV());
+			_immediateContext->PSSetShaderResources(0, 1, objectRenderer->GetTextureRV());
 			_cbData.HasTexture = 1.0f;
 		}
 		else
