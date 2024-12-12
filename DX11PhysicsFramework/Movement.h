@@ -3,6 +3,8 @@
 #include <directxmath.h>
 #include <string>
 #include "Transform.h"
+#include "Vector3D.h"
+#include "DebugOutputer.h"
 
 using namespace DirectX;
 
@@ -24,6 +26,8 @@ private:
 
 	float _movementSpeed = 0.0f; //stores the current movement speed of the object
 	Transform* _transform = nullptr; //stores reference of the transform the component is tied to
+	Vector3D* _vector3D = nullptr; //stores a reference to the object's vector3 manager
+	DebugOutputer* _debugOutputer = nullptr; //stores a reference to the object's debug outputer
 
 public:
 
