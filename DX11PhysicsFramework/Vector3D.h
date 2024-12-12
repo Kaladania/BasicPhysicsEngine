@@ -187,7 +187,7 @@ public:
 	~Vector3D();
 
 	int DotProduct(Vector3 a = Vector3(), Vector3 b = Vector3());
-	int CrossProduct(Vector3 a = Vector3(), Vector3 b = Vector3());
+	Vector3 CrossProduct(Vector3 a = Vector3(), Vector3 b = Vector3());
 	float GetMagnitude(Vector3 vector = Vector3());
 	Vector3 Normalize(Vector3 vector = Vector3());
 	std::string ToString(Vector3 vector = Vector3());

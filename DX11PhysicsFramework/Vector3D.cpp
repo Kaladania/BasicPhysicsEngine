@@ -14,9 +14,15 @@ int Vector3D::DotProduct(Vector3 a, Vector3 b)
 	return 0;
 }
 
-int Vector3D::CrossProduct(Vector3 a, Vector3 b)
+Vector3 Vector3D::CrossProduct(Vector3 a, Vector3 b)
 {
-	return 0;
+	Vector3 vector;
+
+	vector.x = (a.y * b.z) - (a.z * b.y);
+	vector.y = (a.z * b.x) - (a.x * b.z);
+	vector.z = (a.x * b.y) - (a.y * b.x);
+
+	return vector;
 }
 
 /// <summary>

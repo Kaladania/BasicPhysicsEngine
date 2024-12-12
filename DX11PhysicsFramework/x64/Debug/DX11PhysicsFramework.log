@@ -11,7 +11,5 @@ C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\GameO
   Vector3D.cpp
 C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\Vector3D.cpp(12,45): warning C4100: 'b': unreferenced formal parameter
 C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\Vector3D.cpp(12,34): warning C4100: 'a': unreferenced formal parameter
-C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\Vector3D.cpp(17,47): warning C4100: 'b': unreferenced formal parameter
-C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\Vector3D.cpp(17,36): warning C4100: 'a': unreferenced formal parameter
   Generating Code...
   DX11PhysicsFramework.vcxproj -> C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\x64\Debug\DX11PhysicsFramework.exe
