@@ -8,6 +8,7 @@
 #include "Transform.h"
 #include "Renderer.h"
 #include "Movement.h"
+#include "DebugOutputer.h"
 
 using namespace DirectX;
 //using namespace std;
@@ -34,6 +35,8 @@ private:
 	//holds object type
 	std::string _type;
 	XMFLOAT4X4 _world;
+
+	DebugOutputer* _debugOutputer = nullptr; //stores a reference to the object's debug outputer
 
 
 public:

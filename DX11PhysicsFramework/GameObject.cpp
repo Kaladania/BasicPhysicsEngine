@@ -11,6 +11,10 @@ GameObject::GameObject(std::string type)
 	_parent = nullptr;
 	_type = type;
 
+	_debugOutputer = new DebugOutputer(); //instantiates a debug outputter
+
+	_debugOutputer->PrintDebugString("Object Created");
+
 }
 
 /// <summary>
@@ -23,10 +27,12 @@ GameObject::~GameObject()
 	delete _transform;
 	delete _renderer;
 	delete _movement;
+	delete _debugOutputer;
 
 	_transform = nullptr;
 	_renderer = nullptr;
 	_movement = nullptr;
+	_debugOutputer = nullptr;
 	
 }
 

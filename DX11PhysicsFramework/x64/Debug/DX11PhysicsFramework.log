@@ -1,4 +1,5 @@
-﻿  DX11PhysicsFramework.cpp
-C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\DX11PhysicsFramework.cpp(84,75): warning C4100: 'nCmdShow': unreferenced formal parameter
-C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\DX11PhysicsFramework.cpp(441,31): warning C4305: '=': truncation from 'int' to 'FLOAT'
+﻿  DebugOutputer.cpp
+  GameObject.cpp
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\GameObject.cpp(43,31): warning C4100: 'deltaTime': unreferenced formal parameter
+  Generating Code...
   DX11PhysicsFramework.vcxproj -> C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\x64\Debug\DX11PhysicsFramework.exe

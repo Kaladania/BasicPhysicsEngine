@@ -553,7 +553,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		//adds and populates movement information
 		gameObject->AddComponent(MovementComponent);
 		objectMovement = gameObject->GetMovement();
-		objectMovement->SetMovementSpeed(0.02f);
+		objectMovement->SetMovementSpeed(0.002f);
 		objectMovement->SetTransform(objectTransform); //ties movement component to the object's transformation
 
 		_gameObjects.push_back(gameObject);
