@@ -63,9 +63,9 @@ void GameObject::Update(float deltaTime)
 /// Updates object's position
 /// </summary>
 /// <param name="direction">direction to translate position</param>
-void GameObject::Move(XMFLOAT3 direction)
+void GameObject::Move(Vector3 direction)
 {
-	XMFLOAT3 position = _transform->GetPosition();
+	Vector3 position = _transform->GetPosition();
 
 	position.x += direction.x;
 	position.y += direction.y;

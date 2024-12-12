@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera(XMFLOAT3 position, XMFLOAT3 at, XMFLOAT3 up, FLOAT windowWidth, FLOAT windowHeight, FLOAT nearDepth, FLOAT farDepth)
+Camera::Camera(Vector3 position, Vector3 at, Vector3 up, FLOAT windowWidth, FLOAT windowHeight, FLOAT nearDepth, FLOAT farDepth)
 	: _eye(position), _at(at), _up(up), _windowWidth(windowWidth), _windowHeight(windowHeight), _nearDepth(nearDepth), _farDepth(farDepth)
 {
 	Update();
@@ -8,6 +8,8 @@ Camera::Camera(XMFLOAT3 position, XMFLOAT3 at, XMFLOAT3 up, FLOAT windowWidth, F
 
 Camera::~Camera()
 {
+	delete _debugOutputer;
+	_debugOutputer = nullptr;
 }
 
 void Camera::Update()

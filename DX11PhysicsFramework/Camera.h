@@ -4,15 +4,17 @@
 #include <d3d11_1.h>
 #include <d3dcompiler.h>
 #include <directxmath.h>
+#include "DebugOutputer.h"
+#include "Vector3D.h"
 
 using namespace DirectX;
 
 class Camera
 {
 private:
-	XMFLOAT3 _eye; 
-	XMFLOAT3 _at;
-	XMFLOAT3 _up;
+	Vector3 _eye; 
+	Vector3 _at;
+	Vector3 _up;
 
 	FLOAT _windowWidth;
 	FLOAT _windowHeight;
@@ -22,8 +24,10 @@ private:
 	XMFLOAT4X4 _view;
 	XMFLOAT4X4 _projection;
 
+	DebugOutputer* _debugOutputer = nullptr; //stores a reference to the object's debug outputer
+
 public:
-	Camera(XMFLOAT3 position, XMFLOAT3 at, XMFLOAT3 up, FLOAT windowWidth, FLOAT windowHeight, FLOAT nearDepth, FLOAT farDepth);
+	Camera(Vector3 position, Vector3 at, Vector3 up, FLOAT windowWidth, FLOAT windowHeight, FLOAT nearDepth, FLOAT farDepth);
 	~Camera();
 
 	void Update();
@@ -33,13 +37,13 @@ public:
 
 	XMFLOAT4X4 GetViewProjection() const;
 
-	XMFLOAT3 GetPosition() const { return _eye; }
-	XMFLOAT3 GetLookAt() const { return _at; }
-	XMFLOAT3 GetUp() const { return _up; }
+	Vector3 GetPosition() const { return _eye; }
+	Vector3 GetLookAt() const { return _at; }
+	Vector3 GetUp() const { return _up; }
 
-	void SetPosition(XMFLOAT3 position) { _eye = position; }
-	void SetLookAt(XMFLOAT3 lookAt) { _at = lookAt; }
-	void SetUp(XMFLOAT3 up) { _up = up; }
+	void SetPosition(Vector3 position) { _eye = position; }
+	void SetLookAt(Vector3 lookAt) { _at = lookAt; }
+	void SetUp(Vector3 up) { _up = up; }
 
 	void Reshape(FLOAT windowWidth, FLOAT windowHeight, FLOAT nearDepth, FLOAT farDepth);
 };

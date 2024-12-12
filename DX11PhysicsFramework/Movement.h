@@ -3,8 +3,7 @@
 #include <directxmath.h>
 #include <string>
 #include "Transform.h"
-#include "Vector3D.h"
-#include "DebugOutputer.h"
+#include "Component.h"
 
 using namespace DirectX;
 
@@ -20,18 +19,17 @@ enum Directions
 /// <summary>
 /// Responsible for calculating and applying transformation translations
 /// </summary>
-class Movement
+class Movement : public Component
 {
 private:
 
 	float _movementSpeed = 0.0f; //stores the current movement speed of the object
 	Transform* _transform = nullptr; //stores reference of the transform the component is tied to
-	Vector3D* _vector3D = nullptr; //stores a reference to the object's vector3 manager
-	DebugOutputer* _debugOutputer = nullptr; //stores a reference to the object's debug outputer
+	
 
 public:
 
-	Movement();
+	Movement(GameObject* parent = nullptr);
 	~Movement();
 
 	void SetMovementSpeed(float speed) { _movementSpeed = speed; }

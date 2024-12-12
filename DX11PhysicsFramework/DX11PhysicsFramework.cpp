@@ -25,7 +25,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 bool DX11PhysicsFramework::HandleKeyboard(MSG msg)
 {
-	XMFLOAT3 cameraPosition = _camera->GetPosition();
+	Vector3 cameraPosition = _camera->GetPosition();
 
 	switch (msg.wParam)
 	{
@@ -468,9 +468,9 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	if (FAILED(hr)) { return hr; }
 
 	// Setup Camera
-	XMFLOAT3 eye = XMFLOAT3(0.0f, 2.0f, -1.0f);
-	XMFLOAT3 at = XMFLOAT3(0.0f, 2.0f, 0.0f);
-	XMFLOAT3 up = XMFLOAT3(0.0f, 1.0f, 0.0f);
+	Vector3 eye = Vector3(0.0f, 2.0f, -1.0f);
+	Vector3 at = Vector3(0.0f, 2.0f, 0.0f);
+	Vector3 up = Vector3(0.0f, 1.0f, 0.0f);
 
 	_camera = new Camera(eye, at, up, (float)_WindowWidth, (float)_WindowHeight, 0.01f, 200.0f);
 
@@ -656,7 +656,7 @@ void DX11PhysicsFramework::Update()
 	float x = _cameraOrbitRadius * cos(angleAroundZ);
 	float z = _cameraOrbitRadius * sin(angleAroundZ);
 
-	XMFLOAT3 cameraPos = _camera->GetPosition();
+	Vector3 cameraPos = _camera->GetPosition();
 	cameraPos.x = x;
 	cameraPos.z = z;
 
@@ -700,7 +700,9 @@ void DX11PhysicsFramework::Draw()
 	_cbData.Projection = XMMatrixTranspose(projection);
 	
 	_cbData.light = basicLight;
-	_cbData.EyePosW = _camera->GetPosition();
+
+	Vector3 vector = _camera->GetPosition();
+	_cbData.EyePosW = XMFLOAT3(vector.x, vector.y, vector.z);
 
 	Renderer* objectRenderer = nullptr; //holds a reference to the current object's renderer
 
