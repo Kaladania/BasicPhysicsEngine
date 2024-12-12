@@ -126,6 +126,64 @@ struct Vector3
 		this->z *= scalar;
 	}
 
+
+
+	/// <summary>
+	/// * operator overload to multiply a vector by a scalar
+	/// </summary>
+	/// <param name="other">scalar to multiply with</param>
+	/// <returns>vector product</returns>
+	Vector3 operator/(float divisor)
+	{
+		Vector3 output;
+
+		output.x = this->x / divisor;
+		output.y = this->y / divisor;
+		output.z = this->z / divisor;
+
+		return output;
+	}
+
+	/// <summary>
+	/// * operator overload to multiply a vector by a scalar
+	/// </summary>
+	/// <param name="other">scalar to multiply with</param>
+	/// <returns>vector product</returns>
+	Vector3 operator/(int divisor)
+	{
+		Vector3 output;
+
+		output.x = this->x / divisor;
+		output.y = this->y / divisor;
+		output.z = this->z / divisor;
+
+		return output;
+	}
+
+	/// <summary>
+	/// * operator overload to multiply a vector by a scalar
+	/// </summary>
+	/// <param name="other">scalar to multiply with</param>
+	/// <returns>vector product</returns>
+	void operator/=(float divisor)
+	{
+		this->x /= divisor;
+		this->y /= divisor;
+		this->z /= divisor;
+	}
+
+	/// <summary>
+	/// * operator overload to multiply a vector by a scalar
+	/// </summary>
+	/// <param name="other">scalar to multiply with</param>
+	/// <returns>vector product</returns>
+	void operator/=(int divisor)
+	{
+		this->x /= divisor;
+		this->y /= divisor;
+		this->z /= divisor;
+	}
+
 	/// <summary>
 	/// = operator overload to assign another vector to a vector
 	/// </summary>

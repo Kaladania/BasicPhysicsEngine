@@ -39,10 +39,16 @@ float Vector3D::GetMagnitude(Vector3 vector)
 	return sqrtf(squareSum);
 }
 
-
+/// <summary>
+/// Normalizes the given vector
+/// </summary>
+/// <param name="vector">vector to normalize</param>
+/// <returns>resulting unit (normalized) vector</returns>
 Vector3 Vector3D::Normalize(Vector3 vector)
 {
-	return vector;
+	float magnitude = GetMagnitude(vector);
+
+	return vector / magnitude;
 }
 
 
