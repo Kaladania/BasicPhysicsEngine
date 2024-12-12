@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+
 //struct resprenting a data type for 3D Vectors
 struct Vector3
 {
@@ -244,7 +245,7 @@ public:
 	Vector3D();
 	~Vector3D();
 
-	int DotProduct(Vector3 a = Vector3(), Vector3 b = Vector3());
+	float DotProduct(Vector3 a = Vector3(), Vector3 b = Vector3());
 	Vector3 CrossProduct(Vector3 a = Vector3(), Vector3 b = Vector3());
 	float GetMagnitude(Vector3 vector = Vector3());
 	Vector3 Normalize(Vector3 vector = Vector3());
