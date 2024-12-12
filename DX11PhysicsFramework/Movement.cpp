@@ -51,5 +51,4 @@ void Movement::MoveTransform(Directions direction)
 
 	//updates the transform's position
 	_transform->SetPosition(position);
-	_debugOutputer->PrintDebugString(_vector3D->ToString(position));
 }

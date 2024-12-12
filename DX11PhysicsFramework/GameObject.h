@@ -14,12 +14,6 @@
 using namespace DirectX;
 //using namespace std;
 
-class Transform;
-class Renderer;
-class Movement;
-class DebugOutputer;
-class Vector3D;
-
 enum Components
 {
 	TransformComponent,
