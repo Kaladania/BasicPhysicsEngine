@@ -1,6 +1,6 @@
 #include "Transform.h"
 
-Transform::Transform()
+Transform::Transform(GameObject* parent) : Component(parent)
 {
 	_position = XMFLOAT3(0.0f, 0.0f, 0.0f);
 	_rotation = XMFLOAT3(0.0f, 0.0f, 0.0f);

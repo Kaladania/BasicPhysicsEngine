@@ -1,12 +1,13 @@
 #pragma once
 #include <directxmath.h>
 #include <string>
+#include "Component.h"
 
 using namespace DirectX;
 /// <summary>
 /// Responsible for storing and operating on transformation information
 /// </summary>
-class Transform
+class Transform : public Component
 {
 private:
 
@@ -17,7 +18,7 @@ private:
 
 public:
 
-	Transform();
+	Transform(GameObject* parent = nullptr);
 	~Transform();
 
 	// Setters and Getters for position/rotation/scale

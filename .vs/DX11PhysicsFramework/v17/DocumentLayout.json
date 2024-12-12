@@ -3,32 +3,56 @@
   "WorkspaceRootPath": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Vector3D.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Vector3D.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Movement.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Movement.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Transform.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Transform.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Component.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Component.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Movement.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Movement.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\DX11PhysicsFramework.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\DX11PhysicsFramework.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Vector3D.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Vector3D.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Movement.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Movement.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\GameObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\GameObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\GameObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\GameObject.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\GameObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\GameObject.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Component.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Component.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Transform.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Transform.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Renderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Renderer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Renderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Renderer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\DX11PhysicsFramework.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\DX11PhysicsFramework.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Vector3D.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Vector3D.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Vector3D.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Vector3D.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\DebugOutputer.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -37,10 +61,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\DebugOutputer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\DebugOutputer.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Transform.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Transform.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Camera.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -53,10 +73,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\DX11PhysicsFramework.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\DX11PhysicsFramework.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Transform.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{B8FF81B5-9B26-4931-8353-07795FDC4043}|DX11PhysicsFramework\\DX11PhysicsFramework.vcxproj|solutionrelative:DX11PhysicsFramework\\Transform.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -66,104 +82,95 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Vector3D.h",
-              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Vector3D.h",
-              "RelativeDocumentMoniker": "DX11PhysicsFramework\\Vector3D.h",
-              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Vector3D.h",
-              "RelativeToolTip": "DX11PhysicsFramework\\Vector3D.h",
-              "ViewState": "AQIAACkAAAAAAAAAAAAwwDYAAAAfAAAA",
+              "DocumentIndex": 9,
+              "Title": "Renderer.h",
+              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Renderer.h",
+              "RelativeDocumentMoniker": "DX11PhysicsFramework\\Renderer.h",
+              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Renderer.h",
+              "RelativeToolTip": "DX11PhysicsFramework\\Renderer.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-12T12:50:39.685Z",
+              "WhenOpened": "2024-12-12T14:03:04.479Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Renderer.cpp",
+              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Renderer.cpp",
+              "RelativeDocumentMoniker": "DX11PhysicsFramework\\Renderer.cpp",
+              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Renderer.cpp",
+              "RelativeToolTip": "DX11PhysicsFramework\\Renderer.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-12T14:02:56.484Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Component.cpp",
+              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Component.cpp",
+              "RelativeDocumentMoniker": "DX11PhysicsFramework\\Component.cpp",
+              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Component.cpp",
+              "RelativeToolTip": "DX11PhysicsFramework\\Component.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABEAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-12T13:57:45.009Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Component.h",
+              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Component.h",
+              "RelativeDocumentMoniker": "DX11PhysicsFramework\\Component.h",
+              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Component.h",
+              "RelativeToolTip": "DX11PhysicsFramework\\Component.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAABMAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-12T13:53:59.852Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "DX11PhysicsFramework.cpp",
               "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\DX11PhysicsFramework.cpp",
               "RelativeDocumentMoniker": "DX11PhysicsFramework\\DX11PhysicsFramework.cpp",
               "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\DX11PhysicsFramework.cpp",
               "RelativeToolTip": "DX11PhysicsFramework\\DX11PhysicsFramework.cpp",
-              "ViewState": "AQIAANcCAAAAAAAAAAAiwOoCAAAAAAAA",
+              "ViewState": "AQIAAPkBAAAAAAAAAAAiwA0CAAAZAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-09T15:05:24.248Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Camera.h",
-              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Camera.h",
-              "RelativeDocumentMoniker": "DX11PhysicsFramework\\Camera.h",
-              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Camera.h",
-              "RelativeToolTip": "DX11PhysicsFramework\\Camera.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAACgAAAAdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-09T15:05:14.65Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "Transform.cpp",
-              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Transform.cpp",
-              "RelativeDocumentMoniker": "DX11PhysicsFramework\\Transform.cpp",
-              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Transform.cpp",
-              "RelativeToolTip": "DX11PhysicsFramework\\Transform.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-12-09T15:02:53.948Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 1,
               "Title": "Transform.h",
               "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Transform.h",
               "RelativeDocumentMoniker": "DX11PhysicsFramework\\Transform.h",
               "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Transform.h",
               "RelativeToolTip": "DX11PhysicsFramework\\Transform.h",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAUAAAAAAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-09T15:00:06.327Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "DX11PhysicsFramework.h",
-              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\DX11PhysicsFramework.h",
-              "RelativeDocumentMoniker": "DX11PhysicsFramework\\DX11PhysicsFramework.h",
-              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\DX11PhysicsFramework.h",
-              "RelativeToolTip": "DX11PhysicsFramework\\DX11PhysicsFramework.h",
-              "ViewState": "AQIAAC8AAAAAAAAAAAAgwEIAAAAaAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-09T14:58:14.056Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "GameObject.h",
-              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\GameObject.h",
-              "RelativeDocumentMoniker": "DX11PhysicsFramework\\GameObject.h",
-              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\GameObject.h",
-              "RelativeToolTip": "DX11PhysicsFramework\\GameObject.h",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAAACcAAABdAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2024-12-09T14:54:51.362Z",
+              "WhenOpened": "2024-12-09T15:00:06.327Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 0,
               "Title": "Movement.h",
               "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Movement.h",
               "RelativeDocumentMoniker": "DX11PhysicsFramework\\Movement.h",
               "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Movement.h",
               "RelativeToolTip": "DX11PhysicsFramework\\Movement.h",
-              "ViewState": "AQIAAAwAAAAAAAAAAAAAAB0AAABdAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2024-12-09T16:32:54.682Z",
               "EditorCaption": ""
@@ -176,27 +183,92 @@
               "RelativeDocumentMoniker": "DX11PhysicsFramework\\GameObject.cpp",
               "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\GameObject.cpp",
               "RelativeToolTip": "DX11PhysicsFramework\\GameObject.cpp",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAACMAAAAXAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAGAAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-09T14:49:44.742Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 3,
               "Title": "Movement.cpp",
               "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Movement.cpp",
               "RelativeDocumentMoniker": "DX11PhysicsFramework\\Movement.cpp",
               "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Movement.cpp",
               "RelativeToolTip": "DX11PhysicsFramework\\Movement.cpp",
-              "ViewState": "AQIAACEAAAAAAAAAAAAAADgAAAAhAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAD0AAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-12-09T16:39:15.031Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 7,
+              "Title": "Transform.cpp",
+              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Transform.cpp",
+              "RelativeDocumentMoniker": "DX11PhysicsFramework\\Transform.cpp",
+              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Transform.cpp",
+              "RelativeToolTip": "DX11PhysicsFramework\\Transform.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-12-09T15:02:53.948Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "GameObject.h",
+              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\GameObject.h",
+              "RelativeDocumentMoniker": "DX11PhysicsFramework\\GameObject.h",
+              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\GameObject.h",
+              "RelativeToolTip": "DX11PhysicsFramework\\GameObject.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAPAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-09T14:54:51.362Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Vector3D.h",
+              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Vector3D.h",
+              "RelativeDocumentMoniker": "DX11PhysicsFramework\\Vector3D.h",
+              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Vector3D.h",
+              "RelativeToolTip": "DX11PhysicsFramework\\Vector3D.h",
+              "ViewState": "AQIAACkAAAAAAAAAAAAwwDEAAAAhAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-12T12:50:39.685Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "DX11PhysicsFramework.h",
+              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\DX11PhysicsFramework.h",
+              "RelativeDocumentMoniker": "DX11PhysicsFramework\\DX11PhysicsFramework.h",
+              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\DX11PhysicsFramework.h",
+              "RelativeToolTip": "DX11PhysicsFramework\\DX11PhysicsFramework.h",
+              "ViewState": "AQIAAC8AAAAAAAAAAAAgwEIAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-09T14:58:14.056Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "Camera.h",
+              "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Camera.h",
+              "RelativeDocumentMoniker": "DX11PhysicsFramework\\Camera.h",
+              "ToolTip": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Camera.h",
+              "RelativeToolTip": "DX11PhysicsFramework\\Camera.h",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACgAAAAdAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
+              "WhenOpened": "2024-12-09T15:05:14.65Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "Vector3D.cpp",
               "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Vector3D.cpp",
               "RelativeDocumentMoniker": "DX11PhysicsFramework\\Vector3D.cpp",
@@ -209,7 +281,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 13,
               "Title": "DebugOutputer.h",
               "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\DebugOutputer.h",
               "RelativeDocumentMoniker": "DX11PhysicsFramework\\DebugOutputer.h",
@@ -222,7 +294,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 14,
               "Title": "DebugOutputer.cpp",
               "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\DebugOutputer.cpp",
               "RelativeDocumentMoniker": "DX11PhysicsFramework\\DebugOutputer.cpp",
@@ -235,7 +307,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 16,
               "Title": "Camera.cpp",
               "DocumentMoniker": "C:\\Users\\a018073n\\Documents\\GitHub\\basicPhysicsEngine\\DX11PhysicsFramework\\Camera.cpp",
               "RelativeDocumentMoniker": "DX11PhysicsFramework\\Camera.cpp",

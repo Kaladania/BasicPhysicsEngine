@@ -1,19 +1,13 @@
 #include "Movement.h"
 
-Movement::Movement()
+Movement::Movement(GameObject* parent) : Component(parent)
 {
-	_debugOutputer = new DebugOutputer(); //instantiates a debug outputter
-	_vector3D = new Vector3D(); //instantiates a 3D vector manager
+	
 }
 
 Movement::~Movement()
 {
-	delete _debugOutputer;
-	delete _vector3D;
-
 	_transform = nullptr;
-	_debugOutputer = nullptr;
-	_vector3D = nullptr;
 }
 
 /// <summary>
