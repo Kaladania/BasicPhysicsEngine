@@ -700,6 +700,7 @@ void DX11PhysicsFramework::Draw()
 	_cbData.Projection = XMMatrixTranspose(projection);
 	
 	_cbData.light = basicLight;
+
 	Vector3 vector = _camera->GetPosition();
 	_cbData.EyePosW = XMFLOAT3(vector.x, vector.y, vector.z);
 

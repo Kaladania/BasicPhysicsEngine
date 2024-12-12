@@ -71,6 +71,62 @@ struct Vector3
 	}
 
 	/// <summary>
+	/// * operator overload to multiply a vector by a scalar
+	/// </summary>
+	/// <param name="other">scalar to multiply with</param>
+	/// <returns>vector product</returns>
+	Vector3 operator*(float scalar)
+	{
+		Vector3 output;
+
+		output.x = this->x * scalar;
+		output.y = this->y * scalar;
+		output.z = this->z * scalar;
+
+		return output;
+	}
+
+	/// <summary>
+	/// * operator overload to multiply a vector by a scalar
+	/// </summary>
+	/// <param name="other">scalar to multiply with</param>
+	/// <returns>vector product</returns>
+	Vector3 operator*(int scalar)
+	{
+		Vector3 output;
+
+		output.x = this->x * scalar;
+		output.y = this->y * scalar;
+		output.z = this->z * scalar;
+
+		return output;
+	}
+
+	/// <summary>
+	/// * operator overload to multiply a vector by a scalar
+	/// </summary>
+	/// <param name="other">scalar to multiply with</param>
+	/// <returns>vector product</returns>
+	void operator*=(float scalar)
+	{
+		this->x *= scalar;
+		this->y *= scalar;
+		this->z *= scalar;
+	}
+
+	/// <summary>
+	/// * operator overload to multiply a vector by a scalar
+	/// </summary>
+	/// <param name="other">scalar to multiply with</param>
+	/// <returns>vector product</returns>
+	void operator*=(int scalar)
+	{
+		this->x *= scalar;
+		this->y *= scalar;
+		this->z *= scalar;
+	}
+
+	/// <summary>
 	/// = operator overload to assign another vector to a vector
 	/// </summary>
 	/// <param name="other">other vector to copy values</param>
@@ -132,7 +188,7 @@ public:
 
 	int DotProduct(Vector3 a = Vector3(), Vector3 b = Vector3());
 	int CrossProduct(Vector3 a = Vector3(), Vector3 b = Vector3());
-	int GetMagnitude(Vector3 vector = Vector3());
+	float GetMagnitude(Vector3 vector = Vector3());
 	Vector3 Normalize(Vector3 vector = Vector3());
 	std::string ToString(Vector3 vector = Vector3());
 };

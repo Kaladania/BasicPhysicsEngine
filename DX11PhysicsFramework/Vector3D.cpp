@@ -19,10 +19,26 @@ int Vector3D::CrossProduct(Vector3 a, Vector3 b)
 	return 0;
 }
 
-int Vector3D::GetMagnitude(Vector3 vector)
+/// <summary>
+/// Calculates the magnitude of a given vector
+/// </summary>
+/// <param name="vector">desired vector</param>
+/// <returns>maginitude of vector</returns>
+float Vector3D::GetMagnitude(Vector3 vector)
 {
-	return 0;
+	//calculates the sum of all squares of the co-ordinates
+	float squareSum = (vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z);
+
+	//returns the magnitude (the square root of the sum)
+	return sqrtf(squareSum);
 }
+
+
+Vector3 Vector3D::Normalize(Vector3 vector)
+{
+	return vector;
+}
+
 
 /// <summary>
 /// Converts vector to string
@@ -32,10 +48,5 @@ int Vector3D::GetMagnitude(Vector3 vector)
 std::string Vector3D::ToString(Vector3 vector)
 {
 	return "(" + std::to_string(vector.x) + ", " + std::to_string(vector.y) + ", " + std::to_string(vector.z) + ")";
-}
-
-Vector3 Vector3D::Normalize(Vector3 vector)
-{
-	return vector;
 }
 
