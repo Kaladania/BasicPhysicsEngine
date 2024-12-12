@@ -12,8 +12,7 @@ GameObject::GameObject(std::string type)
 	_type = type;
 
 	_debugOutputer = new DebugOutputer(); //instantiates a debug outputter
-
-	_debugOutputer->PrintDebugString("Object Created");
+	//_vector3D = new Vector3D(); //instantiates a 3D vector manager
 
 }
 
@@ -28,11 +27,13 @@ GameObject::~GameObject()
 	delete _renderer;
 	delete _movement;
 	delete _debugOutputer;
+	//delete _vector3D;
 
 	_transform = nullptr;
 	_renderer = nullptr;
 	_movement = nullptr;
 	_debugOutputer = nullptr;
+	//_vector3D = nullptr;
 	
 }
 

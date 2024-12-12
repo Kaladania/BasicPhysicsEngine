@@ -41,9 +41,14 @@
     <ClInclude Include="DX11PhysicsFramework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Movement.h" />
     <ClInclude Include="DebugOutputer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -62,6 +67,7 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="DebugOutputer.cpp" />
+    <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

@@ -2,11 +2,18 @@
 
 Movement::Movement()
 {
+	_debugOutputer = new DebugOutputer(); //instantiates a debug outputter
+	_vector3D = new Vector3D(); //instantiates a 3D vector manager
 }
 
 Movement::~Movement()
 {
+	delete _debugOutputer;
+	delete _vector3D;
+
 	_transform = nullptr;
+	_debugOutputer = nullptr;
+	_vector3D = nullptr;
 }
 
 /// <summary>
@@ -49,4 +56,11 @@ void Movement::MoveTransform(Directions direction)
 
 	//updates the transform's position
 	_transform->SetPosition(position);
+
+	Vector3 vector;
+	vector.x = position.x;
+	vector.y = position.y;
+	vector.z = position.z;
+
+1	_debugOutputer->PrintDebugString(_vector3D->ToString(vector));
 }

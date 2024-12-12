@@ -1,5 +1,5 @@
-﻿  DebugOutputer.cpp
-  GameObject.cpp
-C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\GameObject.cpp(43,31): warning C4100: 'deltaTime': unreferenced formal parameter
-  Generating Code...
+﻿  Movement.cpp
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\Movement.cpp(61,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\Movement.cpp(62,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\DX11PhysicsFramework\Movement.cpp(63,21): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
   DX11PhysicsFramework.vcxproj -> C:\Users\a018073n\Documents\GitHub\basicPhysicsEngine\x64\Debug\DX11PhysicsFramework.exe
