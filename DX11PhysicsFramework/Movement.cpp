@@ -17,11 +17,9 @@ Movement::~Movement()
 /// <param name="direction">direction to translate the object</param>
 void Movement::MoveTransform(Directions direction)
 {
-	XMFLOAT3 position = _transform->GetPosition(); //gets the objects current position
-	Vector3 pos = Vector3(position.x, position.y, position.z);
+	Vector3 position = _transform->GetPosition(); //gets the objects current position
 
-	XMFLOAT3 directionVector = XMFLOAT3(0, 0, 0.0f); //stores the new translation direction vector
-	Vector3 dir = Vector3(directionVector.x, directionVector.y, directionVector.z);
+	Vector3 directionVector = Vector3(0, 0, 0.0f); //stores the new translation direction vector
 
 	//customises the direction vector based on the requested direction
 	switch (direction)
@@ -36,11 +34,11 @@ void Movement::MoveTransform(Directions direction)
 		break;
 	case Forwards:
 
-		dir.z = -_movementSpeed;
+		directionVector.z = -_movementSpeed;
 		break;
 	case Backwards:
 
-		dir.z = _movementSpeed;
+		directionVector.z = _movementSpeed;
 		break;
 	default:
 		break;
@@ -51,13 +49,7 @@ void Movement::MoveTransform(Directions direction)
 	position.y += directionVector.y;
 	position.z += directionVector.z;
 
-	pos += dir;
-
-	position.x = pos.x;
-	position.y = pos.y;
-	position.z = pos.z;
-
 	//updates the transform's position
 	_transform->SetPosition(position);
-	_debugOutputer->PrintDebugString(_vector3D->ToString(pos));
+	_debugOutputer->PrintDebugString(_vector3D->ToString(position));
 }
