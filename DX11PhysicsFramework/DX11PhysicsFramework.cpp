@@ -668,6 +668,7 @@ void DX11PhysicsFramework::Update()
 void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 {
 	_debugOutputer->PrintDebugString(std::to_string(deltaTime));
+	_debugOutputer->PrintDebugStringF("DeltaTime is: %f and Elapsed seconds is: %f", deltaTime, _elapsedSeconds);
 
 
 	// Move gameobjects
