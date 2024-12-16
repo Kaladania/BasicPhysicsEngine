@@ -115,6 +115,7 @@ void GameObject::AddComponent(Components componentType)
 	case MovementComponent:
 
 		_movement = new Movement;
+		break;
 
 	case AutomatedMovementComponent:
 

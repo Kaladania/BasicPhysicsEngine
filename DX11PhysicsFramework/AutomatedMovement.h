@@ -17,6 +17,6 @@ public:
 
 	
 
-	void Update(float deltaTime = 0.0f) override;
+	//void Update(float deltaTime = 0.0f) override;
 };
 

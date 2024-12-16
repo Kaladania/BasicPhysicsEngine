@@ -46,13 +46,21 @@ void Movement::MoveTransform(Directions direction)
 
 	_velocity = directionVector;
 
-	//translates the object
-	position.x += directionVector.x;
-	position.y += directionVector.y;
-	position.z += directionVector.z;
+	_needsToMove = true;
 
-	//updates the transform's position
-	_transform->SetPosition(position);
+	////translates the object
+	//position.x += directionVector.x;
+	//position.y += directionVector.y;
+	//position.z += directionVector.z;
+
+	////updates the transform's position
+	//_transform->SetPosition(position);
+}
+
+Vector3 Movement::CalculateDisplacement(Vector3 displacement, float deltaTime)
+{
+	displacement = (_velocity * deltaTime) + ((_acceleration * (deltaTime * deltaTime)) * 0.5f);
+	return displacement;
 }
 
 /// <summary>
@@ -61,7 +69,19 @@ void Movement::MoveTransform(Directions direction)
 /// <param name="deltaTime">time elapsed since last physics update</param>
 void Movement::Update(float deltaTime)
 {
-	Vector3 position = _transform->GetPosition(); //gets the current position of the transform
-	position += _velocity * deltaTime; //updates position by a constant velocity (multiplied by deltaTime to find distance)
-	_transform->SetPosition(position); //sets new transform position
+	if (_needsToMove)
+	{
+		Vector3 position = _transform->GetPosition(); //gets the current position of the transform
+
+		Vector3 displacement = (_velocity * deltaTime) + ((_acceleration * (deltaTime * deltaTime)) * 0.5f);
+
+		position += displacement; //updates position by a constant velocity (multiplied by deltaTime to find distance)
+
+		_transform->SetPosition(position); //sets new transform position
+	}
+
+	if (!_isAutomatic)
+	{
+		_needsToMove = false;
+	}
 }

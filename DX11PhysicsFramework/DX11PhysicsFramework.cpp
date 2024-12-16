@@ -550,16 +550,30 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		objectRenderer->SetMaterial(shinyMaterial);
 		objectRenderer->SetTextureRV(_StoneTextureRV);
 
-		//adds and populates movement information
-		gameObject->AddComponent(MovementComponent);
+		if (i == 3)
+		{
+			//adds and populates movement information
+			gameObject->AddComponent(AutomatedMovementComponent);
+		}
+		else
+		{
+			//adds and populates movement information
+			gameObject->AddComponent(MovementComponent);
+		}
+
 		objectMovement = gameObject->GetMovement();
-		objectMovement->SetMovementSpeed(0.002f);
+		
 		objectMovement->SetTransform(objectTransform); //ties movement component to the object's transformation
+		objectMovement->SetMovementSpeed(3.0f);
+		objectMovement->SetAcceleration(Vector3(0, 0, 3));
+		objectMovement->SetVelocity(Vector3(0, 0, 1));
+		
 
 		_gameObjects.push_back(gameObject);
 	}
 
 	_gameObjects.back()->GetMovement()->SetVelocity(Vector3(0, 1, 0)); //sets the last cube to constantly ascend updwards
+	_gameObjects.back()->GetMovement()->SetAcceleration(Vector3(0, 3.0f, 0));
 
 	gameObject = new GameObject("Donut");
 
@@ -673,10 +687,6 @@ void DX11PhysicsFramework::Update()
 
 void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 {
-	_debugOutputer->PrintDebugString(std::to_string(deltaTime));
-	_debugOutputer->PrintDebugStringF("DeltaTime is: %f and Elapsed seconds is: %f", deltaTime, _elapsedSeconds);
-
-
 	// Move gameobjects
 	if (GetAsyncKeyState('1'))
 	{
