@@ -8,6 +8,7 @@
 #include "Transform.h"
 #include "Renderer.h"
 #include "Movement.h"
+#include "AutomatedMovement.h"
 #include "DebugOutputer.h"
 #include "Vector3D.h"
 
@@ -18,7 +19,8 @@ enum Components
 {
 	TransformComponent,
 	RendererComponent,
-	MovementComponent
+	MovementComponent,
+	AutomatedMovementComponent
 };
 
 
@@ -63,6 +65,7 @@ public:
 
 
 	void Update(float dt);
+	void UpdatePhysics(float deltaTime = 0.0f);
 	void Move(Vector3 direction);
 	void Draw(ID3D11DeviceContext * pImmediateContext);
 

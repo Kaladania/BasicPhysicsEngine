@@ -44,11 +44,44 @@ void Movement::MoveTransform(Directions direction)
 		break;
 	}
 
-	//translates the object
-	position.x += directionVector.x;
-	position.y += directionVector.y;
-	position.z += directionVector.z;
+	_velocity = directionVector;
 
-	//updates the transform's position
-	_transform->SetPosition(position);
+	_needsToMove = true;
+
+	////translates the object
+	//position.x += directionVector.x;
+	//position.y += directionVector.y;
+	//position.z += directionVector.z;
+
+	////updates the transform's position
+	//_transform->SetPosition(position);
+}
+
+Vector3 Movement::CalculateDisplacement(Vector3 displacement, float deltaTime)
+{
+	displacement = (_velocity * deltaTime) + ((_acceleration * (deltaTime * deltaTime)) * 0.5f);
+	return displacement;
+}
+
+/// <summary>
+/// Updates the position of the connected transform
+/// </summary>
+/// <param name="deltaTime">time elapsed since last physics update</param>
+void Movement::Update(float deltaTime)
+{
+	if (_needsToMove)
+	{
+		Vector3 position = _transform->GetPosition(); //gets the current position of the transform
+
+		Vector3 displacement = (_velocity * deltaTime) + ((_acceleration * (deltaTime * deltaTime)) * 0.5f);
+
+		position += displacement; //updates position by a constant velocity (multiplied by deltaTime to find distance)
+
+		_transform->SetPosition(position); //sets new transform position
+	}
+
+	if (!_isAutomatic)
+	{
+		_needsToMove = false;
+	}
 }

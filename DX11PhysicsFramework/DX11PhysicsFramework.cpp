@@ -550,16 +550,31 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		objectRenderer->SetMaterial(shinyMaterial);
 		objectRenderer->SetTextureRV(_StoneTextureRV);
 
-		//adds and populates movement information
-		gameObject->AddComponent(MovementComponent);
+		if (i == 3)
+		{
+			//adds and populates movement information
+			gameObject->AddComponent(AutomatedMovementComponent);
+		}
+		else
+		{
+			//adds and populates movement information
+			gameObject->AddComponent(MovementComponent);
+		}
+
 		objectMovement = gameObject->GetMovement();
-		objectMovement->SetMovementSpeed(0.002f);
+		
 		objectMovement->SetTransform(objectTransform); //ties movement component to the object's transformation
+		objectMovement->SetMovementSpeed(3.0f);
+		objectMovement->SetAcceleration(Vector3(0, 0, 3));
+		objectMovement->SetVelocity(Vector3(0, 0, 1));
+		
 
 		_gameObjects.push_back(gameObject);
 	}
 
-	
+	_gameObjects.back()->GetMovement()->SetVelocity(Vector3(0, 1, 0)); //sets the last cube to constantly ascend updwards
+	_gameObjects.back()->GetMovement()->SetAcceleration(Vector3(0, 3.0f, 0));
+
 	gameObject = new GameObject("Donut");
 
 	//adds and populates transformation component
@@ -576,6 +591,8 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	objectRenderer->SetTextureRV(_StoneTextureRV);
 
 	_gameObjects.push_back(gameObject);
+
+	_timer = new Timer();
 
 	return S_OK;
 }
@@ -619,20 +636,57 @@ DX11PhysicsFramework::~DX11PhysicsFramework()
 	if (_dxgiDevice)_dxgiDevice->Release();
 	if (_dxgiFactory)_dxgiFactory->Release();
 	if (_device)_device->Release();
+
+	delete _timer;
+	_timer = nullptr;
+
+	delete _debugOutputer;
+	_debugOutputer = nullptr;
 }
 
 void DX11PhysicsFramework::Update()
 {
-	//Static initializes this value only once    
-	static ULONGLONG frameStart = GetTickCount64();
+	//delays physics updated to specified FPS (FIXED_DELTA_VALUE)
+	if (_elapsedSeconds >= FIXED_DELTA_VALUE)
+	{
+		UpdatePhysics(FIXED_DELTA_VALUE); //runs a physics update
 
-	ULONGLONG frameNow = GetTickCount64();
-	float deltaTime = (frameNow - frameStart) / 1000.0f;
-	frameStart = frameNow;
+		//minuses value instead of resetting to 0 to account for lost time
+		_elapsedSeconds -= FIXED_DELTA_VALUE;
 
-	static float simpleCount = 0.0f;
-	simpleCount += deltaTime;
+		//records new update frame
+		_timer->Tick();
+	}
+	else
+	{
+		//continues to count if not yet time to update physics
+		_elapsedSeconds += _timer->GetDeltaTime();
+	}
+	
 
+	// Update camera
+	float angleAroundZ = XMConvertToRadians(_cameraOrbitAngleXZ);
+
+	float x = _cameraOrbitRadius * cos(angleAroundZ);
+	float z = _cameraOrbitRadius * sin(angleAroundZ);
+
+	Vector3 cameraPos = _camera->GetPosition();
+	cameraPos.x = x;
+	cameraPos.z = z;
+
+	_camera->SetPosition(cameraPos);
+	
+
+	// Update objects
+	for (auto gameObject : _gameObjects)
+	{
+		gameObject->Update(_elapsedSeconds);
+	}
+	
+}
+
+void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
+{
 	// Move gameobjects
 	if (GetAsyncKeyState('1'))
 	{
@@ -650,24 +704,16 @@ void DX11PhysicsFramework::Update()
 	{
 		_gameObjects[2]->GetMovement()->MoveTransform(Backwards);
 	}
-	// Update camera
-	float angleAroundZ = XMConvertToRadians(_cameraOrbitAngleXZ);
 
-	float x = _cameraOrbitRadius * cos(angleAroundZ);
-	float z = _cameraOrbitRadius * sin(angleAroundZ);
-
-	Vector3 cameraPos = _camera->GetPosition();
-	cameraPos.x = x;
-	cameraPos.z = z;
-
-	_camera->SetPosition(cameraPos);
 	_camera->Update();
+
 
 	// Update objects
 	for (auto gameObject : _gameObjects)
 	{
-		gameObject->Update(deltaTime);
+		gameObject->UpdatePhysics(deltaTime);
 	}
+
 }
 
 void DX11PhysicsFramework::Draw()

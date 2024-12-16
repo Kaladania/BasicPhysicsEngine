@@ -370,6 +370,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AutomatedMovement.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DebugOutputer.cpp" />
     <ClCompile Include="DX11PhysicsFramework.cpp" />
@@ -380,6 +381,7 @@
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vector3D.cpp" />
   </ItemGroup>
@@ -390,6 +392,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AutomatedMovement.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DebugOutputer.h" />
     <ClInclude Include="DX11PhysicsFramework.h" />
@@ -401,6 +404,7 @@
     <ClInclude Include="Renderer.h" />
     <CLInclude Include="resource.h" />
     <ClInclude Include="Structures.h" />
+    <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="Vector3D.h" />
   </ItemGroup>

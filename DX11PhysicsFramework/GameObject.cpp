@@ -59,6 +59,14 @@ void GameObject::Update(float deltaTime)
 	}
 }
 
+void GameObject::UpdatePhysics(float deltaTime)
+{
+	if (_movement != nullptr)
+	{
+		_movement->Update(deltaTime);
+	}
+}
+
 /// <summary>
 /// Updates object's position
 /// </summary>
@@ -107,6 +115,11 @@ void GameObject::AddComponent(Components componentType)
 	case MovementComponent:
 
 		_movement = new Movement;
+		break;
+
+	case AutomatedMovementComponent:
+
+		_movement = new AutomatedMovement;
 
 	default:
 		break;
