@@ -59,6 +59,14 @@ void GameObject::Update(float deltaTime)
 	}
 }
 
+void GameObject::UpdatePhysics(float deltaTime)
+{
+	if (_movement != nullptr)
+	{
+		_movement->Update(deltaTime);
+	}
+}
+
 /// <summary>
 /// Updates object's position
 /// </summary>

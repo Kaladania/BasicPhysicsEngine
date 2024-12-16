@@ -63,6 +63,7 @@ public:
 
 
 	void Update(float dt);
+	void UpdatePhysics(float deltaTime = 0.0f);
 	void Move(Vector3 direction);
 	void Draw(ID3D11DeviceContext * pImmediateContext);
 

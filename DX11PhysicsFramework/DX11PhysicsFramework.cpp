@@ -559,7 +559,8 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		_gameObjects.push_back(gameObject);
 	}
 
-	
+	_gameObjects.back()->GetMovement()->SetVelocity(Vector3(0, 1, 0)); //sets the last cube to constantly ascend updwards
+
 	gameObject = new GameObject("Donut");
 
 	//adds and populates transformation component
@@ -662,6 +663,11 @@ void DX11PhysicsFramework::Update()
 	_camera->SetPosition(cameraPos);
 	
 
+	// Update objects
+	for (auto gameObject : _gameObjects)
+	{
+		gameObject->Update(_elapsedSeconds);
+	}
 	
 }
 
@@ -691,11 +697,13 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 
 	_camera->Update();
 
+
 	// Update objects
 	for (auto gameObject : _gameObjects)
 	{
-		gameObject->Update(deltaTime);
+		gameObject->UpdatePhysics(deltaTime);
 	}
+
 }
 
 void DX11PhysicsFramework::Draw()
