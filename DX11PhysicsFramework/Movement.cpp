@@ -44,6 +44,8 @@ void Movement::MoveTransform(Directions direction)
 		break;
 	}
 
+	_velocity = directionVector;
+
 	//translates the object
 	position.x += directionVector.x;
 	position.y += directionVector.y;

@@ -59,6 +59,7 @@
     <ClInclude Include="Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AutomatedMovement.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX11PhysicsFramework.cpp" />
@@ -78,6 +79,7 @@
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Timer.cpp" />
+    <ClCompile Include="AutomatedMovement.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
