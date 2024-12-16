@@ -631,29 +631,44 @@ DX11PhysicsFramework::~DX11PhysicsFramework()
 
 void DX11PhysicsFramework::Update()
 {
-
+	//delays physics updated to specified FPS (FIXED_DELTA_VALUE)
 	if (_elapsedSeconds >= FIXED_DELTA_VALUE)
 	{
-		UpdatePhysics();
+		UpdatePhysics(FIXED_DELTA_VALUE); //runs a physics update
+
+		//minuses value instead of resetting to 0 to account for lost time
 		_elapsedSeconds -= FIXED_DELTA_VALUE;
+
+		//records new update frame
 		_timer->Tick();
 	}
 	else
 	{
+		//continues to count if not yet time to update physics
 		_elapsedSeconds += _timer->GetDeltaTime();
-		//_debugOutputer->PrintDebugString(std::to_string(_timer->GetDeltaTime()));
 	}
 	
 
-	//Static initializes this value only once    
-	static ULONGLONG frameStart = GetTickCount64();
+	// Update camera
+	float angleAroundZ = XMConvertToRadians(_cameraOrbitAngleXZ);
 
-	ULONGLONG frameNow = GetTickCount64();
-	float deltaTime = (frameNow - frameStart) / 1000.0f;
-	frameStart = frameNow;
+	float x = _cameraOrbitRadius * cos(angleAroundZ);
+	float z = _cameraOrbitRadius * sin(angleAroundZ);
 
-	static float simpleCount = 0.0f;
-	simpleCount += deltaTime;
+	Vector3 cameraPos = _camera->GetPosition();
+	cameraPos.x = x;
+	cameraPos.z = z;
+
+	_camera->SetPosition(cameraPos);
+	
+
+	
+}
+
+void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
+{
+	_debugOutputer->PrintDebugString(std::to_string(deltaTime));
+
 
 	// Move gameobjects
 	if (GetAsyncKeyState('1'))
@@ -672,17 +687,7 @@ void DX11PhysicsFramework::Update()
 	{
 		_gameObjects[2]->GetMovement()->MoveTransform(Backwards);
 	}
-	// Update camera
-	float angleAroundZ = XMConvertToRadians(_cameraOrbitAngleXZ);
 
-	float x = _cameraOrbitRadius * cos(angleAroundZ);
-	float z = _cameraOrbitRadius * sin(angleAroundZ);
-
-	Vector3 cameraPos = _camera->GetPosition();
-	cameraPos.x = x;
-	cameraPos.z = z;
-
-	_camera->SetPosition(cameraPos);
 	_camera->Update();
 
 	// Update objects
@@ -690,11 +695,6 @@ void DX11PhysicsFramework::Update()
 	{
 		gameObject->Update(deltaTime);
 	}
-}
-
-void DX11PhysicsFramework::UpdatePhysics()
-{
-	_debugOutputer->PrintDebugString(std::to_string(_elapsedSeconds));
 }
 
 void DX11PhysicsFramework::Draw()

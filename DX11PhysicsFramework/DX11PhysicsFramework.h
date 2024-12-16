@@ -102,7 +102,7 @@ public:
 
 	bool HandleKeyboard(MSG msg);
 	void Update();
-	void UpdatePhysics();
+	void UpdatePhysics(float deltaTime = 0.0f);
 	void Draw();
 };
 
