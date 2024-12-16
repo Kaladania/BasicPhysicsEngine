@@ -14,8 +14,14 @@
 #include <vector>
 
 #include "GameObject.h"
+#include "Timer.h"
+#include "DebugOutputer.h"
+
 #include "Transform.h"
 #include "Renderer.h"
+
+#define FIXED_DELTA_VALUE 1.0f/60.f //defines the amount of time each frame update should (on average) take
+
 
 using namespace DirectX;
 
@@ -75,6 +81,11 @@ private:
 	ID3D11RasterizerState* _CCWcullMode; //Counter Clockwise
 	ID3D11RasterizerState* _CWcullMode; //Clockwise
 
+
+	Timer* _timer = nullptr; //holds reference to framework's timer
+	DebugOutputer* _debugOutputer = nullptr; //holds a reference to framework's debug outputter
+	float _elapsedSeconds = 0; //holds the amount of seconds elapsed since last update
+
 private:
 	HRESULT CreateWindowHandle(HINSTANCE hInstance, int nCmdShow);
 	HRESULT CreateD3DDevice();
@@ -91,6 +102,7 @@ public:
 
 	bool HandleKeyboard(MSG msg);
 	void Update();
+	void UpdatePhysics();
 	void Draw();
 };
 

@@ -577,6 +577,8 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 
 	_gameObjects.push_back(gameObject);
 
+	_timer = new Timer();
+
 	return S_OK;
 }
 
@@ -619,10 +621,30 @@ DX11PhysicsFramework::~DX11PhysicsFramework()
 	if (_dxgiDevice)_dxgiDevice->Release();
 	if (_dxgiFactory)_dxgiFactory->Release();
 	if (_device)_device->Release();
+
+	delete _timer;
+	_timer = nullptr;
+
+	delete _debugOutputer;
+	_debugOutputer = nullptr;
 }
 
 void DX11PhysicsFramework::Update()
 {
+
+	if (_elapsedSeconds >= FIXED_DELTA_VALUE)
+	{
+		UpdatePhysics();
+		_elapsedSeconds -= FIXED_DELTA_VALUE;
+		_timer->Tick();
+	}
+	else
+	{
+		_elapsedSeconds += _timer->GetDeltaTime();
+		//_debugOutputer->PrintDebugString(std::to_string(_timer->GetDeltaTime()));
+	}
+	
+
 	//Static initializes this value only once    
 	static ULONGLONG frameStart = GetTickCount64();
 
@@ -668,6 +690,11 @@ void DX11PhysicsFramework::Update()
 	{
 		gameObject->Update(deltaTime);
 	}
+}
+
+void DX11PhysicsFramework::UpdatePhysics()
+{
+	_debugOutputer->PrintDebugString(std::to_string(_elapsedSeconds));
 }
 
 void DX11PhysicsFramework::Draw()
