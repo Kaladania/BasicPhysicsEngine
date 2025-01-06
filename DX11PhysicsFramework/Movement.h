@@ -5,6 +5,10 @@
 #include "Transform.h"
 #include "Component.h"
 
+#define DRAG_COEFFICIENT 1.05
+#define DENSITY_OF_FLUID 1
+#define CROSS_SECTIONAL_AREA 1
+
 using namespace DirectX;
 
 enum Directions
@@ -33,6 +37,7 @@ protected:
 	Vector3 _acceleration = Vector3(); //holds the current acceleration of the transform
 	Vector3 _netForce = Vector3(); //holds the total amount of force being applied to the parent object
 	Vector3 _gravity = Vector3(); //holds the amount of downward force being exherted by gravity
+	Vector3 _dragForce = Vector3(); //holds the amount of drag being applied to the parent object
 
 	float _mass = 1.0f; //holds the current mass of the parent object
 
@@ -61,6 +66,8 @@ public:
 	void AddForce(Vector3 force) { _netForce += force; } //adds a force to the object
 
 	Vector3 CalculateDisplacement(Vector3 displacement = Vector3(), float deltaTime = 0.0f);
+	float CalculateDragForce();
+	Vector3 CalulateFrictionForce();
 	virtual void Update(float deltaTime);
 };
 

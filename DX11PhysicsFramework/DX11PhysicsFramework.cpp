@@ -541,7 +541,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		gameObject->AddComponent(TransformComponent);
 		objectTransform = gameObject->GetTransform();
 		objectTransform->SetScale(1.0f, 1.0f, 1.0f);
-		objectTransform->SetPosition(-2.0f + (i * 2.5f), 1.0f, 10.0f);
+		objectTransform->SetPosition(-2.0f + (i * 2.5f), 5.0f, 10.0f);
 
 		//adds and populates render information
 		gameObject->AddComponent(RendererComponent);
@@ -568,14 +568,11 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		
 		objectMovement->SetTransform(objectTransform); //ties movement component to the object's transformation
 
+		objectMovement->SetIsSimulatingGravity(true); //states second object is going to be influenced by gravity
+
 
 		if (i <= 1)
 		{
-			if (i == 1)
-			{
-				objectMovement->SetIsSimulatingGravity(true); //states second object is going to be influenced by gravity
-			}
-
 			objectMovement->SetMovementSpeed(3.0f);
 		}
 

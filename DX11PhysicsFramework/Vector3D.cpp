@@ -77,6 +77,11 @@ Vector3 Vector3D::Normalize(Vector3 vector)
 	float magnitude = GetMagnitude(vector);
 
 	//returns the vector divided by its magnitude
+	if (vector == Vector3() && magnitude == 00)
+	{
+		return 0;
+	}
+
 	return vector / magnitude;
 }
 
