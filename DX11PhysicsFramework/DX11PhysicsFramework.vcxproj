@@ -380,6 +380,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="OBJLoader.cpp" />
+    <ClCompile Include="ParticleObject.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
@@ -401,6 +402,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Movement.h" />
     <ClInclude Include="OBJLoader.h" />
+    <ClInclude Include="ParticleObject.h" />
     <ClInclude Include="Renderer.h" />
     <CLInclude Include="resource.h" />
     <ClInclude Include="Structures.h" />

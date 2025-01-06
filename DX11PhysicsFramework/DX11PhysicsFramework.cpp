@@ -550,30 +550,37 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		objectRenderer->SetMaterial(shinyMaterial);
 		objectRenderer->SetTextureRV(_StoneTextureRV);
 
-		if (i == 3)
-		{
-			//adds and populates movement information
-			gameObject->AddComponent(AutomatedMovementComponent);
-		}
-		else
-		{
-			//adds and populates movement information
-			gameObject->AddComponent(MovementComponent);
-		}
+		//adds and populates movement information
+		gameObject->AddComponent(MovementComponent);
+
+		//if (i == 3)
+		//{
+		//	//adds and populates movement information
+		//	gameObject->AddComponent(AutomatedMovementComponent);
+		//}
+		//else
+		//{
+		//	//adds and populates movement information
+		//	gameObject->AddComponent(MovementComponent);
+		//}
 
 		objectMovement = gameObject->GetMovement();
 		
 		objectMovement->SetTransform(objectTransform); //ties movement component to the object's transformation
-		objectMovement->SetMovementSpeed(3.0f);
-		objectMovement->SetAcceleration(Vector3(0, 0, 3));
-		objectMovement->SetVelocity(Vector3(0, 0, 1));
-		
+
+		if (i <= 1)
+		{
+			objectMovement->SetMovementSpeed(3.0f);
+			//objectMovement->SetAcceleration(Vector3(0, 0, 3));
+			//objectMovement->SetVelocity(Vector3(0, 0, 1));
+		}
+
 
 		_gameObjects.push_back(gameObject);
 	}
 
-	_gameObjects.back()->GetMovement()->SetVelocity(Vector3(0, 1, 0)); //sets the last cube to constantly ascend updwards
-	_gameObjects.back()->GetMovement()->SetAcceleration(Vector3(0, 3.0f, 0));
+	//_gameObjects.back()->GetMovement()->SetVelocity(Vector3(0, 1, 0)); //sets the last cube to constantly ascend updwards
+	//_gameObjects.back()->GetMovement()->SetAcceleration(Vector3(0, 3.0f, 0));
 
 	gameObject = new GameObject("Donut");
 
@@ -687,23 +694,46 @@ void DX11PhysicsFramework::Update()
 
 void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 {
+	char _currentMovementKeyPressed = '0'; //stores the current movement key that was pressed
+	
 	// Move gameobjects
+	// Add force applies an accelerational force that is intensified by the time the object has been excellerating
 	if (GetAsyncKeyState('1'))
 	{
-		_gameObjects[1]->GetMovement()->MoveTransform(Forwards);
+		_gameObjects[1]->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
+		_currentMovementKeyPressed = '1';
 	}
 	if (GetAsyncKeyState('2'))
 	{
-		_gameObjects[1]->GetMovement()->MoveTransform(Backwards);
+		_gameObjects[1]->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
+		_currentMovementKeyPressed = '2';
 	}
 	if (GetAsyncKeyState('3'))
 	{
-		_gameObjects[2]->GetMovement()->MoveTransform(Forwards);
+		_gameObjects[2]->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
+		_currentMovementKeyPressed = '3';
 	}
 	if (GetAsyncKeyState('4'))
 	{
-		_gameObjects[2]->GetMovement()->MoveTransform(Backwards);
+		_gameObjects[2]->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
+		_currentMovementKeyPressed = '4';
 	}
+
+	//checks if the object has been told to switch movement directions (or stop moving)
+	if (_currentMovementKeyPressed == _lastMovementKeyPressed)
+	{
+		//if not, increase acceleration intensity
+		_currentMovementKeyPressDuration += 0.005f;
+		
+	}
+	else
+	{
+		//else, reset acceleration
+		_currentMovementKeyPressDuration = 1;
+	}
+
+	//records the key currently being pressed
+	_lastMovementKeyPressed = _currentMovementKeyPressed;
 
 	_camera->Update();
 

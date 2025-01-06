@@ -69,19 +69,17 @@ Vector3 Movement::CalculateDisplacement(Vector3 displacement, float deltaTime)
 /// <param name="deltaTime">time elapsed since last physics update</param>
 void Movement::Update(float deltaTime)
 {
-	if (_needsToMove)
-	{
-		Vector3 position = _transform->GetPosition(); //gets the current position of the transform
+	_acceleration += _netForce / _mass; //calculates current rate of acceleration
 
-		Vector3 displacement = (_velocity * deltaTime) + ((_acceleration * (deltaTime * deltaTime)) * 0.5f);
+	Vector3 position = _transform->GetPosition(); //gets the current position of the transform
 
-		position += displacement; //updates position by a constant velocity (multiplied by deltaTime to find distance)
+	_velocity = _acceleration * _mass; //calculates current velocity
 
-		_transform->SetPosition(position); //sets new transform position
-	}
+	position += _velocity * deltaTime; //calculates the distance moved during this frame and updates position
+	_transform->SetPosition(position); //sets new transform position
 
-	if (!_isAutomatic)
-	{
-		_needsToMove = false;
-	}
+	//resets force values to maintain intergrity of calculations
+	_netForce = Vector3(0, 0, 0);
+	_acceleration = Vector3(0, 0, 0);
+	_velocity = Vector3(0, 0, 0);
 }
