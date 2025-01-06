@@ -9,6 +9,8 @@
 #define DENSITY_OF_FLUID 1
 #define CROSS_SECTIONAL_AREA 1
 
+#define FRICTION_COEFFICIENT 0.3
+
 using namespace DirectX;
 
 enum Directions

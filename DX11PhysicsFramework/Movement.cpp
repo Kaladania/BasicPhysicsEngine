@@ -72,7 +72,16 @@ float Movement::CalculateDragForce()
 
 Vector3 Movement::CalulateFrictionForce()
 {
-	return Vector3();
+	Vector3 tangentialForce = (_gravity * _mass) * float(sin(0));
+	Vector3 normalForce = (_gravity * _mass) * float(cos(0));
+	Vector3 frictionForce = normalForce * float(FRICTION_COEFFICIENT); 
+
+	if (tangentialForce > frictionForce)
+	{
+		return 
+	}
+
+	return _acceleration * float(FRICTION_COEFFICIENT);
 }
 
 /// <summary>
@@ -92,10 +101,12 @@ void Movement::Update(float deltaTime)
 	_dragForce = norVelocity * dragScalar;
 	_netForce += _dragForce;*/
 
-	_debugOutputer->PrintDebugString(_vector3D->ToString(_dragForce));
-	_debugOutputer->PrintDebugString(_vector3D->ToString(_velocity));
+	//_debugOutputer->PrintDebugString(_vector3D->ToString(_dragForce));
+	
 
 	_acceleration += _netForce / _mass; //calculates current rate of acceleration
+
+	_debugOutputer->PrintDebugString(_vector3D->ToString(CalulateFrictionForce()));
 
 	Vector3 position = _transform->GetPosition(); //gets the current position of the transform
 
