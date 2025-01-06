@@ -2,7 +2,7 @@
 
 Movement::Movement(GameObject* parent) : Component(parent)
 {
-	
+	_gravity = Vector3(0, -9.81f, 0); //sets gravity to be a downward force of 9.81
 }
 
 Movement::~Movement()
@@ -46,8 +46,6 @@ void Movement::MoveTransform(Directions direction)
 
 	_velocity = directionVector;
 
-	_needsToMove = true;
-
 	////translates the object
 	//position.x += directionVector.x;
 	//position.y += directionVector.y;
@@ -69,6 +67,12 @@ Vector3 Movement::CalculateDisplacement(Vector3 displacement, float deltaTime)
 /// <param name="deltaTime">time elapsed since last physics update</param>
 void Movement::Update(float deltaTime)
 {
+	//checks if the object is current simulating gravity
+	if (_isSimulatingGravity)
+	{
+		_netForce += _gravity * _mass; //calculates the intensity of the gravitational force acting on the parent object
+	}
+
 	_acceleration += _netForce / _mass; //calculates current rate of acceleration
 
 	Vector3 position = _transform->GetPosition(); //gets the current position of the transform

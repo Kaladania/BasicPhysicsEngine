@@ -32,11 +32,11 @@ protected:
 	Vector3 _velocity = Vector3(); //holds the current velocity of the transform
 	Vector3 _acceleration = Vector3(); //holds the current acceleration of the transform
 	Vector3 _netForce = Vector3(); //holds the total amount of force being applied to the parent object
+	Vector3 _gravity = Vector3(); //holds the amount of downward force being exherted by gravity
 
 	float _mass = 1.0f; //holds the current mass of the parent object
 
-	bool _isAutomatic = false;
-	bool _needsToMove = false;
+	bool _isSimulatingGravity = false; //states if the object is being influenced by gravity
 
 	bool _hasConstantVelocity = false; //states if the parent object is moving at a constant velocity
 	bool _hasConstantAcceleration = false; //states if the parent object is accelerating at a constant rate
@@ -53,6 +53,8 @@ public:
 	void SetTransform(Transform* transform) { _transform = transform; }
 	void SetVelocity(Vector3 velocity) { _velocity = velocity; }
 	void SetAcceleration(Vector3 acceleration) { _acceleration = acceleration; }
+
+	void SetIsSimulatingGravity(bool simulationState) { _isSimulatingGravity = simulationState; }
 	
 
 	void MoveTransform(Directions direction);

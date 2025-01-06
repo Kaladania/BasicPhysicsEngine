@@ -568,11 +568,15 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		
 		objectMovement->SetTransform(objectTransform); //ties movement component to the object's transformation
 
+
 		if (i <= 1)
 		{
+			if (i == 1)
+			{
+				objectMovement->SetIsSimulatingGravity(true); //states second object is going to be influenced by gravity
+			}
+
 			objectMovement->SetMovementSpeed(3.0f);
-			//objectMovement->SetAcceleration(Vector3(0, 0, 3));
-			//objectMovement->SetVelocity(Vector3(0, 0, 1));
 		}
 
 

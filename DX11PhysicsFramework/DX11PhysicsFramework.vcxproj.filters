@@ -59,7 +59,6 @@
     <ClInclude Include="Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="AutomatedMovement.h" />
     <ClInclude Include="ParticleObject.h" />
   </ItemGroup>
   <ItemGroup>
@@ -80,7 +79,6 @@
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="AutomatedMovement.cpp" />
     <ClCompile Include="ParticleObject.cpp" />
   </ItemGroup>
   <ItemGroup>

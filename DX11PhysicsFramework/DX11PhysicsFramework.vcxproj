@@ -370,7 +370,6 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AutomatedMovement.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="DebugOutputer.cpp" />
     <ClCompile Include="DX11PhysicsFramework.cpp" />
@@ -393,7 +392,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AutomatedMovement.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="DebugOutputer.h" />
     <ClInclude Include="DX11PhysicsFramework.h" />
