@@ -8,7 +8,6 @@
 #include "Transform.h"
 #include "Renderer.h"
 #include "Movement.h"
-#include "AutomatedMovement.h"
 #include "DebugOutputer.h"
 #include "Vector3D.h"
 
@@ -20,7 +19,6 @@ enum Components
 	TransformComponent,
 	RendererComponent,
 	MovementComponent,
-	AutomatedMovementComponent
 };
 
 

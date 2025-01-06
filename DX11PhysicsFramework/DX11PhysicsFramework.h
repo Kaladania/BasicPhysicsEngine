@@ -86,6 +86,9 @@ private:
 	DebugOutputer* _debugOutputer = nullptr; //holds a reference to framework's debug outputter
 	float _elapsedSeconds = 0; //holds the amount of seconds elapsed since last update
 
+	float _currentMovementKeyPressDuration = 1; //holds how many frames the current movement key has been held down for
+	char _lastMovementKeyPressed = '0'; //holds the last movement key to be pressed
+
 private:
 	HRESULT CreateWindowHandle(HINSTANCE hInstance, int nCmdShow);
 	HRESULT CreateD3DDevice();
