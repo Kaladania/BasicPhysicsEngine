@@ -96,7 +96,7 @@ void Movement::Update(float deltaTime)
 		_netForce += _gravity * _mass; //calculates the intensity of the gravitational force acting on the parent object
 	}
 
-	float dragScalar = CalculateDragForce();
+	//float dragScalar = CalculateDragForce();
 	/*Vector3 norVelocity = _vector3D->Normalize(_velocity);
 	_dragForce = norVelocity * dragScalar;
 	_netForce += _dragForce;*/
@@ -106,7 +106,7 @@ void Movement::Update(float deltaTime)
 
 	_acceleration += _netForce / _mass; //calculates current rate of acceleration
 
-	_debugOutputer->PrintDebugString(_vector3D->ToString(CalulateFrictionForce()));
+	//_debugOutputer->PrintDebugString(_vector3D->ToString(CalulateFrictionForce()));
 
 	Vector3 position = _transform->GetPosition(); //gets the current position of the transform
 

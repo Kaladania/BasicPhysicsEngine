@@ -61,10 +61,13 @@ void GameObject::Update(float deltaTime)
 
 void GameObject::UpdatePhysics(float deltaTime)
 {
-	if (_movement != nullptr)
+	//updates a movement component if it has been added and is active
+	if (_movement != nullptr && _movement->GetIsActive())
 	{
 		_movement->Update(deltaTime);
 	}
+
+	
 }
 
 /// <summary>

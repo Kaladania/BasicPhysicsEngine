@@ -529,6 +529,14 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	objectRenderer->SetMaterial(noSpecMaterial);
 	objectRenderer->SetTextureRV(_GroundTextureRV);
 
+	//adds and populates render information
+	gameObject->AddComponent(SphereCollissionComponent);
+	Collider* objectCollider = gameObject->GetCollider();
+	objectCollider = gameObject->GetCollider();
+	objectCollider->SetTransform(gameObject->GetTransform());
+	static_cast<SphereCollider*>(objectCollider)->SetCollissionRadius(10.0f);
+	
+
 	_gameObjects.push_back(gameObject);
 
 	Movement* objectMovement = nullptr;
@@ -576,7 +584,19 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 			objectMovement->SetMovementSpeed(3.0f);
 		}
 
+		//adds and populates render information
+		gameObject->AddComponent(SphereCollissionComponent);
+		Collider* objectCollider = gameObject->GetCollider();
+		objectCollider = gameObject->GetCollider();
+		objectCollider->SetTransform(gameObject->GetTransform());
+		static_cast<SphereCollider*>(objectCollider)->SetCollissionRadius(10.0f);
+		objectCollider->SetIsActive(false);
 
+		if (i == 0)
+		{
+			objectCollider->SetIsActive(true);
+		}
+		
 		_gameObjects.push_back(gameObject);
 	}
 
@@ -743,6 +763,26 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 	for (auto gameObject : _gameObjects)
 	{
 		gameObject->UpdatePhysics(deltaTime);
+
+		//checks if any collisions have happened
+		Collider* collider = gameObject->GetCollider();
+
+		//only runs a collision check if the collider is active
+		if (collider != nullptr && collider->GetIsActive())
+		{
+			for (auto object : _gameObjects)
+			{
+				Collider* otherCollider = object->GetCollider();
+
+				if (otherCollider != nullptr && otherCollider->GetIsActive())
+				{
+					collider->CheckForCollission(otherCollider);
+				}
+			}
+		}
+
+		
+
 	}
 
 }
