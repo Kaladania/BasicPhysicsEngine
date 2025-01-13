@@ -1,5 +1,6 @@
 #pragma once
 #include "Collider.h"
+//#include "BoxCollider.h"
 
 class GameObject;
 
@@ -19,6 +20,7 @@ public:
 
 	bool CollidesWith(Collider* other) override;
 	bool CollidesWith(SphereCollider* other) override;
+	bool CollidesWith(BoxCollider* other) override;
 
 };
 

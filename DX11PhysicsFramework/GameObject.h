@@ -10,6 +10,7 @@
 #include "Movement.h"
 #include "Collider.h"
 #include "SphereCollider.h"
+#include "BoxCollider.h"
 #include "DebugOutputer.h"
 #include "Vector3D.h"
 
@@ -21,7 +22,8 @@ enum Components
 	TransformComponent,
 	RendererComponent,
 	MovementComponent,
-	SphereCollissionComponent
+	SphereCollissionComponent,
+	BoxCollissionComponent
 };
 
 
