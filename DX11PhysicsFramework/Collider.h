@@ -6,6 +6,7 @@
 
 class GameObject;
 class SphereCollider;
+class BoxCollider;
 
 enum CollissionLayer
 {
@@ -34,6 +35,7 @@ public:
 	//collission check functions + overloads
 	virtual bool CollidesWith(Collider* other) = 0;
 	virtual bool CollidesWith(SphereCollider* other) = 0;
+	virtual bool CollidesWith(BoxCollider* other) = 0;
 
 	bool CheckForCollission(Collider* other);
 	

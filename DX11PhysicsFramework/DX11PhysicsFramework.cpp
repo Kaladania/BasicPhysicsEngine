@@ -534,7 +534,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	Collider* objectCollider = gameObject->GetCollider();
 	objectCollider = gameObject->GetCollider();
 	objectCollider->SetTransform(gameObject->GetTransform());
-	static_cast<SphereCollider*>(objectCollider)->SetCollissionRadius(10.0f);
+	static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(30.0f, 30.0f, 30.0f));
 	
 
 	_gameObjects.push_back(gameObject);
@@ -589,7 +589,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		Collider* objectCollider = gameObject->GetCollider();
 		objectCollider = gameObject->GetCollider();
 		objectCollider->SetTransform(gameObject->GetTransform());
-		static_cast<SphereCollider*>(objectCollider)->SetCollissionRadius(10.0f);
+		static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(2.0f, 2.0f, 2.0f));
 		objectCollider->SetIsActive(false);
 
 		if (i == 0)

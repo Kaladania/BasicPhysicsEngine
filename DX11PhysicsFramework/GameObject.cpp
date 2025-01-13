@@ -124,6 +124,10 @@ void GameObject::AddComponent(Components componentType)
 
 		_collider = new SphereCollider(this);
 
+	case BoxCollissionComponent:
+
+		_collider = new BoxCollider(this);
+
 	default:
 		break;
 	}
