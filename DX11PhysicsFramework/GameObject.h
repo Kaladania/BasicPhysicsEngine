@@ -8,6 +8,8 @@
 #include "Transform.h"
 #include "Renderer.h"
 #include "Movement.h"
+#include "Collider.h"
+#include "SphereCollider.h"
 #include "DebugOutputer.h"
 #include "Vector3D.h"
 
@@ -19,6 +21,7 @@ enum Components
 	TransformComponent,
 	RendererComponent,
 	MovementComponent,
+	SphereCollissionComponent
 };
 
 
@@ -32,6 +35,7 @@ private:
 	Transform* _transform = nullptr; //stores a reference to the object's transform information
 	Renderer* _renderer = nullptr; //stores a reference to the object's renderer
 	Movement* _movement = nullptr; //stores a reference to the object's movement component
+	Collider* _collider = nullptr; //stores a reference to the object's collider component
 	
 	//holds object type
 	std::string _type;
@@ -53,6 +57,7 @@ public:
 	Transform* GetTransform() const { return _transform; }
 	Renderer* GetRenderer() const { return _renderer; }
 	Movement* GetMovement() const { return _movement; }
+	Collider* GetCollider() const { return _collider; }
 
 
 	

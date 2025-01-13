@@ -76,10 +76,10 @@ Vector3 Movement::CalulateFrictionForce()
 	Vector3 normalForce = (_gravity * _mass) * float(cos(0));
 	Vector3 frictionForce = normalForce * float(FRICTION_COEFFICIENT); 
 
-	if (tangentialForce > frictionForce)
+	/*if (tangentialForce > frictionForce)
 	{
 		return 
-	}
+	}*/
 
 	return _acceleration * float(FRICTION_COEFFICIENT);
 }

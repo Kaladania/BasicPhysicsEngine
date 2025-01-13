@@ -31,9 +31,6 @@ private:
 
 	float _movementSpeed = 0.0f; //stores the current movement speed of the object
 	
-	
-protected:
-
 	Transform* _transform = nullptr; //stores reference of the transform the component is tied to
 	Vector3 _velocity = Vector3(); //holds the current velocity of the transform
 	Vector3 _acceleration = Vector3(); //holds the current acceleration of the transform

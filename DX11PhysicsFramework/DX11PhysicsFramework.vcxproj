@@ -381,6 +381,8 @@
     <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="ParticleObject.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="Vector3D.cpp" />
@@ -403,6 +405,8 @@
     <ClInclude Include="ParticleObject.h" />
     <ClInclude Include="Renderer.h" />
     <CLInclude Include="resource.h" />
+    <ClInclude Include="Collider.h" />
+    <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="Structures.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="Transform.h" />
