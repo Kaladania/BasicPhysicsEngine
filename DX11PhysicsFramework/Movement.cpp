@@ -45,14 +45,6 @@ void Movement::MoveTransform(Directions direction)
 	}
 
 	_velocity = directionVector;
-
-	////translates the object
-	//position.x += directionVector.x;
-	//position.y += directionVector.y;
-	//position.z += directionVector.z;
-
-	////updates the transform's position
-	//_transform->SetPosition(position);
 }
 
 Vector3 Movement::CalculateDisplacement(Vector3 displacement, float deltaTime)
@@ -82,6 +74,13 @@ Vector3 Movement::CalulateFrictionForce()
 	}*/
 
 	return _acceleration * float(FRICTION_COEFFICIENT);
+}
+
+void Movement::CalculateCollisionResolutionForce(const float otherCOR)
+{
+	_netForce = ((_velocity * -2.0f)) + (((_velocity * -2)) * _COR);
+	_debugOutputer->PrintDebugString("Velocity is: " + _vector3D->ToString(_velocity));
+	_velocity = Vector3(0, 0, 0);
 }
 
 /// <summary>
@@ -116,10 +115,10 @@ void Movement::Update(float deltaTime)
 
 	//hard coded stop to prevent falling through platform
 	//REMOVE AFTER COLLISSION IS IMPLIMENTED
-	if (position.y < 1)
+	/*if (position.y < 1)
 	{
 		position.y = 1;
-	}
+	}*/
 
 	_transform->SetPosition(position); //sets new transform position
 

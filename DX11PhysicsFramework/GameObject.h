@@ -13,6 +13,7 @@
 #include "BoxCollider.h"
 #include "DebugOutputer.h"
 #include "Vector3D.h"
+#include "set"
 
 using namespace DirectX;
 //using namespace std;
@@ -44,6 +45,8 @@ private:
 	XMFLOAT4X4 _world;
 
 	DebugOutputer* _debugOutputer = nullptr; //stores a reference to the object's debug outputer
+
+	std::set<Components> _componentList; //stores a list of current componenets
 	
 
 
@@ -61,11 +64,11 @@ public:
 	Movement* GetMovement() const { return _movement; }
 	Collider* GetCollider() const { return _collider; }
 
-
 	
 	XMMATRIX GetWorldMatrix() const { return XMLoadFloat4x4(&_world); }
 
 	void AddComponent(Components componentType);
+	bool ContainsComponent(Components componentType);
 
 
 

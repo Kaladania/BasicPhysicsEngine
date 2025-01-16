@@ -481,13 +481,13 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	basicLight.SpecularPower = 10.0f;
 	basicLight.LightVecW = XMFLOAT3(0.0f, 0.5f, -1.0f);
 
-	Geometry herculesGeometry;
-	_objMeshData = OBJLoader::Load("Resources\\OBJ\\donut.obj", _device);
-	herculesGeometry.indexBuffer = _objMeshData.IndexBuffer;
-	herculesGeometry.numberOfIndices = _objMeshData.IndexCount;
-	herculesGeometry.vertexBuffer = _objMeshData.VertexBuffer;
-	herculesGeometry.vertexBufferOffset = _objMeshData.VBOffset;
-	herculesGeometry.vertexBufferStride = _objMeshData.VBStride;
+	Geometry sphereGeometry;
+	_objMeshData = OBJLoader::Load("Resources\\OBJ\\sphere.obj", _device);
+	sphereGeometry.indexBuffer = _objMeshData.IndexBuffer;
+	sphereGeometry.numberOfIndices = _objMeshData.IndexCount;
+	sphereGeometry.vertexBuffer = _objMeshData.VertexBuffer;
+	sphereGeometry.vertexBufferOffset = _objMeshData.VBOffset;
+	sphereGeometry.vertexBufferStride = _objMeshData.VBStride;
 
 	Geometry cubeGeometry;
 	cubeGeometry.indexBuffer = _cubeIndexBuffer;
@@ -534,7 +534,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	Collider* objectCollider = gameObject->GetCollider();
 	objectCollider = gameObject->GetCollider();
 	objectCollider->SetTransform(gameObject->GetTransform());
-	static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(30.0f, 30.0f, 30.0f));
+	static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(30.0f, 0.0f, 30.0f));
 	
 
 	_gameObjects.push_back(gameObject);
@@ -603,18 +603,18 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	//_gameObjects.back()->GetMovement()->SetVelocity(Vector3(0, 1, 0)); //sets the last cube to constantly ascend updwards
 	//_gameObjects.back()->GetMovement()->SetAcceleration(Vector3(0, 3.0f, 0));
 
-	gameObject = new GameObject("Donut");
+	gameObject = new GameObject("Sphere");
 
 	//adds and populates transformation component
 	gameObject->AddComponent(TransformComponent);
 	objectTransform = gameObject->GetTransform();
 	objectTransform->SetScale(1.0f, 1.0f, 1.0f);
-	objectTransform->SetPosition(-5.0f, 0.5f, 10.0f);
+	objectTransform->SetPosition(-5.0f, 2.0f, 10.0f);
 
 	//adds and populates render information
 	gameObject->AddComponent(RendererComponent);
 	objectRenderer = gameObject->GetRenderer();
-	objectRenderer->SetGeometry(herculesGeometry);
+	objectRenderer->SetGeometry(sphereGeometry);
 	objectRenderer->SetMaterial(shinyMaterial);
 	objectRenderer->SetTextureRV(_StoneTextureRV);
 
@@ -762,7 +762,7 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 	// Update objects
 	for (auto gameObject : _gameObjects)
 	{
-		gameObject->UpdatePhysics(deltaTime);
+		
 
 		//checks if any collisions have happened
 		Collider* collider = gameObject->GetCollider();
@@ -772,16 +772,40 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 		{
 			for (auto object : _gameObjects)
 			{
-				Collider* otherCollider = object->GetCollider();
-
-				if (otherCollider != nullptr && otherCollider->GetIsActive())
+				//ensures objects do not attempt to collision check against themselves
+				if (object != gameObject)
 				{
-					collider->CheckForCollission(otherCollider);
+					Collider* otherCollider = object->GetCollider();
+
+					if (otherCollider != nullptr && otherCollider->GetIsActive())
+					{
+						if (collider->CheckForCollission(otherCollider))
+						{
+
+							_debugOutputer->PrintDebugString("COLLISSION!");
+
+							//checks to see if the current game object has a movement component (and so should react to the collision)
+							if (gameObject->ContainsComponent(MovementComponent))
+							{
+								//checks to see if the colliding object has a movement component (and so has a custom COR)
+								if (object->ContainsComponent(MovementComponent))
+								{
+									gameObject->GetMovement()->CalculateCollisionResolutionForce(object->GetMovement()->GetCOR());
+								}
+								else
+								{
+									//assumes the colliding object is completely stationary and/or a wall
+									gameObject->GetMovement()->CalculateCollisionResolutionForce(0);
+								}
+							}
+
+						}
+					}
 				}
 			}
 		}
 
-		
+		gameObject->UpdatePhysics(deltaTime);
 
 	}
 

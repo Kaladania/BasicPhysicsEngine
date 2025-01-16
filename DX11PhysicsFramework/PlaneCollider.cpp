@@ -1,10 +1,12 @@
-#include "SphereCollider.h"
+#include "PlaneCollider.h"
 
-SphereCollider::SphereCollider(GameObject* parent)
+
+
+PlaneCollider::PlaneCollider(GameObject* parent)
 {
 }
 
-SphereCollider::~SphereCollider()
+PlaneCollider::~PlaneCollider()
 {
 
 }
@@ -14,7 +16,7 @@ SphereCollider::~SphereCollider()
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool SphereCollider::CollidesWith(Collider* other)
+bool PlaneCollider::CollidesWith(Collider* other)
 {
 	if (_isActive)
 	{
@@ -30,31 +32,7 @@ bool SphereCollider::CollidesWith(Collider* other)
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool SphereCollider::CollidesWith(SphereCollider* other)
-{
-	//calculates the distance between the center's of the two objects
-	float distance = _vector3D->GetMagnitude(this->_transform->GetPosition() - other->_transform->GetPosition());
-	_debugOutputer->PrintDebugString("This object's center: " + _vector3D->ToString(this->_transform->GetPosition()) + "Other Object's center: " + _vector3D->ToString(other->_transform->GetPosition()) + ". Distance is: " + std::to_string(distance));
-
-	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
-	float combinedRadii = this->GetCollissionRadius() + other->GetCollissionRadius();
-	_debugOutputer->PrintDebugString("Combined Radii is: " + std::to_string(combinedRadii));
-
-	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
-	if (distance < combinedRadii)
-	{
-		return true;
-	}
-	
-	return false;
-}
-
-/// <summary>
-/// Checks collission against another sphere collider
-/// </summary>
-/// <param name="other">the other collider being collided with</param>
-/// <returns>bool stating if collission occured</returns>
-bool SphereCollider::CollidesWith(BoxCollider* other)
+bool PlaneCollider::CollidesWith(SphereCollider* other)
 {
 	////calculates the distance between the center's of the two objects
 	//float distance = _vector3D->GetMagnitude(this->_transform->GetPosition() - other->_transform->GetPosition());
@@ -73,7 +51,24 @@ bool SphereCollider::CollidesWith(BoxCollider* other)
 	return false;
 }
 
-bool SphereCollider::CollidesWith(PlaneCollider* other)
+/// <summary>
+/// Checks collission against                      another sphere collider
+/// </summary>
+/// <param name="other">the other collider being collided with</param>
+/// <returns>bool stating if collission occured</returns>
+bool PlaneCollider::CollidesWith(BoxCollider* other)
+{
+	Vector3 objectDirection = other->GetTransform()->GetPosition();
+
+	return false;
+}
+
+/// <summary>
+/// Checks collission against another sphere collider
+/// </summary>
+/// <param name="other">the other collider being collided with</param>
+/// <returns>bool stating if collission occured</returns>
+bool PlaneCollider::CollidesWith(PlaneCollider* other)
 {
 	return false;
 }
