@@ -59,7 +59,6 @@
     <ClInclude Include="Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleObject.h" />
     <ClInclude Include="Collider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -67,6 +66,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BoxCollider.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlaneCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -92,6 +97,7 @@
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
+    <ClCompile Include="PlaneCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

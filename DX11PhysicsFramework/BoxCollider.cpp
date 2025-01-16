@@ -83,10 +83,11 @@ bool BoxCollider::CollidesWith(BoxCollider* other)
 	_minPoint = Vector3(_center.x - _halfExtents.x, _center.y - _halfExtents.y, _center.z -_halfExtents.z);
 	_maxPoint = Vector3(_center.x + _halfExtents.x, _center.y + _halfExtents.y, _center.z +_halfExtents.z);
 
-	//distance = this->_transform->GetPosition().x - other->_transform->GetPosition().x;
+	distance = this->_transform->GetPosition().x - other->_transform->GetPosition().x;
+	distance = sqrtf(distance * distance);
 	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
 	float combinedRadii = this->_halfExtents.x + other->GetExtents().x;
-	_debugOutputer->PrintDebugString("Combined Radii is: " + std::to_string(combinedRadii));
+	_debugOutputer->PrintDebugString("Combined Radii is: " + std::to_string(combinedRadii) + " Distance is: " + std::to_string(distance));
 
 	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
 	if (distance < combinedRadii)
@@ -98,10 +99,11 @@ bool BoxCollider::CollidesWith(BoxCollider* other)
 		return false; //immediately breaks out of the function and returns a failed collision check
 	}
 
-	//distance = this->_transform->GetPosition().y - other->_transform->GetPosition().y;
+	distance = this->_transform->GetPosition().y - other->_transform->GetPosition().y;
+	distance = sqrtf(distance * distance);
 	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
 	combinedRadii = this->_halfExtents.y + other->GetExtents().y;
-	_debugOutputer->PrintDebugString("Combined Radii is: " + std::to_string(combinedRadii));
+	_debugOutputer->PrintDebugString("Combined Radii is: " + std::to_string(combinedRadii) + " Distance is: " + std::to_string(distance));
 
 	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
 	if (distance < combinedRadii)
@@ -113,10 +115,11 @@ bool BoxCollider::CollidesWith(BoxCollider* other)
 		return false; //immediately breaks out of the function and returns a failed collision check
 	}
 
-	//distance = this->_transform->GetPosition().z - other->_transform->GetPosition().z;
+	distance = this->_transform->GetPosition().z - other->_transform->GetPosition().z;
+	distance = sqrtf(distance * distance);
 	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
 	combinedRadii = this->_halfExtents.z + other->GetExtents().z;
-	_debugOutputer->PrintDebugString("Combined Radii is: " + std::to_string(combinedRadii));
+	_debugOutputer->PrintDebugString("Combined Radii is: " + std::to_string(combinedRadii) + " Distance is: " + std::to_string(distance));
 
 	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
 	if (distance < combinedRadii)
@@ -134,4 +137,9 @@ bool BoxCollider::CollidesWith(BoxCollider* other)
 	}
 
 	return true;
+}
+
+bool BoxCollider::CollidesWith(PlaneCollider* other)
+{
+	return false;
 }

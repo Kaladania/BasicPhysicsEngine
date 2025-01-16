@@ -21,6 +21,7 @@ public:
 	bool CollidesWith(Collider* other) override;
 	bool CollidesWith(SphereCollider* other) override;
 	bool CollidesWith(BoxCollider* other) override;
+	bool CollidesWith(PlaneCollider* other) override;
 
 };
 

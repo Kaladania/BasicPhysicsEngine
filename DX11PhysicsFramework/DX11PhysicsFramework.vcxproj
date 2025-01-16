@@ -381,6 +381,7 @@
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="ParticleObject.cpp" />
+    <ClCompile Include="PlaneCollider.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Collider.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
@@ -405,6 +406,7 @@
     <ClInclude Include="Movement.h" />
     <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="ParticleObject.h" />
+    <ClInclude Include="PlaneCollider.h" />
     <ClInclude Include="Renderer.h" />
     <CLInclude Include="resource.h" />
     <ClInclude Include="Collider.h" />
