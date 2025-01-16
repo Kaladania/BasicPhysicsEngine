@@ -762,7 +762,7 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 	// Update objects
 	for (auto gameObject : _gameObjects)
 	{
-		gameObject->UpdatePhysics(deltaTime);
+		
 
 		//checks if any collisions have happened
 		Collider* collider = gameObject->GetCollider();
@@ -783,14 +783,29 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 						{
 
 							_debugOutputer->PrintDebugString("COLLISSION!");
-							gameObject->GetMovement()->CalculateCollisionResolutionForce(object->GetMovement()->GetCOR());
+
+							//checks to see if the current game object has a movement component (and so should react to the collision)
+							if (gameObject->ContainsComponent(MovementComponent))
+							{
+								//checks to see if the colliding object has a movement component (and so has a custom COR)
+								if (object->ContainsComponent(MovementComponent))
+								{
+									gameObject->GetMovement()->CalculateCollisionResolutionForce(object->GetMovement()->GetCOR());
+								}
+								else
+								{
+									//assumes the colliding object is completely stationary and/or a wall
+									gameObject->GetMovement()->CalculateCollisionResolutionForce(0);
+								}
+							}
+
 						}
 					}
 				}
 			}
 		}
 
-		
+		gameObject->UpdatePhysics(deltaTime);
 
 	}
 

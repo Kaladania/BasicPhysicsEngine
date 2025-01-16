@@ -1,0 +1,23 @@
+Force of restitution
+- How 'springy' and obect is
+- 0 = rigid
+- 1 = elastic
+
+Collision resolution
+- comes after collission detection
+- how an object 'reacts' to collission
+- can either have them stop in place (reset position so they are constantly 'vibrating'
+- or provide a propelling force opposite to gravity
+
+- do second option and multiply by force of resistution value.
+
+
+plane = -A + B + C - D
+
+
+How to stop vibrations
+- mark if an object is hollow/can be phased through
+- if not, get the normal of the surface you'r colliding with (facing direction)
+- lock the angle of that facing direction
+	- e.g. if the object's normal points to the y-axis, lock that axis
+	- need to know object's base normal then apply any rotation to match the orientation

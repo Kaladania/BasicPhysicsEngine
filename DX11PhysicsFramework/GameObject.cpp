@@ -96,7 +96,7 @@ void GameObject::Draw(ID3D11DeviceContext * pImmediateContext)
 }
 
 /// <summary>
-/// Adds the requested component to the object
+/// Adds the requested component to the object and the component list
 /// </summary>
 /// <param name="componentType">component type to add</param>
 void GameObject::AddComponent(Components componentType)
@@ -106,29 +106,52 @@ void GameObject::AddComponent(Components componentType)
 	case TransformComponent:
 
 		_transform = new Transform;
+		_componentList.insert(TransformComponent);
 
 		break;
 
 	case RendererComponent:
 
 		_renderer = new Renderer;
-
+		_componentList.insert(RendererComponent);
 		break;
 
 	case MovementComponent:
 
 		_movement = new Movement;
+		_componentList.insert(MovementComponent);
 		break;
 
 	case SphereCollissionComponent:
 
 		_collider = new SphereCollider(this);
+		_componentList.insert(SphereCollissionComponent);
 
 	case BoxCollissionComponent:
 
 		_collider = new BoxCollider(this);
+		_componentList.insert(BoxCollissionComponent);
 
 	default:
 		break;
 	}
+}
+
+/// <summary>
+/// States if the game object holds a requested component
+/// </summary>
+/// <param name="componentType">The component to check</param>
+/// <returns>states if the component has been found on the object</returns>
+bool GameObject::ContainsComponent(Components componentType)
+{
+	std::set<Components>::iterator it;
+	it = _componentList.find(componentType);
+
+	//checks to see if the returned iterator is an actual index
+	if (it != _componentList.end())
+	{
+		return true;
+	}
+
+	return false;
 }

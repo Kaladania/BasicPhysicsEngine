@@ -78,7 +78,9 @@ Vector3 Movement::CalulateFrictionForce()
 
 void Movement::CalculateCollisionResolutionForce(const float otherCOR)
 {
-	_netForce = ((_netForce * -1)) * _COR;
+	_netForce = ((_velocity * -2.0f)) + (((_velocity * -2)) * _COR);
+	_debugOutputer->PrintDebugString("Velocity is: " + _vector3D->ToString(_velocity));
+	_velocity = Vector3(0, 0, 0);
 }
 
 /// <summary>
