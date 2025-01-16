@@ -481,13 +481,13 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	basicLight.SpecularPower = 10.0f;
 	basicLight.LightVecW = XMFLOAT3(0.0f, 0.5f, -1.0f);
 
-	Geometry herculesGeometry;
-	_objMeshData = OBJLoader::Load("Resources\\OBJ\\donut.obj", _device);
-	herculesGeometry.indexBuffer = _objMeshData.IndexBuffer;
-	herculesGeometry.numberOfIndices = _objMeshData.IndexCount;
-	herculesGeometry.vertexBuffer = _objMeshData.VertexBuffer;
-	herculesGeometry.vertexBufferOffset = _objMeshData.VBOffset;
-	herculesGeometry.vertexBufferStride = _objMeshData.VBStride;
+	Geometry sphereGeometry;
+	_objMeshData = OBJLoader::Load("Resources\\OBJ\\sphere.obj", _device);
+	sphereGeometry.indexBuffer = _objMeshData.IndexBuffer;
+	sphereGeometry.numberOfIndices = _objMeshData.IndexCount;
+	sphereGeometry.vertexBuffer = _objMeshData.VertexBuffer;
+	sphereGeometry.vertexBufferOffset = _objMeshData.VBOffset;
+	sphereGeometry.vertexBufferStride = _objMeshData.VBStride;
 
 	Geometry cubeGeometry;
 	cubeGeometry.indexBuffer = _cubeIndexBuffer;
@@ -603,18 +603,18 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	//_gameObjects.back()->GetMovement()->SetVelocity(Vector3(0, 1, 0)); //sets the last cube to constantly ascend updwards
 	//_gameObjects.back()->GetMovement()->SetAcceleration(Vector3(0, 3.0f, 0));
 
-	gameObject = new GameObject("Donut");
+	gameObject = new GameObject("Sphere");
 
 	//adds and populates transformation component
 	gameObject->AddComponent(TransformComponent);
 	objectTransform = gameObject->GetTransform();
 	objectTransform->SetScale(1.0f, 1.0f, 1.0f);
-	objectTransform->SetPosition(-5.0f, 0.5f, 10.0f);
+	objectTransform->SetPosition(-5.0f, 2.0f, 10.0f);
 
 	//adds and populates render information
 	gameObject->AddComponent(RendererComponent);
 	objectRenderer = gameObject->GetRenderer();
-	objectRenderer->SetGeometry(herculesGeometry);
+	objectRenderer->SetGeometry(sphereGeometry);
 	objectRenderer->SetMaterial(shinyMaterial);
 	objectRenderer->SetTextureRV(_StoneTextureRV);
 
