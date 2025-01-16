@@ -39,6 +39,7 @@ private:
 	Vector3 _dragForce = Vector3(); //holds the amount of drag being applied to the parent object
 
 	float _mass = 1.0f; //holds the current mass of the parent object
+	float _COR = 0.0f; //holds the objects co-efficient of resitution
 
 	bool _isSimulatingGravity = false; //states if the object is being influenced by gravity
 
@@ -59,6 +60,8 @@ public:
 	void SetAcceleration(Vector3 acceleration) { _acceleration = acceleration; }
 
 	void SetIsSimulatingGravity(bool simulationState) { _isSimulatingGravity = simulationState; }
+
+	float GetCOR() { return _COR; } //returns the object's COR to use in collision resolution calculations
 	
 
 	void MoveTransform(Directions direction);
@@ -67,6 +70,7 @@ public:
 	Vector3 CalculateDisplacement(Vector3 displacement = Vector3(), float deltaTime = 0.0f);
 	float CalculateDragForce();
 	Vector3 CalulateFrictionForce();
+	void CalculateCollisionResolutionForce(const float otherCOR);
 	virtual void Update(float deltaTime);
 };
 

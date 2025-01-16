@@ -10,7 +10,7 @@ private:
 	Vector3 _minPoint = Vector3(); //position of bottom left corner
 	Vector3 _maxPoint = Vector3(); //position of top right corner
 	Vector3 _center = Vector3(); //position of object center
-	Vector3 _extents = Vector3(); //position of the length of the object along each axis
+	Vector3 _halfExtents = Vector3(); //position of the length of the object along each axis
 
 
 public:
@@ -19,7 +19,7 @@ public:
 
 	//gets the current collission radius of the collider
 	void SetExtents(Vector3 extents = Vector3());
-	Vector3 GetExtents() { return _extents; }
+	Vector3 GetExtents() { return _halfExtents; }
 
 	bool CollidesWith(Collider* other) override;
 	bool CollidesWith(SphereCollider* other) override;

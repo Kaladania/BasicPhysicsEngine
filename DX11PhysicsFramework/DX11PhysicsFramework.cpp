@@ -534,7 +534,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	Collider* objectCollider = gameObject->GetCollider();
 	objectCollider = gameObject->GetCollider();
 	objectCollider->SetTransform(gameObject->GetTransform());
-	static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(30.0f, 30.0f, 30.0f));
+	static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(30.0f, 1.0f, 30.0f));
 	
 
 	_gameObjects.push_back(gameObject);
@@ -772,11 +772,20 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 		{
 			for (auto object : _gameObjects)
 			{
-				Collider* otherCollider = object->GetCollider();
-
-				if (otherCollider != nullptr && otherCollider->GetIsActive())
+				//ensures objects do not attempt to collision check against themselves
+				if (object != gameObject)
 				{
-					collider->CheckForCollission(otherCollider);
+					Collider* otherCollider = object->GetCollider();
+
+					if (otherCollider != nullptr && otherCollider->GetIsActive())
+					{
+						if (collider->CheckForCollission(otherCollider))
+						{
+
+							_debugOutputer->PrintDebugString("COLLISSION!");
+							//gameObject->GetMovement()->CalculateCollisionResolutionForce(object->GetMovement()->GetCOR());
+						}
+					}
 				}
 			}
 		}
