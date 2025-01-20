@@ -534,6 +534,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	PhysicsBody* objectBody = gameObject->GetPhysicsBody();
 	objectBody->SetCollider(BOX_COLLISSION_COMPONET);
 	Collider* objectCollider = objectBody->GetCollider();
+	objectBody->GetMovement()->SetIsStationary(true); //sets the floor as stationary
 	static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(30.0f, 0.0f, 30.0f));
 	
 
@@ -775,17 +776,21 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 					if (collider->CheckForCollission(otherCollider))
 					{
 						_debugOutputer->PrintDebugString("COLLISSION!");
+						gameObject->GetPhysicsBody()->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), object->GetPhysicsBody()->GetMovement());
 
 						//checks to see if the colliding object has a movement component (and so has a custom COR)
 						if (object->ContainsComponent(RigidbodyComponent))
 						{
-							gameObject->GetPhysicsBody()->GetMovement()->CalculateCollisionResolutionForce(object->GetPhysicsBody()->GetMovement()->GetCOR());
+							//gameObject->GetPhysicsBody()->GetMovement()->CalculateCollisionResolutionForce(object->GetPhysicsBody()->GetMovement()->GetCOR());
+							
+							object->GetPhysicsBody()->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), object->GetPhysicsBody()->GetMovement());
 						}
-						else
-						{
-							//assumes the colliding object is completely stationary and/or a wall
-							gameObject->GetPhysicsBody()->GetMovement()->CalculateCollisionResolutionForce(0);
-						}
+						//else
+						//{
+						//	//assumes the colliding object is completely stationary and/or a wall
+						//	gameObject->GetPhysicsBody()->GetMovement()->ApplyImpulse(Vector3(-1, 0, 0));
+						//	//gameObject->GetPhysicsBody()->GetMovement()->CalculateCollisionResolutionForce(0);
+						//}
 
 					}
 				}

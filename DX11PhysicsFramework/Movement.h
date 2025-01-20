@@ -42,6 +42,7 @@ private:
 	float _COR = 0.0f; //holds the objects co-efficient of resitution
 
 	bool _isSimulatingGravity = false; //states if the object is being influenced by gravity
+	bool _isStationary = false; //states if the object is currently supposed to be stationary
 
 	bool _hasConstantVelocity = false; //states if the parent object is moving at a constant velocity
 	bool _hasConstantAcceleration = false; //states if the parent object is accelerating at a constant rate
@@ -57,20 +58,27 @@ public:
 	void SetMovementSpeed(float speed) { _movementSpeed = speed; }
 	void SetTransform(Transform* transform) { _transform = transform; }
 	void SetVelocity(Vector3 velocity) { _velocity = velocity; }
+	Vector3 GetVeclocity() const { return _velocity; }
+	float GetMass() const { return _mass; }
 	void SetAcceleration(Vector3 acceleration) { _acceleration = acceleration; }
 
 	void SetIsSimulatingGravity(bool simulationState) { _isSimulatingGravity = simulationState; }
+
+	void SetIsStationary(bool stationaryState) { _isStationary = stationaryState; }
+	bool GetIsStationary(bool stationaryState) { return _isStationary; }
 
 	float GetCOR() { return _COR; } //returns the object's COR to use in collision resolution calculations
 	
 
 	void MoveTransform(Directions direction);
 	void AddForce(Vector3 force) { _netForce += force; } //adds a force to the object
+	void ApplyImpulse(Vector3 impulse = Vector3());
 
 	Vector3 CalculateDisplacement(Vector3 displacement = Vector3(), float deltaTime = 0.0f);
 	float CalculateDragForce();
 	Vector3 CalulateFrictionForce();
 	void CalculateCollisionResolutionForce(const float otherCOR);
+	void CalculateImpulse(Vector3 otherPosition = Vector3(), Movement* otherMovement = nullptr);
 	virtual void Update(float deltaTime);
 };
 
