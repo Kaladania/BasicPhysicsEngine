@@ -513,7 +513,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	noSpecMaterial.diffuse = XMFLOAT4(1.0f, 1.0f, 1.0f, 1.0f);
 	noSpecMaterial.specular = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
 
-	GameObject* gameObject = new GameObject("Floor");
+	GameObject* gameObject = new GameObject("Floor", 0);
 
 	//adds and populates transformation component
 	gameObject->AddComponent(TransformComponent);
@@ -543,7 +543,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 
 	for (auto i = 0; i < 4; i++)
 	{
-		gameObject = new GameObject("Cube " + i);
+		gameObject = new GameObject("Cube " + i, i + 1);
 
 		//adds and populates transformation component
 		gameObject->AddComponent(TransformComponent);
@@ -574,6 +574,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 
 		Collider* objectCollider = objectBody->GetCollider(); //gets a reference to the collider
 		static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(2.0f, 2.0f, 2.0f)); //sets the dimensions of the collider
+
 		objectCollider->SetIsActive(false); //disables collision on the object
 
 		objectMovement = gameObject->GetPhysicsBody()->GetMovement();
@@ -585,6 +586,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 			objectMovement->SetMovementSpeed(3.0f);
 		}
 
+		//sets the first square to collide
 		if (i == 0)
 		{
 			objectCollider->SetIsActive(true);
@@ -596,7 +598,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	//_gameObjects.back()->GetMovement()->SetVelocity(Vector3(0, 1, 0)); //sets the last cube to constantly ascend updwards
 	//_gameObjects.back()->GetMovement()->SetAcceleration(Vector3(0, 3.0f, 0));
 
-	gameObject = new GameObject("Sphere");
+	gameObject = new GameObject("Sphere", 5);
 
 	//adds and populates transformation component
 	gameObject->AddComponent(TransformComponent);

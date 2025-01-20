@@ -3,6 +3,12 @@
 Collider::Collider(GameObject* parent, Transform* transform) : Component(parent)
 {
 	_transform = transform;
+
+	if (transform == nullptr)
+	{
+		_debugOutputer->PrintDebugString("COMPONENT MISSING: Transform. Disabling Collision.");
+		_isActive = false;
+	}
 }
 
 Collider::~Collider()

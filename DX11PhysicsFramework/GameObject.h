@@ -43,6 +43,7 @@ private:
 
 	//holds object type
 	std::string _type;
+	int _objectID = 0; //holds the ID of the current object
 	XMFLOAT4X4 _world;
 
 	DebugOutputer* _debugOutputer = nullptr; //stores a reference to the object's debug outputer
@@ -52,7 +53,7 @@ private:
 
 
 public:
-	GameObject(std::string type);
+	GameObject(std::string type = "", float id = -1);
 	~GameObject();
 
 	std::string GetType() const { return _type; }

@@ -61,8 +61,12 @@ void PhysicsBody::SetCollider(ColliderType colliderType)
 void PhysicsBody::UpdatePhysics(float deltaTime)
 {
 	//updates a movement component if it has been added and is active
-	if (_movement != nullptr && _movement->GetIsActive())
+	if ((_movement != nullptr || _transform != nullptr) && _movement->GetIsActive())
 	{
 		_movement->Update(deltaTime);
+	}
+	else
+	{
+
 	}
 }

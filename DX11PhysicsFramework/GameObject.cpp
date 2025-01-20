@@ -6,10 +6,11 @@
 /// <param name="type">object type</param>
 /// <param name="geometry"></param>
 /// <param name="material"></param>
-GameObject::GameObject(std::string type)
+GameObject::GameObject(std::string type, float id)
 {
 	_parent = nullptr;
 	_type = type;
+	_objectID = id;
 
 	_debugOutputer = new DebugOutputer(); //instantiates a debug outputter
 	//_vector3D = new Vector3D(); //instantiates a 3D vector manager
@@ -82,14 +83,14 @@ void GameObject::AddComponent(Components componentType)
 	{
 	case TransformComponent:
 
-		_transform = new Transform;
+		_transform = new Transform(this);
 		_componentList.insert(TransformComponent);
 
 		break;
 
 	case RendererComponent:
 
-		_renderer = new Renderer;
+		_renderer = new Renderer();
 		_componentList.insert(RendererComponent);
 		break;
 
