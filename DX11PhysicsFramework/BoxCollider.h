@@ -14,7 +14,7 @@ private:
 
 
 public:
-	BoxCollider(GameObject* parent);
+	BoxCollider(GameObject* parent, Transform* transform);
 	~BoxCollider();
 
 	//gets the current collission radius of the collider

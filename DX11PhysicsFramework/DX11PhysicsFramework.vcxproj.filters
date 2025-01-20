@@ -74,6 +74,12 @@
     <ClInclude Include="PlaneCollider.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PhysicsBody.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RigidBody.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX11PhysicsFramework.cpp" />
@@ -98,6 +104,8 @@
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="PlaneCollider.cpp" />
+    <ClCompile Include="PhysicsBody.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

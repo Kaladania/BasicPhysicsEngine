@@ -11,9 +11,16 @@ class PlaneCollider;
 
 enum CollissionLayer
 {
-	World,
-	Object,
-	Player
+	WORLD,
+	OBJECT,
+	PLAYER
+};
+
+enum ColliderType
+{
+	NONE,
+	SPHERE_COLLISSION_COMPONENT,
+	BOX_COLLISSION_COMPONET
 };
 
 /// <summary>
@@ -28,7 +35,7 @@ protected:
 
 public:
 
-	Collider(GameObject* parent = nullptr);
+	Collider(GameObject* parent = nullptr, Transform* transform = nullptr);
 	~Collider();
 
 	void SetTransform(Transform* transform = nullptr) { _transform = transform; }

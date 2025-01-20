@@ -381,9 +381,11 @@
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="OBJLoader.cpp" />
     <ClCompile Include="ParticleObject.cpp" />
+    <ClCompile Include="PhysicsBody.cpp" />
     <ClCompile Include="PlaneCollider.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Collider.cpp" />
+    <ClCompile Include="RigidBody.cpp" />
     <ClCompile Include="SphereCollider.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="Transform.cpp" />
@@ -406,10 +408,12 @@
     <ClInclude Include="Movement.h" />
     <ClInclude Include="OBJLoader.h" />
     <ClInclude Include="ParticleObject.h" />
+    <ClInclude Include="PhysicsBody.h" />
     <ClInclude Include="PlaneCollider.h" />
     <ClInclude Include="Renderer.h" />
     <CLInclude Include="resource.h" />
     <ClInclude Include="Collider.h" />
+    <ClInclude Include="RigidBody.h" />
     <ClInclude Include="SphereCollider.h" />
     <ClInclude Include="Structures.h" />
     <ClInclude Include="Timer.h" />
