@@ -1,7 +1,7 @@
 #include "BoxCollider.h"
 
 
-BoxCollider::BoxCollider(GameObject* parent)
+BoxCollider::BoxCollider(GameObject* parent, Transform* transform) : Collider(parent, transform)
 {
 }
 

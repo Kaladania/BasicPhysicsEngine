@@ -1,6 +1,6 @@
 #include "SphereCollider.h"
 
-SphereCollider::SphereCollider(GameObject* parent)
+SphereCollider::SphereCollider(GameObject* parent, Transform* transform)
 {
 }
 

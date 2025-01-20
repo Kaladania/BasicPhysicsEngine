@@ -25,13 +25,14 @@ GameObject::~GameObject()
 
 	delete _transform;
 	delete _renderer;
-	delete _movement;
+	delete _physicsBody;
+
 	delete _debugOutputer;
 	//delete _vector3D;
 
 	_transform = nullptr;
 	_renderer = nullptr;
-	_movement = nullptr;
+	_physicsBody = nullptr;
 	_debugOutputer = nullptr;
 	//_vector3D = nullptr;
 	
@@ -59,31 +60,7 @@ void GameObject::Update(float deltaTime)
 	}
 }
 
-void GameObject::UpdatePhysics(float deltaTime)
-{
-	//updates a movement component if it has been added and is active
-	if (_movement != nullptr && _movement->GetIsActive())
-	{
-		_movement->Update(deltaTime);
-	}
 
-	
-}
-
-/// <summary>
-/// Updates object's position
-/// </summary>
-/// <param name="direction">direction to translate position</param>
-void GameObject::Move(Vector3 direction)
-{
-	Vector3 position = _transform->GetPosition();
-
-	position.x += direction.x;
-	position.y += direction.y;
-	position.z += direction.z;
-
-	_transform->SetPosition(position);
-}
 
 /// <summary>
 /// Renders Game objects. RUNS AFTER MAIN FRAMEWORK DRAW SETUP
@@ -116,7 +93,19 @@ void GameObject::AddComponent(Components componentType)
 		_componentList.insert(RendererComponent);
 		break;
 
-	case MovementComponent:
+	case RigidbodyComponent:
+
+		_physicsBody = new RigidBody(this, _transform);
+		_componentList.insert(RigidbodyComponent);
+		break;
+
+	/*case ParticleComponent:
+
+		_physicsBody = new RigidBody;
+		_componentList.insert(RigidbodyComponent);
+		break;*/
+
+	/*case MovementComponent:
 
 		_movement = new Movement;
 		_componentList.insert(MovementComponent);
@@ -130,7 +119,7 @@ void GameObject::AddComponent(Components componentType)
 	case BoxCollissionComponent:
 
 		_collider = new BoxCollider(this);
-		_componentList.insert(BoxCollissionComponent);
+		_componentList.insert(BoxCollissionComponent);*/
 
 	default:
 		break;

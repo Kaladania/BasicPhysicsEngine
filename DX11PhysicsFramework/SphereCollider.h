@@ -11,7 +11,7 @@ private:
 	
 
 public:
-	SphereCollider(GameObject* parent);
+	SphereCollider(GameObject* parent, Transform* transform);
 	~SphereCollider();
 
 	//gets the current collission radius of the collider

@@ -1,8 +1,8 @@
 #include "Collider.h"
 
-Collider::Collider(GameObject* parent) : Component(parent)
+Collider::Collider(GameObject* parent, Transform* transform) : Component(parent)
 {
-
+	_transform = transform;
 }
 
 Collider::~Collider()

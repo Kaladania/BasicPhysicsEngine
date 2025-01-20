@@ -7,12 +7,13 @@
 //components
 #include "Transform.h"
 #include "Renderer.h"
-#include "Movement.h"
-#include "Collider.h"
 #include "SphereCollider.h"
 #include "BoxCollider.h"
 #include "DebugOutputer.h"
 #include "Vector3D.h"
+
+#include "PhysicsBody.h"
+#include "RigidBody.h"
 #include "set"
 
 using namespace DirectX;
@@ -22,9 +23,8 @@ enum Components
 {
 	TransformComponent,
 	RendererComponent,
-	MovementComponent,
-	SphereCollissionComponent,
-	BoxCollissionComponent
+	RigidbodyComponent,
+	ParticleComponent
 };
 
 
@@ -37,9 +37,10 @@ private:
 	//components
 	Transform* _transform = nullptr; //stores a reference to the object's transform information
 	Renderer* _renderer = nullptr; //stores a reference to the object's renderer
-	Movement* _movement = nullptr; //stores a reference to the object's movement component
-	Collider* _collider = nullptr; //stores a reference to the object's collider component
 	
+	PhysicsBody* _physicsBody = nullptr; //stores a refernce to the object's physics body
+	PhysicsType _physicsType = NOPHYSICS; //stores a reference to the type of physics body paired to the object
+
 	//holds object type
 	std::string _type;
 	XMFLOAT4X4 _world;
@@ -61,8 +62,8 @@ public:
 	//Gets components
 	Transform* GetTransform() const { return _transform; }
 	Renderer* GetRenderer() const { return _renderer; }
-	Movement* GetMovement() const { return _movement; }
-	Collider* GetCollider() const { return _collider; }
+	PhysicsBody* GetPhysicsBody() const { return _physicsBody; }
+	PhysicsType GetPhysicsType() const { return _physicsType; }
 
 	
 	XMMATRIX GetWorldMatrix() const { return XMLoadFloat4x4(&_world); }
@@ -73,8 +74,6 @@ public:
 
 
 	void Update(float dt);
-	void UpdatePhysics(float deltaTime = 0.0f);
-	void Move(Vector3 direction);
 	void Draw(ID3D11DeviceContext * pImmediateContext);
 
 };
