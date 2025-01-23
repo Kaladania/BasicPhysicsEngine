@@ -118,7 +118,6 @@ void Movement::Update(float deltaTime)
 		{
 			_netForce += _gravity * _mass; //calculates the intensity of the gravitational force acting on the parent object
 		}
-
 		//float dragScalar = CalculateDragForce();
 		/*Vector3 norVelocity = _vector3D->Normalize(_velocity);
 		_dragForce = norVelocity * dragScalar;
@@ -139,10 +138,10 @@ void Movement::Update(float deltaTime)
 
 		//hard coded stop to prevent falling through platform
 		//REMOVE AFTER COLLISSION IS IMPLIMENTED
-		/*if (position.y < 1)
+		if (_usesForcedFloor && position.y < 1)
 		{
 			position.y = 1;
-		}*/
+		}
 
 		_transform->SetPosition(position); //sets new transform position
 

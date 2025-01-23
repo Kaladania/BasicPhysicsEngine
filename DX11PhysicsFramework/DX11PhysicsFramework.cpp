@@ -582,9 +582,11 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		objectMovement->SetIsSimulatingGravity(true); //states second object is going to be influenced by gravity
 
 
-		if (i <= 1)
+		objectMovement->SetMovementSpeed(3.0f);
+
+		if (i >= 1)
 		{
-			objectMovement->SetMovementSpeed(3.0f);
+			objectMovement->SetIsUsingFloor(true);
 		}
 
 		//sets the first square to collide
@@ -735,6 +737,26 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '4';
 	}
+	if (GetAsyncKeyState('5'))
+	{
+		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
+		_currentMovementKeyPressed = '5';
+	}
+	if (GetAsyncKeyState('6'))
+	{
+		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
+		_currentMovementKeyPressed = '6';
+	}
+	if (GetAsyncKeyState('7'))
+	{
+		_gameObjects[4]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
+		_currentMovementKeyPressed = '7';
+	}
+	if (GetAsyncKeyState('8'))
+	{
+		_gameObjects[4]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
+		_currentMovementKeyPressed = '8';
+	}
 
 	//checks if the object has been told to switch movement directions (or stop moving)
 	if (_currentMovementKeyPressed == _lastMovementKeyPressed)
@@ -758,48 +780,53 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 	// Update objects
 	for (auto gameObject : _gameObjects)
 	{
-		//if the current game object has a physics componet and is actively looking for collissions
-		if (gameObject->ContainsComponent(RigidbodyComponent) && gameObject->GetPhysicsBody()->GetCollider()->GetIsActive())
+		PhysicsBody* gameBody = gameObject->GetPhysicsBody();
+
+		//if the current game object has a physics componet and is currenlt simulating physics
+		if (gameBody != nullptr && gameBody->GetIsActive())
 		{
-			
-			for (auto object : _gameObjects)
+			//checks for collission
+			if (gameBody->GetCollider()->GetIsActive())
 			{
-				//ensures objects do not attempt to collision check against themselves
-				//ensures object has a collission component and is also actively looking for collissions
-				if (object != gameObject && object->ContainsComponent(RigidbodyComponent) && object->GetPhysicsBody()->GetCollider()->GetIsActive())
+
+				for (auto object : _gameObjects)
 				{
-					//gets a reference to all colliders
-					Collider* collider = gameObject->GetPhysicsBody()->GetCollider();
-					Collider* otherCollider = object->GetPhysicsBody()->GetCollider();
-
-					//checks if a collision occures
-					if (collider->CheckForCollission(otherCollider))
+					PhysicsBody* otherGameBody = object->GetPhysicsBody();
+					//ensures objects do not attempt to collision check against themselves
+					//ensures object has a collission component and is also actively looking for collissions
+					if (object != gameObject && otherGameBody != nullptr && otherGameBody->GetCollider()->GetIsActive())
 					{
-						_debugOutputer->PrintDebugString("COLLISSION!");
-						gameObject->GetPhysicsBody()->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), object->GetPhysicsBody()->GetMovement());
+						//gets a reference to all colliders
+						Collider* collider = gameBody->GetCollider();
+						Collider* otherCollider = otherGameBody->GetCollider();
 
-						//checks to see if the colliding object has a movement component (and so has a custom COR)
-						if (object->ContainsComponent(RigidbodyComponent))
+						//checks if a collision occures
+						if (collider->CheckForCollission(otherCollider))
 						{
-							//gameObject->GetPhysicsBody()->GetMovement()->CalculateCollisionResolutionForce(object->GetPhysicsBody()->GetMovement()->GetCOR());
-							
+							_debugOutputer->PrintDebugString("COLLISSION!");
+							gameBody->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), otherGameBody->GetMovement());
 							object->GetPhysicsBody()->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), object->GetPhysicsBody()->GetMovement());
-						}
-						//else
-						//{
-						//	//assumes the colliding object is completely stationary and/or a wall
-						//	gameObject->GetPhysicsBody()->GetMovement()->ApplyImpulse(Vector3(-1, 0, 0));
-						//	//gameObject->GetPhysicsBody()->GetMovement()->CalculateCollisionResolutionForce(0);
-						//}
+							////checks to see if the colliding object has a movement component (and so has a custom COR)
+							//if (object->ContainsComponent(RigidbodyComponent))
+							//{
+							//	//gameObject->GetPhysicsBody()->GetMovement()->CalculateCollisionResolutionForce(object->GetPhysicsBody()->GetMovement()->GetCOR());
+							//	
+							//	object->GetPhysicsBody()->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), object->GetPhysicsBody()->GetMovement());
+							//}
+							//else
+							//{
+							//	//assumes the colliding object is completely stationary and/or a wall
+							//	gameObject->GetPhysicsBody()->GetMovement()->ApplyImpulse(Vector3(-1, 0, 0));
+							//	//gameObject->GetPhysicsBody()->GetMovement()->CalculateCollisionResolutionForce(0);
+							//}
 
+						}
 					}
 				}
 			}
 
 			gameObject->GetPhysicsBody()->UpdatePhysics(deltaTime);
 		}
-
-		
 
 	}
 

@@ -44,6 +44,8 @@ private:
 	bool _isSimulatingGravity = false; //states if the object is being influenced by gravity
 	bool _isStationary = false; //states if the object is currently supposed to be stationary
 
+	bool _usesForcedFloor = false; //states if the object forceably stops at 'floor-level'
+
 	bool _hasConstantVelocity = false; //states if the parent object is moving at a constant velocity
 	bool _hasConstantAcceleration = false; //states if the parent object is accelerating at a constant rate
 
@@ -63,6 +65,7 @@ public:
 	void SetAcceleration(Vector3 acceleration) { _acceleration = acceleration; }
 
 	void SetIsSimulatingGravity(bool simulationState) { _isSimulatingGravity = simulationState; }
+	void SetIsUsingFloor(bool floorState) { _usesForcedFloor = floorState; }
 
 	void SetIsStationary(bool stationaryState) { _isStationary = stationaryState; }
 	bool GetIsStationary(bool stationaryState) { return _isStationary; }
