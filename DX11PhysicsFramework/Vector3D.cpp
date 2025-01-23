@@ -61,9 +61,11 @@ float Vector3D::GetMagnitude(Vector3 vector)
 {
 	//calculates the sum of all squares of the co-ordinates
 	float squareSum = (vector.x * vector.x) + (vector.y * vector.y) + (vector.z * vector.z);
+	squareSum = sqrtf(squareSum);
+
 
 	//returns the magnitude (the square root of the sum)
-	return sqrtf(squareSum);
+	return squareSum;
 }
 
 /// <summary>

@@ -762,7 +762,7 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 	if (_currentMovementKeyPressed == _lastMovementKeyPressed)
 	{
 		//if not, increase acceleration intensity
-		_currentMovementKeyPressDuration += 0.005f;
+		_currentMovementKeyPressDuration += 0.05f;
 		
 	}
 	else
@@ -803,7 +803,7 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 						//checks if a collision occures
 						if (collider->CheckForCollission(otherCollider))
 						{
-							_debugOutputer->PrintDebugString("COLLISSION!");
+							//_debugOutputer->PrintDebugString("COLLISSION!");
 							gameBody->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), otherGameBody->GetMovement());
 							object->GetPhysicsBody()->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), object->GetPhysicsBody()->GetMovement());
 							////checks to see if the colliding object has a movement component (and so has a custom COR)
