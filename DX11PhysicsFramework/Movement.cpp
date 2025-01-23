@@ -53,27 +53,41 @@ Vector3 Movement::CalculateDisplacement(Vector3 displacement, float deltaTime)
 	return displacement;
 }
 
-float Movement::CalculateDragForce()
+Vector3 Movement::CalculateDragForce()
 {
+	//drag = 1/2(fluid density * speed^2 * COD * cross-section area
+
 	float velocityMagnitude = _vector3D->GetMagnitude(_velocity);
 	
-	float drag = 0.5 * DENSITY_OF_FLUID * (velocityMagnitude * velocityMagnitude) * DRAG_COEFFICIENT * CROSS_SECTIONAL_AREA;
+	float drag = 0.5f * DENSITY_OF_FLUID * (velocityMagnitude * velocityMagnitude) * DRAG_COEFFICIENT * CROSS_SECTIONAL_AREA;
+	_debugOutputer->PrintDebugString(std::to_string(drag) + " " + std::to_string(velocityMagnitude));
 
-	return drag;
+	//creates a base drag force that is the negated normal of the current velocity
+	Vector3 dragForce = (_vector3D->Normalize(_velocity) * -1) * drag;
+
+
+
+	return dragForce;
 }
 
 Vector3 Movement::CalulateFrictionForce()
 {
-	Vector3 tangentialForce = (_gravity * _mass) * float(sin(0));
+	//friction = COF
+	//normal force = force of gravity on object
+
+	Vector3 normalForce = _gravity * _mass;
+	
+
+	/*Vector3 tangentialForce = (_gravity * _mass) * float(sin(0));
 	Vector3 normalForce = (_gravity * _mass) * float(cos(0));
-	Vector3 frictionForce = normalForce * float(FRICTION_COEFFICIENT); 
+	Vector3 frictionForce = normalForce * float(FRICTION_COEFFICIENT); */
 
 	/*if (tangentialForce > frictionForce)
 	{
 		return 
 	}*/
 
-	return _acceleration * float(FRICTION_COEFFICIENT);
+	return normalForce * FRICTION_COEFFICIENT;
 }
 
 void Movement::CalculateCollisionResolutionForce(const float otherCOR)
@@ -125,6 +139,8 @@ void Movement::Update(float deltaTime)
 
 		//_debugOutputer->PrintDebugString(_vector3D->ToString(_dragForce));
 
+		_netForce += CalulateFrictionForce();
+		_netForce += CalculateDragForce();
 
 		_acceleration += _netForce / _mass; //calculates current rate of acceleration
 
@@ -148,6 +164,6 @@ void Movement::Update(float deltaTime)
 		//resets force values to maintain intergrity of calculations
 		_netForce = Vector3(0, 0, 0);
 		_acceleration = Vector3(0, 0, 0);
-		_velocity = Vector3(0, 0, 0);
+		//_velocity = Vector3(0, 0, 0);
 	}
 }

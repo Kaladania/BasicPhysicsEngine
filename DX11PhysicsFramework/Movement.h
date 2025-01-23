@@ -5,11 +5,11 @@
 #include "Transform.h"
 #include "Component.h"
 
-#define DRAG_COEFFICIENT 1.05
-#define DENSITY_OF_FLUID 1
-#define CROSS_SECTIONAL_AREA 1
+#define DRAG_COEFFICIENT 1.05f
+#define DENSITY_OF_FLUID 1.0f
+#define CROSS_SECTIONAL_AREA 4.0f //(for cubes, 2f * 2f = 4f
 
-#define FRICTION_COEFFICIENT 0.3
+#define FRICTION_COEFFICIENT 0.3f
 
 using namespace DirectX;
 
@@ -78,7 +78,7 @@ public:
 	void ApplyImpulse(Vector3 impulse = Vector3());
 
 	Vector3 CalculateDisplacement(Vector3 displacement = Vector3(), float deltaTime = 0.0f);
-	float CalculateDragForce();
+	Vector3 CalculateDragForce();
 	Vector3 CalulateFrictionForce();
 	void CalculateCollisionResolutionForce(const float otherCOR);
 	void CalculateImpulse(Vector3 otherPosition = Vector3(), Movement* otherMovement = nullptr);
