@@ -132,9 +132,20 @@ void Movement::Update(float deltaTime)
 		//calculates resistance force based on if object is suspended in air (not colliding) or moving along a surface (colliding)
 		if (_isColliding)
 		{
-			//calculates friction applied on a movement across a surface
-			_netForce -= CalulateFrictionForce();
-			_debugOutputer->PrintDebugString("Net Force after Friction is: " + _vector3D->ToString(_netForce));
+			float maxFriction = _vector3D->GetMagnitude((_gravity * _mass) * STATIC_FRICTION_COEFFICIENT);
+			_debugOutputer->PrintDebugString("Max Friction = " + std::to_string(maxFriction) + " | Mag of NetForce = " + std::to_string(_vector3D->GetMagnitude(_netForce)));
+
+			if (_vector3D->GetMagnitude(_netForce) > maxFriction)
+			{
+				//calculates friction applied on a movement across a surface
+				_netForce -= CalulateFrictionForce();
+				_debugOutputer->PrintDebugString("Net Force after Friction is: " + _vector3D->ToString(_netForce));
+			}
+			else 
+			{
+				_netForce = Vector3(0,0,0);
+				_debugOutputer->PrintDebugString("Net Force Reset.");
+			}
 		}
 		else
 		{

@@ -10,6 +10,7 @@
 #define CROSS_SECTIONAL_AREA 4.0f //(for cubes, 2f * 2f = 4f
 
 #define FRICTION_COEFFICIENT 1.3f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
+#define STATIC_FRICTION_COEFFICIENT 2.0f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
 
 using namespace DirectX;
 

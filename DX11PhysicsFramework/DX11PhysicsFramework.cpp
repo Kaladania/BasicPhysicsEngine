@@ -550,7 +550,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		gameObject->AddComponent(TransformComponent);
 		objectTransform = gameObject->GetTransform();
 		objectTransform->SetScale(1.0f, 1.0f, 1.0f);
-		objectTransform->SetPosition(-2.0f + (i * 2.5f), 10.0f, 10.0f);
+		objectTransform->SetPosition(-2.0f + (i * 2.5f), 5.0f, 10.0f);
 
 		//adds and populates render information
 		gameObject->AddComponent(RendererComponent);
