@@ -53,20 +53,23 @@ Vector3 Movement::CalculateDisplacement(Vector3 displacement, float deltaTime)
 	return displacement;
 }
 
+/// <summary>
+/// Calculates the amount of drag applied to a floating object
+/// </summary>
+/// <returns>Current Drag Force</returns>
 Vector3 Movement::CalculateDragForce()
 {
-	//drag = 1/2(fluid density * speed^2 * COD * cross-section area
-
+	//gets the magnitude of the current velocity
 	float velocityMagnitude = _vector3D->GetMagnitude(_velocity);
 	
-	float drag = 0.5f * DENSITY_OF_FLUID * (velocityMagnitude * velocityMagnitude) * DRAG_COEFFICIENT * CROSS_SECTIONAL_AREA;
-	_debugOutputer->PrintDebugString(std::to_string(drag) + " " + std::to_string(velocityMagnitude));
+	//determines the scalar drag co-efficent
+	float drag = DENSITY_OF_FLUID * ((velocityMagnitude * velocityMagnitude) * 0.5f) * DRAG_COEFFICIENT * CROSS_SECTIONAL_AREA;
 
 	//creates a base drag force that is the negated normal of the current velocity
+	//multiplies base opposing force by the drag scalar to determine the intensity of drag
 	Vector3 dragForce = (_vector3D->Normalize(_velocity) * -1) * drag;
 
-
-
+	//returns the total drag force
 	return dragForce;
 }
 
@@ -125,14 +128,6 @@ void Movement::Update(float deltaTime)
 		{
 			_netForce += _gravity * _mass; //calculates the intensity of the gravitational force acting on the parent object
 		}
-		//float dragScalar = CalculateDragForce();
-		/*Vector3 norVelocity = _vector3D->Normalize(_velocity);
-		_dragForce = norVelocity * dragScalar;
-		_netForce += _dragForce;*/
-
-		_debugOutputer->PrintDebugString(_vector3D->ToString(_dragForce));
-
-		_debugOutputer->PrintDebugString("Net Force is: " + _vector3D->ToString(_netForce));
 
 		//calculates resistance force based on if object is suspended in air (not colliding) or moving along a surface (colliding)
 		if (_isColliding)
@@ -141,18 +136,25 @@ void Movement::Update(float deltaTime)
 			_netForce -= CalulateFrictionForce();
 			_debugOutputer->PrintDebugString("Net Force after Friction is: " + _vector3D->ToString(_netForce));
 		}
+		else
+		{
+			//calculates drag applied ( air resistance )
+			_netForce += CalculateDragForce();
+			_debugOutputer->PrintDebugString("Net Force after Drag is: " + _vector3D->ToString(_netForce));
+		}
 
-		//_netForce += CalculateDragForce();
 
 		_acceleration += _netForce / _mass; //calculates current rate of acceleration
 
-		//_debugOutputer->PrintDebugString(_vector3D->ToString(CalulateFrictionForce()));
 
 		Vector3 position = _transform->GetPosition(); //gets the current position of the transform
 
-		_velocity += _acceleration * _mass; //calculates current velocity
+		//calculates current velocity
+		//v = u + at
+		_velocity += _acceleration * deltaTime;
 
-		position += _velocity * deltaTime; //calculates the distance moved during this frame and updates position
+		//calculates the distance moved during this frame and updates position
+		position += _velocity * deltaTime; 
 
 		//hard coded stop to prevent falling through platform
 		//REMOVE AFTER COLLISSION IS IMPLIMENTED
@@ -171,6 +173,7 @@ void Movement::Update(float deltaTime)
 		//resets force values to maintain intergrity of calculations
 		_netForce = Vector3(0, 0, 0);
 		_acceleration = Vector3(0, 0, 0);
+		_oldVelocity = _velocity;
 		//_velocity = Vector3(0, 0, 0);
 	}
 }

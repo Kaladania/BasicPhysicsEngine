@@ -9,7 +9,7 @@
 #define DENSITY_OF_FLUID 1.0f
 #define CROSS_SECTIONAL_AREA 4.0f //(for cubes, 2f * 2f = 4f
 
-#define FRICTION_COEFFICIENT 0.3f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
+#define FRICTION_COEFFICIENT 1.3f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
 
 using namespace DirectX;
 
@@ -36,7 +36,7 @@ private:
 	Vector3 _acceleration = Vector3(); //holds the current acceleration of the transform
 	Vector3 _netForce = Vector3(); //holds the total amount of force being applied to the parent object
 	Vector3 _gravity = Vector3(); //holds the amount of downward force being exherted by gravity
-	Vector3 _dragForce = Vector3(); //holds the amount of drag being applied to the parent object
+	Vector3 _oldVelocity = Vector3(); //holds the amount of drag being applied to the parent object
 
 	float _mass = 1.0f; //holds the current mass of the parent object
 	float _COR = 0.0f; //holds the objects co-efficient of resitution
