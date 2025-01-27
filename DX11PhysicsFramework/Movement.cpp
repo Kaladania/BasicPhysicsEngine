@@ -133,8 +133,15 @@ void Movement::Update(float deltaTime)
 		_debugOutputer->PrintDebugString(_vector3D->ToString(_dragForce));
 
 		_debugOutputer->PrintDebugString("Net Force is: " + _vector3D->ToString(_netForce));
-		_netForce -= CalulateFrictionForce();
-		_debugOutputer->PrintDebugString("Net Force after Friction is: " + _vector3D->ToString(_netForce));
+
+		//calculates resistance force based on if object is suspended in air (not colliding) or moving along a surface (colliding)
+		if (_isColliding)
+		{
+			//calculates friction applied on a movement across a surface
+			_netForce -= CalulateFrictionForce();
+			_debugOutputer->PrintDebugString("Net Force after Friction is: " + _vector3D->ToString(_netForce));
+		}
+
 		//_netForce += CalculateDragForce();
 
 		_acceleration += _netForce / _mass; //calculates current rate of acceleration
@@ -152,6 +159,11 @@ void Movement::Update(float deltaTime)
 		if (_usesForcedFloor && position.y < 1)
 		{
 			position.y = 1;
+			_isColliding = true;
+		}
+		else
+		{
+			_isColliding == false;
 		}
 
 		_transform->SetPosition(position); //sets new transform position

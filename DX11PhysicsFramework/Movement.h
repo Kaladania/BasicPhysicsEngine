@@ -9,7 +9,7 @@
 #define DENSITY_OF_FLUID 1.0f
 #define CROSS_SECTIONAL_AREA 4.0f //(for cubes, 2f * 2f = 4f
 
-#define FRICTION_COEFFICIENT 0.3f
+#define FRICTION_COEFFICIENT 0.3f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
 
 using namespace DirectX;
 
@@ -48,6 +48,8 @@ private:
 
 	bool _hasConstantVelocity = false; //states if the parent object is moving at a constant velocity
 	bool _hasConstantAcceleration = false; //states if the parent object is accelerating at a constant rate
+
+	bool _isColliding = false; //states if the object is currently colliding (REPLACE WITH A FUNCTION CALL TO THE COLLIDER)
 
 
 public:
