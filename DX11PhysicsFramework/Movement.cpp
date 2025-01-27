@@ -132,26 +132,24 @@ void Movement::Update(float deltaTime)
 		//calculates resistance force based on if object is suspended in air (not colliding) or moving along a surface (colliding)
 		if (_isColliding)
 		{
+			//calculates the max value the friction scalar (intensity) should be to allow the object to move
 			float maxFriction = _vector3D->GetMagnitude((_gravity * _mass) * STATIC_FRICTION_COEFFICIENT);
-			_debugOutputer->PrintDebugString("Max Friction = " + std::to_string(maxFriction) + " | Mag of NetForce = " + std::to_string(_vector3D->GetMagnitude(_netForce)));
 
-			if (_vector3D->GetMagnitude(_netForce) > maxFriction)
+			//negates the netForce if the object does not have enough force to overcome friction (resets force applied to 0
+			if (_vector3D->GetMagnitude(_netForce) < maxFriction)
 			{
-				//calculates friction applied on a movement across a surface
-				_netForce -= CalulateFrictionForce();
-				_debugOutputer->PrintDebugString("Net Force after Friction is: " + _vector3D->ToString(_netForce));
+				_netForce = Vector3(0, 0, 0);
 			}
-			else 
-			{
-				_netForce = Vector3(0,0,0);
-				_debugOutputer->PrintDebugString("Net Force Reset.");
-			}
+
+			//calculates friction applied on a movement across a surface
+			//applied even if static force is applied to ensure objects still decelerate if netForce drops below max while object is moving
+			//e.g. if the propulsing force stops being applied
+			_netForce -= CalulateFrictionForce();
 		}
 		else
 		{
 			//calculates drag applied ( air resistance )
 			_netForce += CalculateDragForce();
-			_debugOutputer->PrintDebugString("Net Force after Drag is: " + _vector3D->ToString(_netForce));
 		}
 
 
