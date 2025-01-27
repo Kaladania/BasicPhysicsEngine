@@ -89,6 +89,8 @@ private:
 	float _currentMovementKeyPressDuration = 1; //holds how many frames the current movement key has been held down for
 	char _lastMovementKeyPressed = '0'; //holds the last movement key to be pressed
 
+	std::vector<int>ManualMovingObjects; //holds a list of all the objects currrently being manually moved.
+
 private:
 	HRESULT CreateWindowHandle(HINSTANCE hInstance, int nCmdShow);
 	HRESULT CreateD3DDevice();
@@ -104,6 +106,7 @@ public:
 	HRESULT Initialise(HINSTANCE hInstance, int nCmdShow);
 
 	bool HandleKeyboard(MSG msg);
+	void GetMovementInput();
 	void Update();
 	void UpdatePhysics(float deltaTime = 0.0f);
 	void Draw();

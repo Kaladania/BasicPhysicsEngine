@@ -583,10 +583,15 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 
 
 		objectMovement->SetMovementSpeed(3.0f);
+		objectMovement->SetIsActive(false);
 
 		if (i >= 1)
 		{
 			objectMovement->SetIsUsingFloor(true);
+		}
+		if (i == 1)
+		{
+			objectMovement->SetIsActive(true);
 		}
 
 		//sets the first square to collide
@@ -711,10 +716,10 @@ void DX11PhysicsFramework::Update()
 	
 }
 
-void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
+void DX11PhysicsFramework::GetMovementInput()
 {
 	char _currentMovementKeyPressed = '0'; //stores the current movement key that was pressed
-	
+
 	// Move gameobjects
 	// Add force applies an accelerational force that is intensified by the time the object has been excellerating
 	if (GetAsyncKeyState('1'))
@@ -763,16 +768,29 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 	{
 		//if not, increase acceleration intensity
 		_currentMovementKeyPressDuration += 0.05f;
-		
+
 	}
 	else
 	{
 		//else, reset acceleration
+		if (_currentMovementKeyPressDuration > 1)
+		{
+			_currentMovementKeyPressDuration -= 0.05f;
+		}
+		else
+		{
+
+		}
 		_currentMovementKeyPressDuration = 1;
 	}
 
 	//records the key currently being pressed
 	_lastMovementKeyPressed = _currentMovementKeyPressed;
+}
+
+void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
+{
+	GetMovementInput();
 
 	_camera->Update();
 
