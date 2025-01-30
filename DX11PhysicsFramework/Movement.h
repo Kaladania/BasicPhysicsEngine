@@ -11,6 +11,7 @@
 
 #define FRICTION_COEFFICIENT 1.3f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
 #define STATIC_FRICTION_COEFFICIENT 2.0f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
+#define RESTITUTION_COEFFICIENT 1.0f //determines how 'elastic' the collision is
 
 using namespace DirectX;
 
@@ -84,7 +85,7 @@ public:
 	Vector3 CalculateDragForce();
 	Vector3 CalulateFrictionForce();
 	void CalculateCollisionResolutionForce(const float otherCOR);
-	void CalculateImpulse(Vector3 otherPosition = Vector3(), Movement* otherMovement = nullptr);
+	void CalculateImpulse(Movement* otherMovement = nullptr);
 	virtual void Update(float deltaTime);
 };
 
