@@ -93,9 +93,35 @@ void Movement::CalculateCollisionResolutionForce(const float otherCOR)
 	_velocity = Vector3(0, 0, 0);
 }
 
-void Movement::CalculateImpulse(Vector3 otherPosition, Movement* otherMovement)
+void Movement::CalculateImpulse(Movement* otherMovement)
 {
-	ApplyImpulse(Vector3(10, 0, 0));
+	//determines the collision normal
+	//the direction between the centers of the colliding objects
+	Vector3 collisionNormal = _vector3D->Normalize(_transform->GetPosition() - otherMovement->_transform->GetPosition());
+
+	//gets the relative velocity of the current object with respect to the incoming object
+	Vector3 relativeVelocity = _velocity - otherMovement->GetVeclocity();
+
+	float collisionDotProduct = _vector3D->DotProduct(collisionNormal, relativeVelocity);
+	_debugOutputer->PrintDebugString("Collision Dot Product is" + std::to_string(collisionDotProduct));
+
+	if (collisionDotProduct > 0.0f)
+	{
+		//velocity impulse
+		float vj = -(1 + RESTITUTION_COEFFICIENT) * collisionDotProduct;
+
+		//calculates the total impulse applied in the collision
+		float J = vj / ((1 / _mass) + (1 / otherMovement->GetMass()));
+		
+		//applies an impulse to the current object to propel it away from the other object
+		ApplyImpulse(collisionNormal * (1 / _mass) * J);
+		_debugOutputer->PrintDebugString("Object Impulse is" + _vector3D->ToString(collisionNormal * (1 / _mass) * J));
+
+		//applies the same impulse in the reverse direction move the other object away from the current object
+		ApplyImpulse((collisionNormal * J * (1 / otherMovement->GetMass())) * -1);
+		_debugOutputer->PrintDebugString("Other Object Impulse is" +  _vector3D->ToString((collisionNormal * J * (1 / otherMovement->GetMass())) * -1));
+	}
+
 	//otherMovement->ApplyImpulse(Vector3(-10, 0, 0));
 	////gets the direction between objects
 	//Vector3 collisionNormal = _vector3D->Normalize(_transform->GetPosition() - otherPosition);
