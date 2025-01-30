@@ -109,6 +109,7 @@ public:
 	void GetMovementInput();
 	void Update();
 	void UpdatePhysics(float deltaTime = 0.0f);
+	void ResolveCollisions();
 	void Draw();
 };
 

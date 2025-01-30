@@ -95,19 +95,21 @@ void Movement::CalculateCollisionResolutionForce(const float otherCOR)
 
 void Movement::CalculateImpulse(Vector3 otherPosition, Movement* otherMovement)
 {
-	//gets the direction between objects
-	Vector3 collisionNormal = _vector3D->Normalize(_transform->GetPosition() - otherPosition);
+	ApplyImpulse(Vector3(10, 0, 0));
+	//otherMovement->ApplyImpulse(Vector3(-10, 0, 0));
+	////gets the direction between objects
+	//Vector3 collisionNormal = _vector3D->Normalize(_transform->GetPosition() - otherPosition);
 
-	float restitution = 0; //hard coded for testing
+	//float restitution = 0; //hard coded for testing
 
-	Vector3 relativeVelocity = _velocity - otherMovement->GetVeclocity();
+	//Vector3 relativeVelocity = _velocity - otherMovement->GetVeclocity();
 
-	Vector3 vj = relativeVelocity * _vector3D->GetMagnitude((collisionNormal * (-(1 + restitution))));
+	//Vector3 vj = relativeVelocity * _vector3D->GetMagnitude((collisionNormal * (-(1 + restitution))));
 
-	Vector3 J = vj * ((-1 / _mass) + (-1 / otherMovement->GetMass()));
+	//Vector3 J = vj * ((-1 / _mass) + (-1 / otherMovement->GetMass()));
 
-	ApplyImpulse(_vector3D->CrossProduct(J * (-1 / _mass), collisionNormal));
-	ApplyImpulse((_vector3D->CrossProduct(J * (-1 / _mass), collisionNormal)) * -1);
+	//ApplyImpulse(_vector3D->CrossProduct(J * (-1 / _mass), collisionNormal));
+	//ApplyImpulse((_vector3D->CrossProduct(J * (-1 / _mass), collisionNormal)) * -1);
 }
 
 void Movement::ApplyImpulse(Vector3 impulse)

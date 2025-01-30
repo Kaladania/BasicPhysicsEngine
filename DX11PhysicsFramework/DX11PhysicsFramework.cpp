@@ -583,19 +583,17 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 
 
 		objectMovement->SetMovementSpeed(3.0f);
-		objectMovement->SetIsActive(false);
+		objectMovement->SetIsActive(true);
 
-		if (i >= 1)
-		{
-			objectMovement->SetIsUsingFloor(true);
-		}
+		objectMovement->SetIsUsingFloor(true);
+
 		if (i == 1)
 		{
 			objectMovement->SetIsActive(true);
 		}
 
 		//sets the first square to collide
-		if (i == 0)
+		if (i <= 1)
 		{
 			objectCollider->SetIsActive(true);
 		}
@@ -742,6 +740,16 @@ void DX11PhysicsFramework::GetMovementInput()
 		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '4';
 	}
+	if (GetAsyncKeyState(0x45))
+	{
+		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-1.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_currentMovementKeyPressed = 'e';
+	}
+	if (GetAsyncKeyState(0x52))
+	{
+		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(1.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_currentMovementKeyPressed = 'r';
+	}
 	if (GetAsyncKeyState('5'))
 	{
 		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
@@ -767,7 +775,7 @@ void DX11PhysicsFramework::GetMovementInput()
 	if (_currentMovementKeyPressed == _lastMovementKeyPressed)
 	{
 		//if not, increase acceleration intensity
-		_currentMovementKeyPressDuration += 0.05f;
+		_currentMovementKeyPressDuration += 0.2f;
 
 	}
 	else
@@ -775,7 +783,7 @@ void DX11PhysicsFramework::GetMovementInput()
 		//else, reset acceleration
 		if (_currentMovementKeyPressDuration > 1)
 		{
-			_currentMovementKeyPressDuration -= 0.05f;
+			_currentMovementKeyPressDuration -= 0.2f;
 		}
 		else
 		{
@@ -794,6 +802,29 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 
 	_camera->Update();
 
+	
+
+	for (auto gameObject : _gameObjects)
+	{
+		PhysicsBody* gameBody = gameObject->GetPhysicsBody();
+
+		//checks for collission
+		if (gameObject->ContainsComponent(RigidbodyComponent) && gameBody->GetCollider()->GetIsActive())
+		{
+
+			
+			ResolveCollisions();
+			gameObject->GetPhysicsBody()->UpdatePhysics(deltaTime);
+		}
+
+	}
+
+	
+
+}
+
+void DX11PhysicsFramework::ResolveCollisions()
+{
 
 	// Update objects
 	for (auto gameObject : _gameObjects)
@@ -821,9 +852,10 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 						//checks if a collision occures
 						if (collider->CheckForCollission(otherCollider))
 						{
-							//_debugOutputer->PrintDebugString("COLLISSION!");
+							_debugOutputer->PrintDebugString("COLLISSION!");
 							gameBody->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), otherGameBody->GetMovement());
-							object->GetPhysicsBody()->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), object->GetPhysicsBody()->GetMovement());
+							//object->GetPhysicsBody()->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), object->GetPhysicsBody()->GetMovement());
+
 							////checks to see if the colliding object has a movement component (and so has a custom COR)
 							//if (object->ContainsComponent(RigidbodyComponent))
 							//{
@@ -843,12 +875,12 @@ void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
 				}
 			}
 
-			gameObject->GetPhysicsBody()->UpdatePhysics(deltaTime);
+			
 		}
 
 	}
-
 }
+
 
 void DX11PhysicsFramework::Draw()
 {
