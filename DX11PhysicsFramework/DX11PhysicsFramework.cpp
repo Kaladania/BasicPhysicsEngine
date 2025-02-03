@@ -559,33 +559,28 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		objectRenderer->SetMaterial(shinyMaterial);
 		objectRenderer->SetTextureRV(_StoneTextureRV);
 
-		//adds and populates movement information
 
-		//objectMovement = gameObject->GetPhysicsBody()->GetMovement();
-		
-		//objectMovement->SetTransform(objectTransform); //ties movement component to the object's transformation
-
-		
-
-		//adds and populates render information
+		//adds and populates Collider information
 		gameObject->AddComponent(RigidbodyComponent);
+
+		Vector3 halfExtents = Vector3(2.0f, 2.0f, 2.0f); //half-extents of a basic 3D cube
 
 		PhysicsBody* objectBody = gameObject->GetPhysicsBody(); //adds a physics body
 		objectBody->SetCollider(BOX_COLLISSION_COMPONET); //sets the type of collider the body should use
 
 		Collider* objectCollider = objectBody->GetCollider(); //gets a reference to the collider
-		static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(2.0f, 2.0f, 2.0f)); //sets the dimensions of the collider
+		static_cast<BoxCollider*>(objectCollider)->SetExtents(halfExtents); //sets the dimensions of the collider
 
 		objectCollider->SetIsActive(false); //disables collision on the object
 
+
+		//populates Movement information
 		objectMovement = gameObject->GetPhysicsBody()->GetMovement();
 		objectMovement->SetIsSimulatingGravity(true); //states second object is going to be influenced by gravity
+		objectMovement->SetMovementSpeed(3.0f); //sets the object's movement speed (DELETE)
 
-
-		objectMovement->SetMovementSpeed(3.0f);
-		objectMovement->SetIsActive(true);
-
-		objectMovement->SetIsUsingFloor(true);
+		objectMovement->SetIsUsingFloor(true); //enables a hard check to ensure cubes don't fall through the floor
+		objectMovement->SetInertiaMatrix(halfExtents); //sets up an inertia matrix
 
 		if (i == 1)
 		{
@@ -596,6 +591,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		if (i <= 2)
 		{
 			objectCollider->SetIsActive(true);
+			//objectMovement->SetIsUsingFloor(false);
 		}
 		
 		_gameObjects.push_back(gameObject);
@@ -719,16 +715,16 @@ void DX11PhysicsFramework::Update()
 	//_debugOutputer->PrintDebugString("Cube 1 rotation = " + std::to_string(previousRotation.x) + " | " + std::to_string(previousRotation.y) + " | " + std::to_string(previousRotation.z) + " | ");
 	//
 
-	Transform* transform = _gameObjects[1]->GetTransform();
-	//transform->SetRotation(QVRotate(transform->GetOrientation(), Vector3(0, 0.1f, 0)));
-	a += 10;
-	transform->SetRotation(QVRotate(MakeQFromEulerAngles(a, a, 0), transform->GetPosition()));
+	//Transform* transform = _gameObjects[1]->GetTransform();
+	////transform->SetRotation(QVRotate(transform->GetOrientation(), Vector3(0, 0.1f, 0)));
+	//a += 10;
+	//transform->SetRotation(QVRotate(MakeQFromEulerAngles(a, a, 0), transform->GetPosition()));
 
-	Vector3 previousRotation = _gameObjects[1]->GetTransform()->GetRotation(); //grabs the previous rotation for cube 1
+	//Vector3 previousRotation = _gameObjects[1]->GetTransform()->GetRotation(); //grabs the previous rotation for cube 1
 
 
-	_debugOutputer->PrintDebugString("Cube 1 rotation = " + std::to_string(previousRotation.x) + " | " + std::to_string(previousRotation.y) + " | " + std::to_string(previousRotation.z) + " | ");
-	//
+	//_debugOutputer->PrintDebugString("Cube 1 rotation = " + std::to_string(previousRotation.x) + " | " + std::to_string(previousRotation.y) + " | " + std::to_string(previousRotation.z) + " | ");
+	////
 }
 
 void DX11PhysicsFramework::GetMovementInput()
@@ -756,6 +752,11 @@ void DX11PhysicsFramework::GetMovementInput()
 	{
 		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '4';
+	}
+	if (GetAsyncKeyState(0x51))
+	{
+		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddRelativeForce(Vector3(0,0,-1), Vector3(1, 0, -1));
+		_currentMovementKeyPressed = 'q';
 	}
 	if (GetAsyncKeyState(0x45))
 	{

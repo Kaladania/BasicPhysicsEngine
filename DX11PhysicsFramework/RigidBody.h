@@ -2,6 +2,8 @@
 #include "PhysicsBody.h"
 
 
+
+
 //enum ColliderType
 //{
 //	NOCOLLIDER,
@@ -18,12 +20,13 @@ private:
 	
 	
 
+	
+
 public:
 
 	RigidBody(GameObject* parent, Transform* transform = nullptr);
 	~RigidBody();
 
 	void UpdatePhysics(float deltaTime = 0.0f) override;
-	void AddRelativeForce() override;
 };
 

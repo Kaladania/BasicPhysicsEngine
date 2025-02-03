@@ -12,6 +12,7 @@
 #define FRICTION_COEFFICIENT 1.3f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
 #define STATIC_FRICTION_COEFFICIENT 2.0f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
 #define RESTITUTION_COEFFICIENT 1.0f //determines how 'elastic' the collision is
+#define ANGULAR_DAMPING 0.5f
 
 using namespace DirectX;
 
@@ -53,6 +54,11 @@ private:
 
 	bool _isColliding = false; //states if the object is currently colliding (REPLACE WITH A FUNCTION CALL TO THE COLLIDER)
 
+	Vector3 _angularVelocity = Vector3(0, 0, 0);
+
+	Vector3 _torque = Vector3(0, 0, 0); //holds the amount of torque currently being applied to the object
+	XMFLOAT3X3 _inertiaTensorMatrix;
+
 
 public:
 
@@ -81,11 +87,17 @@ public:
 	void AddForce(Vector3 force) { _netForce += force; } //adds a force to the object
 	void ApplyImpulse(Vector3 impulse = Vector3());
 
+
+	void AddRelativeForce(Vector3 force, Vector3 originPoint);
+	void SetInertiaMatrix(Vector3 halfExtents);
+
 	Vector3 CalculateDisplacement(Vector3 displacement = Vector3(), float deltaTime = 0.0f);
 	Vector3 CalculateDragForce();
 	Vector3 CalulateFrictionForce();
 	void CalculateCollisionResolutionForce(const float otherCOR);
 	void CalculateImpulse(Movement* otherMovement = nullptr);
+	void CalculateAngularMovement(float deltaTime);
+
 	virtual void Update(float deltaTime);
 };
 
