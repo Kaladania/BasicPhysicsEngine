@@ -26,4 +26,3 @@ void RigidBody::UpdatePhysics(float deltaTime)
 		_movement->Update(deltaTime);
 	}
 }
-

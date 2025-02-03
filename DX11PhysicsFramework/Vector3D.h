@@ -246,6 +246,7 @@ public:
 	~Vector3D();
 
 	float DotProduct(Vector3 a = Vector3(), Vector3 b = Vector3());
+	float DotProductAngle(Vector3 a = Vector3(), Vector3 b = Vector3());
 	Vector3 CrossProduct(Vector3 a = Vector3(), Vector3 b = Vector3());
 	float GetMagnitude(Vector3 vector = Vector3());
 	Vector3 Normalize(Vector3 vector = Vector3());

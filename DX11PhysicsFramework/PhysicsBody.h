@@ -40,5 +40,7 @@ public:
 
 	virtual void UpdatePhysics(float deltaTime = 0.0f) ;
 	void Move(Vector3 direction);
+
+	//virtual void AddRelativeForce(Vector3 force, Vector3 originPoint);
 };
 

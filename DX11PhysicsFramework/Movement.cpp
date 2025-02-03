@@ -3,6 +3,7 @@
 Movement::Movement(GameObject* parent) : Component(parent)
 {
 	_gravity = Vector3(0, -9.81f, 0); //sets gravity to be a downward force of 9.81
+	DirectX::XMStoreFloat3x3(&_inertiaTensorMatrix, XMMatrixIdentity()); //defaults the inertia matrix to an identiy matrix
 }
 
 Movement::~Movement()
@@ -90,11 +91,12 @@ void Movement::CalculateCollisionResolutionForce(const float otherCOR)
 {
 	_netForce = ((_velocity * -2.0f)) + (((_velocity * -2)) * _COR);
 	_debugOutputer->PrintDebugString("Velocity is: " + _vector3D->ToString(_velocity));
-	_velocity = Vector3(0, 0, 0);
+	//_velocity = Vector3(0, 0, 0);
 }
 
 void Movement::CalculateImpulse(Movement* otherMovement)
 {
+	//ApplyImpulse(Vector3(10, 0, 0));
 	//determines the collision normal
 	//the direction between the centers of the colliding objects
 	Vector3 collisionNormal = _vector3D->Normalize(_transform->GetPosition() - otherMovement->_transform->GetPosition());
@@ -102,45 +104,129 @@ void Movement::CalculateImpulse(Movement* otherMovement)
 	//gets the relative velocity of the current object with respect to the incoming object
 	Vector3 relativeVelocity = _velocity - otherMovement->GetVeclocity();
 
+	//float collisionDotProduct = (collisionNormal.x * relativeVelocity.x) + (collisionNormal.y * relativeVelocity.y) + (collisionNormal.z * relativeVelocity.z);
 	float collisionDotProduct = _vector3D->DotProduct(collisionNormal, relativeVelocity);
 	_debugOutputer->PrintDebugString("Collision Dot Product is" + std::to_string(collisionDotProduct));
 
-	if (collisionDotProduct > 0.0f)
+	if (collisionDotProduct < 0.0f)
 	{
 		//velocity impulse
 		float vj = -(1 + RESTITUTION_COEFFICIENT) * collisionDotProduct;
 
 		//calculates the total impulse applied in the collision
 		float J = vj / ((1 / _mass) + (1 / otherMovement->GetMass()));
+
+		Vector3 impulseForce = collisionNormal * (1 / _mass) * J;
 		
 		//applies an impulse to the current object to propel it away from the other object
-		ApplyImpulse(collisionNormal * (1 / _mass) * J);
-		_debugOutputer->PrintDebugString("Object Impulse is" + _vector3D->ToString(collisionNormal * (1 / _mass) * J));
+		ApplyImpulse(impulseForce);
+		_debugOutputer->PrintDebugString("Object Impulse is" + _vector3D->ToString(impulseForce));
+
+		impulseForce = (collisionNormal * J * (1 / otherMovement->GetMass())) * -1;
 
 		//applies the same impulse in the reverse direction move the other object away from the current object
-		ApplyImpulse((collisionNormal * J * (1 / otherMovement->GetMass())) * -1);
-		_debugOutputer->PrintDebugString("Other Object Impulse is" +  _vector3D->ToString((collisionNormal * J * (1 / otherMovement->GetMass())) * -1));
+		otherMovement->ApplyImpulse(impulseForce);
+		_debugOutputer->PrintDebugString("Other Object Impulse is" +  _vector3D->ToString(impulseForce));
 	}
 
-	//otherMovement->ApplyImpulse(Vector3(-10, 0, 0));
-	////gets the direction between objects
-	//Vector3 collisionNormal = _vector3D->Normalize(_transform->GetPosition() - otherPosition);
-
-	//float restitution = 0; //hard coded for testing
-
-	//Vector3 relativeVelocity = _velocity - otherMovement->GetVeclocity();
-
-	//Vector3 vj = relativeVelocity * _vector3D->GetMagnitude((collisionNormal * (-(1 + restitution))));
-
-	//Vector3 J = vj * ((-1 / _mass) + (-1 / otherMovement->GetMass()));
-
-	//ApplyImpulse(_vector3D->CrossProduct(J * (-1 / _mass), collisionNormal));
-	//ApplyImpulse((_vector3D->CrossProduct(J * (-1 / _mass), collisionNormal)) * -1);
+	_debugOutputer->PrintDebugString("Velocity is now " + _vector3D->ToString(_velocity));
 }
 
+/// <summary>
+/// Adds a specified amount of force to the velocity
+/// </summary>
+/// <param name="impulse">Amount of force to increase velocity by</param>
 void Movement::ApplyImpulse(Vector3 impulse)
 {
 	_velocity += impulse;
+}
+
+
+/// <summary>
+/// Override to add a relative force
+/// </summary>
+/// <param name="deltaTime"></param>
+void Movement::AddRelativeForce(Vector3 force, Vector3 originPoint)
+{
+	//calculates the amount of force being applied - dependant on the angle of impact
+	Vector3 relativePosition = _vector3D->Normalize(_transform->GetPosition() - originPoint);
+	_torque = _vector3D->CrossProduct(relativePosition, force);
+
+	//particle body just adds the force, doesn't require torque calculation
+
+	AddForce(_torque);
+}
+
+/// <summary>
+/// Updates the values of the inertia matrix
+/// </summary>
+/// <param name="halfExtents">The half extents used to populate the matrix</param>
+void Movement::SetInertiaMatrix(Vector3 halfExtents)
+{
+	float inertia = (1.0f / 12.0f) * _mass * ((halfExtents.y * halfExtents.y) + (halfExtents.z * halfExtents.z));
+
+	_inertiaTensorMatrix._11 = inertia;
+	_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
+
+	inertia = (1.0f / 12.0f) * _mass * ((halfExtents.x * halfExtents.x) + (halfExtents.z * halfExtents.z));
+	_inertiaTensorMatrix._22 = inertia;
+	_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
+
+	inertia = (1.0f / 12.0f) * _mass * ((halfExtents.x * halfExtents.x) + (halfExtents.y * halfExtents.y));
+	_inertiaTensorMatrix._33 = inertia;
+	_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
+}
+
+void Movement::CalculateAngularMovement(float deltaTime)
+{
+	XMFLOAT3 angularAcceleration;
+	XMVECTOR inverseInertia;
+
+	//similar to friction, adds an inverse force that will aim to overtake and restrict the rotation of the object if not enough torque is applied
+	//more than comparison limits opposing force to only being applied if torque increases
+	if (_vector3D->GetMagnitude(_torque) > 0)
+	{
+		_torque -= _torque * 0.5f;
+	}
+
+	XMFLOAT3 convertedTorque;
+	convertedTorque.x = _torque.x;
+	convertedTorque.y = _torque.y;
+	convertedTorque.z = _torque.z;
+
+	//angularAcceleration; //holds the calculated angular acceleration
+	Vector3 convertedAcceleration = Vector3(0, 0, 0); //holds a copy of the angular acceleration
+	//inverseInertia; //holds the inverted inertia matrix
+
+	//calculates the angular acceleration
+	//inverse of inertia * torque
+	DirectX::XMStoreFloat3(&angularAcceleration, XMVector3Transform(XMLoadFloat3(&convertedTorque), XMMatrixInverse(nullptr, DirectX::XMLoadFloat3x3(&_inertiaTensorMatrix))));
+
+	//converts the acceleration from DirectX11 Vector3 to the custom made Vector3 in order to work with the Quaternion class calculations
+	convertedAcceleration.x = angularAcceleration.x;
+	convertedAcceleration.y = angularAcceleration.y;
+	convertedAcceleration.z = angularAcceleration.z;
+
+	//calculates the new angular velocity
+	_angularVelocity += convertedAcceleration * deltaTime;
+
+	//rotates the object based on its new velocity
+	Quaternion orientation = _transform->GetOrientation();
+	orientation += orientation * _angularVelocity * 0.5f * deltaTime;
+
+	//checks to ensure the quaternion does not drift above/below 1
+	float magnitude = orientation.Magnitude();
+	if (magnitude != 0)
+	{
+		//normalises quaterion
+		orientation /= magnitude;
+	}
+
+	_debugOutputer->PrintDebugString("Orientation: " + std::to_string(orientation.GetVector().x) + std::to_string(orientation.GetVector().y) + std::to_string(orientation.GetVector().z));
+	_transform->SetOrientation(orientation);
+
+	//dampens velocity
+	_angularVelocity = _angularVelocity * powf(ANGULAR_DAMPING, deltaTime);
 }
 
 /// <summary>
@@ -180,6 +266,7 @@ void Movement::Update(float deltaTime)
 			_netForce += CalculateDragForce();
 		}
 
+		CalculateAngularMovement(deltaTime);
 
 		_acceleration += _netForce / _mass; //calculates current rate of acceleration
 

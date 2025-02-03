@@ -91,6 +91,8 @@ private:
 
 	std::vector<int>ManualMovingObjects; //holds a list of all the objects currrently being manually moved.
 
+	float a = 0;
+
 private:
 	HRESULT CreateWindowHandle(HINSTANCE hInstance, int nCmdShow);
 	HRESULT CreateD3DDevice();

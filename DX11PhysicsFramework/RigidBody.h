@@ -2,6 +2,8 @@
 #include "PhysicsBody.h"
 
 
+
+
 //enum ColliderType
 //{
 //	NOCOLLIDER,
@@ -16,6 +18,8 @@ class RigidBody : public PhysicsBody
 {
 private:
 	
+	
+
 	
 
 public:

@@ -410,6 +410,7 @@
     <ClInclude Include="ParticleObject.h" />
     <ClInclude Include="PhysicsBody.h" />
     <ClInclude Include="PlaneCollider.h" />
+    <ClInclude Include="Quaternion.h" />
     <ClInclude Include="Renderer.h" />
     <CLInclude Include="resource.h" />
     <ClInclude Include="Collider.h" />

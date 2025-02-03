@@ -70,3 +70,12 @@ void PhysicsBody::UpdatePhysics(float deltaTime)
 
 	}
 }
+
+///// <summary>
+///// Override to add a relative force
+///// </summary>
+///// <param name="deltaTime"></param>
+//void PhysicsBody::AddRelativeForce(Vector3 force, Vector3 originPoint)
+//{
+//
+//}

@@ -47,7 +47,13 @@ void GameObject::Update(float deltaTime)
 {
 	// creates transformation matrices
 	XMMATRIX scale = XMMatrixScaling(_transform->GetScale().x, _transform->GetScale().y, _transform->GetScale().z);
-	XMMATRIX rotation = XMMatrixRotationX(_transform->GetRotation().x) * XMMatrixRotationY(_transform->GetRotation().y) * XMMatrixRotationZ(_transform->GetRotation().z);
+
+	//loads the quaternion from the transform and converts it into a rotation matrix
+	Vector3 vector = _transform->GetOrientation().GetVector();
+	XMVECTOR orientation = XMVectorSet(vector.x, vector.y, vector.z, _transform->GetOrientation().GetScalar());
+	XMMATRIX rotation = XMMatrixRotationQuaternion(orientation);
+	
+	//XMMATRIX rotation = XMMatrixRotationX(_transform->GetRotation().x) * XMMatrixRotationY(_transform->GetRotation().y) * XMMatrixRotationZ(_transform->GetRotation().z);
 	XMMATRIX translation = XMMatrixTranslation(_transform->GetPosition().x, _transform->GetPosition().y, _transform->GetPosition().z);
 
 	//Calculates and updates object world matrix

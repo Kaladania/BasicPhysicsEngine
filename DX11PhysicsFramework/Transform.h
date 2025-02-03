@@ -13,7 +13,10 @@ private:
 
 	//object transformation vectors
 	Vector3 _position;
-	Vector3 _rotation;
+
+	//for improved readability, publicly reffered to as a 'rotation' when expecting Euler Angles from the user
+	//class converts and uses Quaternions - refered to as 'orientation' - for improved performance
+	Quaternion _orientation;
 	Vector3 _scale;
 
 public:
@@ -32,9 +35,12 @@ public:
 
 	Vector3 GetScale() const { return _scale; }
 
-	void SetRotation(Vector3 rotation) { _rotation = rotation; }
-	void SetRotation(float x, float y, float z) { _rotation.x = x; _rotation.y = y; _rotation.z = z; }
+	void SetRotation(Vector3 rotation) { _orientation = MakeQFromEulerAngles(rotation.x, rotation.y, rotation.z); }
+	void SetRotation(float x, float y, float z) { _orientation = MakeQFromEulerAngles(x, y, z); }
 
-	Vector3 GetRotation() const { return _rotation; }
+	void SetOrientation(Quaternion orientation) { _orientation = orientation; }
+
+	Vector3 GetRotation() const { return MakeEulerAnglesFromQ(_orientation); }
+	Quaternion GetOrientation() const { return _orientation; }
 };
 
