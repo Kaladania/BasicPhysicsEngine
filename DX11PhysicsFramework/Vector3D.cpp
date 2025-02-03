@@ -12,27 +12,18 @@ Vector3D::~Vector3D()
 
 }
 
+/// <summary>
+/// Returns the dot product of two vectors
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <returns></returns>
 float Vector3D::DotProduct(Vector3 a, Vector3 b)
 {
 	//Vector3 normA = Normalize(a);
 	//Vector3 normB = Normalize(b);
 
-	float dotProduct = (a.x * b.x) + (a.y * b.y) + (a.z * b.z); //calculates the dot product
-
-	//calculates the magnitude for the denominator
-	float magA = GetMagnitude(a);
-	float magB = GetMagnitude(b);
-
-	//divides dot product by combined magnitude
-	float cosA = dotProduct / (magA * magB);
-
-	//gets (radian) angle between vectors
-	float angle = acosf(cosA);
-
-	//converts angle from radians to degrees
-	angle *= (180 / M_PI);
-
-	return angle;
+	return (a.x * b.x) + (a.y * b.y) + (a.z * b.z); //calculates the dot product
 }
 
 /// <summary>

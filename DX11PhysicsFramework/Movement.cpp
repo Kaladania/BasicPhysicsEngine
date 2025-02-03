@@ -103,8 +103,8 @@ void Movement::CalculateImpulse(Movement* otherMovement)
 	//gets the relative velocity of the current object with respect to the incoming object
 	Vector3 relativeVelocity = _velocity - otherMovement->GetVeclocity();
 
-	//float collisionDotProduct = _vector3D->DotProduct(collisionNormal, relativeVelocity);
-	float collisionDotProduct = (collisionNormal.x * relativeVelocity.x) + (collisionNormal.y * relativeVelocity.y) + (collisionNormal.z * relativeVelocity.z);
+	//float collisionDotProduct = (collisionNormal.x * relativeVelocity.x) + (collisionNormal.y * relativeVelocity.y) + (collisionNormal.z * relativeVelocity.z);
+	float collisionDotProduct = _vector3D->DotProduct(collisionNormal, relativeVelocity);
 	_debugOutputer->PrintDebugString("Collision Dot Product is" + std::to_string(collisionDotProduct));
 
 	if (collisionDotProduct < 0.0f)
