@@ -129,23 +129,12 @@ void Movement::CalculateImpulse(Movement* otherMovement)
 	}
 
 	_debugOutputer->PrintDebugString("Velocity is now " + _vector3D->ToString(_velocity));
-
-	//otherMovement->ApplyImpulse(Vector3(-10, 0, 0));
-	////gets the direction between objects
-	//Vector3 collisionNormal = _vector3D->Normalize(_transform->GetPosition() - otherPosition);
-
-	//float restitution = 0; //hard coded for testing
-
-	//Vector3 relativeVelocity = _velocity - otherMovement->GetVeclocity();
-
-	//Vector3 vj = relativeVelocity * _vector3D->GetMagnitude((collisionNormal * (-(1 + restitution))));
-
-	//Vector3 J = vj * ((-1 / _mass) + (-1 / otherMovement->GetMass()));
-
-	//ApplyImpulse(_vector3D->CrossProduct(J * (-1 / _mass), collisionNormal));
-	//ApplyImpulse((_vector3D->CrossProduct(J * (-1 / _mass), collisionNormal)) * -1);
 }
 
+/// <summary>
+/// Adds a specified amount of force to the velocity
+/// </summary>
+/// <param name="impulse">Amount of force to increase velocity by</param>
 void Movement::ApplyImpulse(Vector3 impulse)
 {
 	_velocity += impulse;

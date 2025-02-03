@@ -520,7 +520,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	Transform* objectTransform = gameObject->GetTransform();
 	objectTransform->SetPosition(0.0f, 0.0f, 0.0f);
 	objectTransform->SetScale(15.0f, 15.0f, 15.0f);
-	objectTransform->SetRotation(XMConvertToRadians(90.0f), 0.0f, 0.0f);
+	objectTransform->SetRotation(90.0f, 0.0f, 0.0f);
 
 	//adds and populates render information
 	gameObject->AddComponent(RendererComponent);
@@ -593,7 +593,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		}
 
 		//sets the first square to collide
-		if (i <= 1)
+		if (i <= 2)
 		{
 			objectCollider->SetIsActive(true);
 		}
@@ -711,7 +711,24 @@ void DX11PhysicsFramework::Update()
 	{
 		gameObject->Update(_elapsedSeconds);
 	}
-	
+
+	//Vector3 previousRotation = _gameObjects[1]->GetTransform()->GetRotation(); //grabs the previous rotation for cube 1
+
+	//_gameObjects[1]->GetTransform()->SetRotation(previousRotation.x, previousRotation.y + 0.1f, previousRotation.z);
+
+	//_debugOutputer->PrintDebugString("Cube 1 rotation = " + std::to_string(previousRotation.x) + " | " + std::to_string(previousRotation.y) + " | " + std::to_string(previousRotation.z) + " | ");
+	//
+
+	Transform* transform = _gameObjects[1]->GetTransform();
+	//transform->SetRotation(QVRotate(transform->GetOrientation(), Vector3(0, 0.1f, 0)));
+	a += 10;
+	transform->SetRotation(QVRotate(MakeQFromEulerAngles(a, a, 0), transform->GetPosition()));
+
+	Vector3 previousRotation = _gameObjects[1]->GetTransform()->GetRotation(); //grabs the previous rotation for cube 1
+
+
+	_debugOutputer->PrintDebugString("Cube 1 rotation = " + std::to_string(previousRotation.x) + " | " + std::to_string(previousRotation.y) + " | " + std::to_string(previousRotation.z) + " | ");
+	//
 }
 
 void DX11PhysicsFramework::GetMovementInput()

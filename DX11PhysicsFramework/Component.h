@@ -1,6 +1,6 @@
 #pragma once
 #include "DebugOutputer.h"
-#include "Vector3D.h"
+#include "Quaternion.h"
 //#include "GameObject.h"
 
 class GameObject;

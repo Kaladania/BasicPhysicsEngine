@@ -24,5 +24,6 @@ public:
 	~RigidBody();
 
 	void UpdatePhysics(float deltaTime = 0.0f) override;
+	void AddRelativeForce() override;
 };
 

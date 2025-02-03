@@ -27,3 +27,11 @@ void RigidBody::UpdatePhysics(float deltaTime)
 	}
 }
 
+/// <summary>
+/// Override to add a relative force
+/// </summary>
+/// <param name="deltaTime"></param>
+void RigidBody::AddRelativeForce()
+{
+
+}
