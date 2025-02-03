@@ -854,7 +854,7 @@ void DX11PhysicsFramework::ResolveCollisions()
 						{
 							//_debugOutputer->PrintDebugString("COLLISSION!");
 							gameBody->GetMovement()->CalculateImpulse(otherGameBody->GetMovement());
-							object->GetPhysicsBody()->GetMovement()->CalculateImpulse(gameBody->GetMovement());
+							//object->GetPhysicsBody()->GetMovement()->CalculateImpulse(gameBody->GetMovement());
 							//object->GetPhysicsBody()->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), object->GetPhysicsBody()->GetMovement());
 
 							////checks to see if the colliding object has a movement component (and so has a custom COR)
