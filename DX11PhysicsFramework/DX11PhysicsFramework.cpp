@@ -755,7 +755,7 @@ void DX11PhysicsFramework::GetMovementInput()
 	}
 	if (GetAsyncKeyState(0x51))
 	{
-		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddRelativeForce(Vector3(0,0,-1), Vector3(1, 0, -1));
+		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddRelativeForce(Vector3(0,0,-1) * _currentMovementKeyPressDuration, Vector3(1, 0, -1));
 		_currentMovementKeyPressed = 'q';
 	}
 	if (GetAsyncKeyState(0x45))
@@ -803,10 +803,7 @@ void DX11PhysicsFramework::GetMovementInput()
 		{
 			_currentMovementKeyPressDuration -= 0.2f;
 		}
-		else
-		{
 
-		}
 		_currentMovementKeyPressDuration = 1;
 	}
 

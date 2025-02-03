@@ -181,6 +181,14 @@ void Movement::CalculateAngularMovement(float deltaTime)
 {
 	XMFLOAT3 angularAcceleration;
 	XMVECTOR inverseInertia;
+
+	//similar to friction, adds an inverse force that will aim to overtake and restrict the rotation of the object if not enough torque is applied
+	//more than comparison limits opposing force to only being applied if torque increases
+	if (_vector3D->GetMagnitude(_torque) > 0)
+	{
+		_torque -= _torque * 0.5f;
+	}
+
 	XMFLOAT3 convertedTorque;
 	convertedTorque.x = _torque.x;
 	convertedTorque.y = _torque.y;
