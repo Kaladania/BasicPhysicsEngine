@@ -28,11 +28,11 @@ void BoxCollider::SetExtents(Vector3 extents)
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool BoxCollider::CollidesWith(Collider* other)
+bool BoxCollider::CollidesWith(Collider* other, CollisionManifold& manifold)
 {
 	if (_isActive)
 	{
-		return other->CollidesWith(this);
+		return other->CollidesWith(this, _collisionManifold);
 	}
 
 	//defaults to no collission if component is not active
@@ -44,7 +44,7 @@ bool BoxCollider::CollidesWith(Collider* other)
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool BoxCollider::CollidesWith(SphereCollider* other)
+bool BoxCollider::CollidesWith(SphereCollider* other, CollisionManifold& manifold)
 {
 	////calculates the distance between the center's of the two objects
 	//float distance = _vector3D->GetMagnitude(this->_transform->GetPosition() - other->_transform->GetPosition());
@@ -68,16 +68,12 @@ bool BoxCollider::CollidesWith(SphereCollider* other)
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool BoxCollider::CollidesWith(BoxCollider* other)
+bool BoxCollider::CollidesWith(BoxCollider* other, CollisionManifold& manifold)
 {
 	bool collided = false;
 
-	//_center = _transform->GetPosition();
-
 	//calculates the distance between the center's of the two objects
 	float distance = _vector3D->GetMagnitude(other->_transform->GetPosition() - this->_transform->GetPosition());
-	//_debugOutputer->PrintDebugString("This object's center: " + _vector3D->ToString(this->_transform->GetPosition()) + "Other Object's center: " + _vector3D->ToString(other->_transform->GetPosition()) + ". Distance is: " + std::to_string(distance));
-
 
 	//determines min and max points by finding the point along the object furthest away from center
 	_minPoint = Vector3(_center.x - _halfExtents.x, _center.y - _halfExtents.y, _center.z -_halfExtents.z);
@@ -85,9 +81,9 @@ bool BoxCollider::CollidesWith(BoxCollider* other)
 
 	distance = this->_transform->GetPosition().x - other->_transform->GetPosition().x;
 	distance = sqrtf(distance * distance);
+
 	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
 	float combinedRadii = this->_halfExtents.x + other->GetExtents().x;
-	//_debugOutputer->PrintDebugString("Combined Radii is: " + std::to_string(combinedRadii) + " Distance is: " + std::to_string(distance));
 
 	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
 	if (distance < combinedRadii)
@@ -101,45 +97,38 @@ bool BoxCollider::CollidesWith(BoxCollider* other)
 
 	distance = this->_transform->GetPosition().y - other->_transform->GetPosition().y;
 	distance = sqrtf(distance * distance);
+
 	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
 	combinedRadii = this->_halfExtents.y + other->GetExtents().y;
-	//_debugOutputer->PrintDebugString("Combined Radii is: " + std::to_string(combinedRadii) + " Distance is: " + std::to_string(distance));
 
-	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
 	if (distance < combinedRadii)
 	{
 		collided = true;
 	}
 	else
 	{
-		return false; //immediately breaks out of the function and returns a failed collision check
+		return false;
 	}
 
 	distance = this->_transform->GetPosition().z - other->_transform->GetPosition().z;
 	distance = sqrtf(distance * distance);
+
 	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
 	combinedRadii = this->_halfExtents.z + other->GetExtents().z;
-	//_debugOutputer->PrintDebugString("Combined Radii is: " + std::to_string(combinedRadii) + " Distance is: " + std::to_string(distance));
 
-	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
 	if (distance < combinedRadii)
 	{
 		collided = true;
 	}
 	else
 	{
-		return false; //immediately breaks out of the function and returns a failed collision check
-	}
-
-	if (collided)
-	{
-		//_debugOutputer->PrintDebugString("COLLISION!");
+		return false; 
 	}
 
 	return true;
 }
 
-bool BoxCollider::CollidesWith(PlaneCollider* other)
+bool BoxCollider::CollidesWith(PlaneCollider* other, CollisionManifold& manifold)
 {
 	return false;
 }

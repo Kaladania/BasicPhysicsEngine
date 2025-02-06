@@ -23,6 +23,19 @@ enum ColliderType
 	BOX_COLLISSION_COMPONET
 };
 
+struct ContactPoint
+{
+	Vector3 Position;
+	float penetrationDepth;
+};
+
+struct CollisionManifold
+{
+	int contactPointCount = 0;
+	ContactPoint point[4];
+	Vector3 collisionNormal;
+};
+
 /// <summary>
 /// Responsible for calculating and applying collissions
 /// </summary>
@@ -32,6 +45,8 @@ class Collider abstract : public Component
 protected:
 
 	Transform* _transform = nullptr; //stores reference of the transform the component is tied to
+	ContactPoint _contactPoint; //holds the point of collision
+	CollisionManifold _collisionManifold; //holds the collider's collision manifold
 
 public:
 
@@ -41,13 +56,15 @@ public:
 	void SetTransform(Transform* transform = nullptr) { _transform = transform; }
 	Transform* GetTransform(){return _transform;}
 
-	//collission check functions + overloads
-	virtual bool CollidesWith(Collider* other) = 0;
-	virtual bool CollidesWith(SphereCollider* other) = 0;
-	virtual bool CollidesWith(BoxCollider* other) = 0;
-	virtual bool CollidesWith(PlaneCollider* other) = 0;
+	CollisionManifold GetManifold() const { return _collisionManifold; }
 
-	bool CheckForCollission(Collider* other);
+	//collission check functions + overloads
+	virtual bool CollidesWith(Collider* other, CollisionManifold& manifold) = 0;
+	virtual bool CollidesWith(SphereCollider* other, CollisionManifold& manifold) = 0;
+	virtual bool CollidesWith(BoxCollider* other, CollisionManifold& manifold) = 0;
+	virtual bool CollidesWith(PlaneCollider* other, CollisionManifold& manifold) = 0;
+
+	bool CheckForCollission(Collider* other, CollisionManifold& manifold);
 	
 };
 

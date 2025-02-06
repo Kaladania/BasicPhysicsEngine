@@ -149,7 +149,7 @@ void Movement::ApplyImpulse(Vector3 impulse)
 void Movement::AddRelativeForce(Vector3 force, Vector3 originPoint)
 {
 	//calculates the amount of force being applied - dependant on the angle of impact
-	Vector3 relativePosition = _vector3D->Normalize(_transform->GetPosition() - originPoint);
+	Vector3 relativePosition =  originPoint;
 	_torque = _vector3D->CrossProduct(relativePosition, force);
 
 	//particle body just adds the force, doesn't require torque calculation
@@ -166,67 +166,71 @@ void Movement::SetInertiaMatrix(Vector3 halfExtents)
 	float inertia = (1.0f / 12.0f) * _mass * ((halfExtents.y * halfExtents.y) + (halfExtents.z * halfExtents.z));
 
 	_inertiaTensorMatrix._11 = inertia;
-	_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
+	//_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
 
 	inertia = (1.0f / 12.0f) * _mass * ((halfExtents.x * halfExtents.x) + (halfExtents.z * halfExtents.z));
 	_inertiaTensorMatrix._22 = inertia;
-	_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
+	//_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
 
 	inertia = (1.0f / 12.0f) * _mass * ((halfExtents.x * halfExtents.x) + (halfExtents.y * halfExtents.y));
 	_inertiaTensorMatrix._33 = inertia;
-	_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
+	//_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
 }
 
 void Movement::CalculateAngularMovement(float deltaTime)
 {
-	XMFLOAT3 angularAcceleration;
-	XMVECTOR inverseInertia;
-
-	//similar to friction, adds an inverse force that will aim to overtake and restrict the rotation of the object if not enough torque is applied
-	//more than comparison limits opposing force to only being applied if torque increases
-	if (_vector3D->GetMagnitude(_torque) > 0)
+	//ensures only objects with mass can rotate
+	if (_mass > 0)
 	{
-		_torque -= _torque * 0.5f;
+		XMFLOAT3 angularAcceleration;
+		XMVECTOR inverseInertia;
+
+		//similar to friction, adds an inverse force that will aim to overtake and restrict the rotation of the object if not enough torque is applied
+		//more than comparison limits opposing force to only being applied if torque increases
+		if (_vector3D->GetMagnitude(_torque) > 0)
+		{
+			_torque -= _torque * 0.5f;
+		}
+
+		XMFLOAT3 convertedTorque;
+		convertedTorque.x = _torque.x;
+		convertedTorque.y = _torque.y;
+		convertedTorque.z = _torque.z;
+
+		//angularAcceleration; //holds the calculated angular acceleration
+		Vector3 convertedAcceleration = Vector3(0, 0, 0); //holds a copy of the angular acceleration
+		//inverseInertia; //holds the inverted inertia matrix
+
+		//calculates the angular acceleration
+		//inverse of inertia * torque
+		DirectX::XMStoreFloat3(&angularAcceleration, XMVector3Transform(XMLoadFloat3(&convertedTorque), XMMatrixInverse(nullptr, DirectX::XMLoadFloat3x3(&_inertiaTensorMatrix))));
+
+		//converts the acceleration from DirectX11 Vector3 to the custom made Vector3 in order to work with the Quaternion class calculations
+		convertedAcceleration.x = angularAcceleration.x;
+		convertedAcceleration.y = angularAcceleration.y;
+		convertedAcceleration.z = angularAcceleration.z;
+
+		//calculates the new angular velocity
+		_angularVelocity += convertedAcceleration * deltaTime;
+
+		//rotates the object based on its new velocity
+		Quaternion orientation = _transform->GetOrientation();
+		orientation += orientation * _angularVelocity * 0.5f * deltaTime;
+
+		//checks to ensure the quaternion does not drift above/below 1qqq
+		float magnitude = orientation.Magnitude();
+		if (magnitude != 0)
+		{
+			//normalises quaterion
+			orientation /= magnitude;
+		}
+
+		//_debugOutputer->PrintDebugString("Orientation: " + std::to_string(orientation.GetVector().x) + std::to_string(orientation.GetVector().y) + std::to_string(orientation.GetVector().z));
+		_transform->SetOrientation(orientation);
+
+		//dampens velocity
+		_angularVelocity = _angularVelocity * powf(ANGULAR_DAMPING, deltaTime);
 	}
-
-	XMFLOAT3 convertedTorque;
-	convertedTorque.x = _torque.x;
-	convertedTorque.y = _torque.y;
-	convertedTorque.z = _torque.z;
-
-	//angularAcceleration; //holds the calculated angular acceleration
-	Vector3 convertedAcceleration = Vector3(0, 0, 0); //holds a copy of the angular acceleration
-	//inverseInertia; //holds the inverted inertia matrix
-
-	//calculates the angular acceleration
-	//inverse of inertia * torque
-	DirectX::XMStoreFloat3(&angularAcceleration, XMVector3Transform(XMLoadFloat3(&convertedTorque), XMMatrixInverse(nullptr, DirectX::XMLoadFloat3x3(&_inertiaTensorMatrix))));
-
-	//converts the acceleration from DirectX11 Vector3 to the custom made Vector3 in order to work with the Quaternion class calculations
-	convertedAcceleration.x = angularAcceleration.x;
-	convertedAcceleration.y = angularAcceleration.y;
-	convertedAcceleration.z = angularAcceleration.z;
-
-	//calculates the new angular velocity
-	_angularVelocity += convertedAcceleration * deltaTime;
-
-	//rotates the object based on its new velocity
-	Quaternion orientation = _transform->GetOrientation();
-	orientation += orientation * _angularVelocity * 0.5f * deltaTime;
-
-	//checks to ensure the quaternion does not drift above/below 1
-	float magnitude = orientation.Magnitude();
-	if (magnitude != 0)
-	{
-		//normalises quaterion
-		orientation /= magnitude;
-	}
-
-	_debugOutputer->PrintDebugString("Orientation: " + std::to_string(orientation.GetVector().x) + std::to_string(orientation.GetVector().y) + std::to_string(orientation.GetVector().z));
-	_transform->SetOrientation(orientation);
-
-	//dampens velocity
-	_angularVelocity = _angularVelocity * powf(ANGULAR_DAMPING, deltaTime);
 }
 
 /// <summary>
@@ -237,12 +241,7 @@ void Movement::Update(float deltaTime)
 {
 	if (!_isStationary)
 	{
-		//checks if the object is current simulating gravity
-		if (_isSimulatingGravity)
-		{
-			_netForce += _gravity * _mass; //calculates the intensity of the gravitational force acting on the parent object
-		}
-
+		
 		//calculates resistance force based on if object is suspended in air (not colliding) or moving along a surface (colliding)
 		if (_isColliding)
 		{
@@ -266,7 +265,16 @@ void Movement::Update(float deltaTime)
 			_netForce += CalculateDragForce();
 		}
 
+		//checks if the object is current simulating gravity
+		if (_isSimulatingGravity)
+		{
+			_netForce += _gravity * _mass; //calculates the intensity of the gravitational force acting on the parent object
+		}
+
+
 		CalculateAngularMovement(deltaTime);
+
+		_debugOutputer->PrintDebugString("Net Force: " + _vector3D->ToString(_netForce));
 
 		_acceleration += _netForce / _mass; //calculates current rate of acceleration
 

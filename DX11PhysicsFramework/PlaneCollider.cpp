@@ -16,11 +16,11 @@ PlaneCollider::~PlaneCollider()
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool PlaneCollider::CollidesWith(Collider* other)
+bool PlaneCollider::CollidesWith(Collider* other, CollisionManifold& manifold)
 {
 	if (_isActive)
 	{
-		return other->CollidesWith(this);
+		return other->CollidesWith(this, _collisionManifold);
 	}
 
 	//defaults to no collission if component is not active
@@ -32,7 +32,7 @@ bool PlaneCollider::CollidesWith(Collider* other)
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool PlaneCollider::CollidesWith(SphereCollider* other)
+bool PlaneCollider::CollidesWith(SphereCollider* other, CollisionManifold& manifold)
 {
 	////calculates the distance between the center's of the two objects
 	//float distance = _vector3D->GetMagnitude(this->_transform->GetPosition() - other->_transform->GetPosition());
@@ -56,7 +56,7 @@ bool PlaneCollider::CollidesWith(SphereCollider* other)
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool PlaneCollider::CollidesWith(BoxCollider* other)
+bool PlaneCollider::CollidesWith(BoxCollider* other, CollisionManifold& manifold)
 {
 	Vector3 objectDirection = other->GetTransform()->GetPosition();
 
@@ -68,7 +68,7 @@ bool PlaneCollider::CollidesWith(BoxCollider* other)
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool PlaneCollider::CollidesWith(PlaneCollider* other)
+bool PlaneCollider::CollidesWith(PlaneCollider* other, CollisionManifold& manifold)
 {
 	return false;
 }

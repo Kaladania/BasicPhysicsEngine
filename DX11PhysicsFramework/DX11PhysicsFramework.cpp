@@ -537,10 +537,13 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	objectBody->GetMovement()->SetIsStationary(true); //sets the floor as stationary
 	static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(30.0f, 0.0f, 30.0f));
 	
+	objectBody->GetMovement()->SetMass(0.0f);
+	Movement* objectMovement = nullptr;
+	
 
 	_gameObjects.push_back(gameObject);
 
-	Movement* objectMovement = nullptr;
+	
 
 	for (auto i = 0; i < 4; i++)
 	{
@@ -581,6 +584,26 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 
 		objectMovement->SetIsUsingFloor(true); //enables a hard check to ensure cubes don't fall through the floor
 		objectMovement->SetInertiaMatrix(halfExtents); //sets up an inertia matrix
+
+		//customises mass for each cube
+		switch (i)
+		{
+			case 0:
+				objectMovement->SetMass(5.0f);
+			break;
+
+			case 1:
+				objectMovement->SetMass(1.0f);
+				break;
+
+			case 2:
+				objectMovement->SetMass(10.0f);
+				break;
+
+			case 3:
+				objectMovement->SetMass(20.0f);
+				break;
+		}
 
 		if (i == 1)
 		{
@@ -738,6 +761,11 @@ void DX11PhysicsFramework::GetMovementInput()
 		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '1';
 	}
+	if (GetAsyncKeyState('7'))
+	{
+		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 5.0f, 0) * _currentMovementKeyPressDuration);
+		_currentMovementKeyPressed = '7';
+	}
 	if (GetAsyncKeyState('2'))
 	{
 		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
@@ -755,7 +783,7 @@ void DX11PhysicsFramework::GetMovementInput()
 	}
 	if (GetAsyncKeyState(0x51))
 	{
-		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddRelativeForce(Vector3(0,0,-1) * _currentMovementKeyPressDuration, Vector3(1, 0, -1));
+		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddRelativeForce(Vector3(0,0,1) * _currentMovementKeyPressDuration, Vector3(1, 0, 0));
 		_currentMovementKeyPressed = 'q';
 	}
 	if (GetAsyncKeyState(0x45))
@@ -865,7 +893,7 @@ void DX11PhysicsFramework::ResolveCollisions()
 						Collider* otherCollider = otherGameBody->GetCollider();
 
 						//checks if a collision occures
-						if (collider->CheckForCollission(otherCollider))
+						if (collider->CheckForCollission(otherCollider, otherCollider->GetManifold()))
 						{
 							//_debugOutputer->PrintDebugString("COLLISSION!");
 							gameBody->GetMovement()->CalculateImpulse(otherGameBody->GetMovement());

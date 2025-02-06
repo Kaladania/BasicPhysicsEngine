@@ -11,7 +11,7 @@
 
 #define FRICTION_COEFFICIENT 1.3f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
 #define STATIC_FRICTION_COEFFICIENT 2.0f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
-#define RESTITUTION_COEFFICIENT 1.0f //determines how 'elastic' the collision is
+#define RESTITUTION_COEFFICIENT 0.2f //determines how 'elastic' the collision is
 #define ANGULAR_DAMPING 0.5f
 
 using namespace DirectX;
@@ -71,6 +71,7 @@ public:
 	void SetTransform(Transform* transform) { _transform = transform; }
 	void SetVelocity(Vector3 velocity) { _velocity = velocity; }
 	Vector3 GetVeclocity() const { return _velocity; }
+	void SetMass(float mass) { _mass = mass; }
 	float GetMass() const { return _mass; }
 	void SetAcceleration(Vector3 acceleration) { _acceleration = acceleration; }
 
