@@ -149,7 +149,7 @@ void Movement::ApplyImpulse(Vector3 impulse)
 void Movement::AddRelativeForce(Vector3 force, Vector3 originPoint)
 {
 	//calculates the amount of force being applied - dependant on the angle of impact
-	Vector3 relativePosition = _vector3D->Normalize(_transform->GetPosition() - originPoint);
+	Vector3 relativePosition =  originPoint;
 	_torque = _vector3D->CrossProduct(relativePosition, force);
 
 	//particle body just adds the force, doesn't require torque calculation
