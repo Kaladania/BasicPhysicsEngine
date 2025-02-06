@@ -5,7 +5,6 @@
 #include "Transform.h"
 #include "Component.h"
 
-#define DRAG_COEFFICIENT 1.05f
 #define DENSITY_OF_FLUID 1.0f
 #define CROSS_SECTIONAL_AREA 4.0f //(for cubes, 2f * 2f = 4f
 
@@ -54,6 +53,8 @@ private:
 
 	bool _isColliding = false; //states if the object is currently colliding (REPLACE WITH A FUNCTION CALL TO THE COLLIDER)
 
+	float _dragCoefficient = 0.04f; //holds the current drag co-efficient. Defaults to 0.04f for a generic streamlined body
+
 	Vector3 _angularVelocity = Vector3(0, 0, 0);
 
 	Vector3 _torque = Vector3(0, 0, 0); //holds the amount of torque currently being applied to the object
@@ -75,6 +76,8 @@ public:
 	float GetMass() const { return _mass; }
 	void SetAcceleration(Vector3 acceleration) { _acceleration = acceleration; }
 
+	void SetDragCoefficient(float dragCoefficient) { _dragCoefficient = dragCoefficient; }
+
 	void SetIsSimulatingGravity(bool simulationState) { _isSimulatingGravity = simulationState; }
 	void SetIsUsingFloor(bool floorState) { _usesForcedFloor = floorState; }
 
@@ -90,7 +93,10 @@ public:
 
 
 	void AddRelativeForce(Vector3 force, Vector3 originPoint);
+
+	//overloads to set the InertiaMatrix
 	void SetInertiaMatrix(Vector3 halfExtents);
+	void SetInertiaMatrix(float radius);
 
 	Vector3 CalculateDisplacement(Vector3 displacement = Vector3(), float deltaTime = 0.0f);
 	Vector3 CalculateDragForce();

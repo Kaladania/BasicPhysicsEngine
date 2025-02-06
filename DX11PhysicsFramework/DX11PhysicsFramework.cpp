@@ -568,19 +568,20 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 
 		Vector3 halfExtents = Vector3(2.0f, 2.0f, 2.0f); //half-extents of a basic 3D cube
 
-		PhysicsBody* objectBody = gameObject->GetPhysicsBody(); //adds a physics body
+		objectBody = gameObject->GetPhysicsBody(); //adds a physics body
 		objectBody->SetCollider(BOX_COLLISSION_COMPONET); //sets the type of collider the body should use
 
-		Collider* objectCollider = objectBody->GetCollider(); //gets a reference to the collider
+		objectCollider = objectBody->GetCollider(); //gets a reference to the collider
 		static_cast<BoxCollider*>(objectCollider)->SetExtents(halfExtents); //sets the dimensions of the collider
 
-		objectCollider->SetIsActive(false); //disables collision on the object
+		objectCollider->SetIsActive(true); //disables collision on the object
 
 
 		//populates Movement information
 		objectMovement = gameObject->GetPhysicsBody()->GetMovement();
 		objectMovement->SetIsSimulatingGravity(true); //states second object is going to be influenced by gravity
 		objectMovement->SetMovementSpeed(3.0f); //sets the object's movement speed (DELETE)
+		objectMovement->SetDragCoefficient(1.05f);
 
 		objectMovement->SetIsUsingFloor(true); //enables a hard check to ensure cubes don't fall through the floor
 		objectMovement->SetInertiaMatrix(halfExtents); //sets up an inertia matrix
@@ -610,12 +611,12 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 			objectMovement->SetIsActive(true);
 		}
 
-		//sets the first square to collide
-		if (i <= 2)
-		{
-			objectCollider->SetIsActive(true);
-			//objectMovement->SetIsUsingFloor(false);
-		}
+		////sets the first square to collide
+		//if (i <= 2)
+		//{
+		//	objectCollider->SetIsActive(true);
+		//	//objectMovement->SetIsUsingFloor(false);
+		//}
 		
 		_gameObjects.push_back(gameObject);
 	}
@@ -629,7 +630,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	gameObject->AddComponent(TransformComponent);
 	objectTransform = gameObject->GetTransform();
 	objectTransform->SetScale(1.0f, 1.0f, 1.0f);
-	objectTransform->SetPosition(-5.0f, 2.0f, 10.0f);
+	objectTransform->SetPosition(-5.0f, 5.0f, 10.0f);
 
 	//adds and populates render information
 	gameObject->AddComponent(RendererComponent);
@@ -637,6 +638,23 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	objectRenderer->SetGeometry(sphereGeometry);
 	objectRenderer->SetMaterial(shinyMaterial);
 	objectRenderer->SetTextureRV(_StoneTextureRV);
+
+	gameObject->AddComponent(RigidbodyComponent);
+	objectBody = gameObject->GetPhysicsBody();
+	objectBody->SetCollider(SPHERE_COLLISSION_COMPONENT);
+	objectCollider = objectBody->GetCollider();
+	objectCollider->SetIsActive(true);
+	objectBody->GetMovement()->SetIsStationary(false); //sets the floor as stationary
+	static_cast<SphereCollider*>(objectCollider)->SetCollissionRadius(1.0f);
+
+	objectMovement = objectBody->GetMovement();
+	objectBody->GetMovement()->SetMass(1.0f);
+	objectMovement->SetMovementSpeed(3.0f); //sets the object's movement speed (DELETE)
+	objectMovement->SetDragCoefficient(0.47f);
+
+	objectMovement->SetIsUsingFloor(true); //enables a hard check to ensure cubes don't fall through the floor
+	objectMovement->SetIsSimulatingGravity(true);
+	objectMovement->SetInertiaMatrix(0.5f); //sets up an inertia matrix
 
 	_gameObjects.push_back(gameObject);
 
@@ -758,7 +776,7 @@ void DX11PhysicsFramework::GetMovementInput()
 	// Add force applies an accelerational force that is intensified by the time the object has been excellerating
 	if (GetAsyncKeyState('1'))
 	{
-		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -3.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '1';
 	}
 	if (GetAsyncKeyState('7'))
@@ -768,7 +786,7 @@ void DX11PhysicsFramework::GetMovementInput()
 	}
 	if (GetAsyncKeyState('2'))
 	{
-		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 3.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '2';
 	}
 	if (GetAsyncKeyState('3'))
@@ -788,12 +806,12 @@ void DX11PhysicsFramework::GetMovementInput()
 	}
 	if (GetAsyncKeyState(0x45))
 	{
-		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-1.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'e';
 	}
 	if (GetAsyncKeyState(0x52))
 	{
-		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(1.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'r';
 	}
 	if (GetAsyncKeyState('5'))
@@ -815,6 +833,11 @@ void DX11PhysicsFramework::GetMovementInput()
 	{
 		_gameObjects[4]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '8';
+	}
+	if (GetAsyncKeyState(0x5A))
+	{
+		_gameObjects[5]->GetPhysicsBody()->GetMovement()->AddRelativeForce(Vector3(0, 0, 1) * _currentMovementKeyPressDuration, Vector3(1, 0, 0));
+		_currentMovementKeyPressed = 'z';
 	}
 
 	//checks if the object has been told to switch movement directions (or stop moving)
