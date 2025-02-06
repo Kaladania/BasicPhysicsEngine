@@ -166,15 +166,15 @@ void Movement::SetInertiaMatrix(Vector3 halfExtents)
 	float inertia = (1.0f / 12.0f) * _mass * ((halfExtents.y * halfExtents.y) + (halfExtents.z * halfExtents.z));
 
 	_inertiaTensorMatrix._11 = inertia;
-	_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
+	//_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
 
 	inertia = (1.0f / 12.0f) * _mass * ((halfExtents.x * halfExtents.x) + (halfExtents.z * halfExtents.z));
 	_inertiaTensorMatrix._22 = inertia;
-	_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
+	//_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
 
 	inertia = (1.0f / 12.0f) * _mass * ((halfExtents.x * halfExtents.x) + (halfExtents.y * halfExtents.y));
 	_inertiaTensorMatrix._33 = inertia;
-	_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
+	//_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
 }
 
 void Movement::CalculateAngularMovement(float deltaTime)
@@ -214,7 +214,7 @@ void Movement::CalculateAngularMovement(float deltaTime)
 	Quaternion orientation = _transform->GetOrientation();
 	orientation += orientation * _angularVelocity * 0.5f * deltaTime;
 
-	//checks to ensure the quaternion does not drift above/below 1
+	//checks to ensure the quaternion does not drift above/below 1qqq
 	float magnitude = orientation.Magnitude();
 	if (magnitude != 0)
 	{
@@ -222,7 +222,7 @@ void Movement::CalculateAngularMovement(float deltaTime)
 		orientation /= magnitude;
 	}
 
-	_debugOutputer->PrintDebugString("Orientation: " + std::to_string(orientation.GetVector().x) + std::to_string(orientation.GetVector().y) + std::to_string(orientation.GetVector().z));
+	//_debugOutputer->PrintDebugString("Orientation: " + std::to_string(orientation.GetVector().x) + std::to_string(orientation.GetVector().y) + std::to_string(orientation.GetVector().z));
 	_transform->SetOrientation(orientation);
 
 	//dampens velocity
@@ -237,12 +237,7 @@ void Movement::Update(float deltaTime)
 {
 	if (!_isStationary)
 	{
-		//checks if the object is current simulating gravity
-		if (_isSimulatingGravity)
-		{
-			_netForce += _gravity * _mass; //calculates the intensity of the gravitational force acting on the parent object
-		}
-
+		
 		//calculates resistance force based on if object is suspended in air (not colliding) or moving along a surface (colliding)
 		if (_isColliding)
 		{
@@ -266,7 +261,16 @@ void Movement::Update(float deltaTime)
 			_netForce += CalculateDragForce();
 		}
 
+		//checks if the object is current simulating gravity
+		if (_isSimulatingGravity)
+		{
+			_netForce += _gravity * _mass; //calculates the intensity of the gravitational force acting on the parent object
+		}
+
+
 		CalculateAngularMovement(deltaTime);
+
+		_debugOutputer->PrintDebugString("Net Force: " + _vector3D->ToString(_netForce));
 
 		_acceleration += _netForce / _mass; //calculates current rate of acceleration
 

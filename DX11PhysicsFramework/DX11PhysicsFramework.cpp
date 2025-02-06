@@ -536,11 +536,14 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	Collider* objectCollider = objectBody->GetCollider();
 	objectBody->GetMovement()->SetIsStationary(true); //sets the floor as stationary
 	static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(30.0f, 0.0f, 30.0f));
+
+	//gameObject->AddComponent(MOVEM)
+	Movement* objectMovement = nullptr;
 	
 
 	_gameObjects.push_back(gameObject);
 
-	Movement* objectMovement = nullptr;
+	
 
 	for (auto i = 0; i < 4; i++)
 	{
@@ -737,6 +740,11 @@ void DX11PhysicsFramework::GetMovementInput()
 	{
 		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '1';
+	}
+	if (GetAsyncKeyState('7'))
+	{
+		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 5.0f, 0) * _currentMovementKeyPressDuration);
+		_currentMovementKeyPressed = '7';
 	}
 	if (GetAsyncKeyState('2'))
 	{
