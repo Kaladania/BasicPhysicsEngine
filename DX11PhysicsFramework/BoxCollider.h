@@ -21,10 +21,10 @@ public:
 	void SetExtents(Vector3 extents = Vector3());
 	Vector3 GetExtents() { return _halfExtents; }
 
-	bool CollidesWith(Collider* other) override;
-	bool CollidesWith(SphereCollider* other) override;
-	bool CollidesWith(BoxCollider* other) override;
-	bool CollidesWith(PlaneCollider* other) override;
+	bool CollidesWith(Collider* other, CollisionManifold& manifold) override;
+	bool CollidesWith(SphereCollider* other, CollisionManifold& manifold) override;
+	bool CollidesWith(BoxCollider* other, CollisionManifold& manifold) override;
+	bool CollidesWith(PlaneCollider* other, CollisionManifold& manifold) override;
 
 };
 

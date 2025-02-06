@@ -28,11 +28,11 @@ void BoxCollider::SetExtents(Vector3 extents)
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool BoxCollider::CollidesWith(Collider* other)
+bool BoxCollider::CollidesWith(Collider* other, CollisionManifold& manifold)
 {
 	if (_isActive)
 	{
-		return other->CollidesWith(this);
+		return other->CollidesWith(this, _collisionManifold);
 	}
 
 	//defaults to no collission if component is not active
@@ -44,7 +44,7 @@ bool BoxCollider::CollidesWith(Collider* other)
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool BoxCollider::CollidesWith(SphereCollider* other)
+bool BoxCollider::CollidesWith(SphereCollider* other, CollisionManifold& manifold)
 {
 	////calculates the distance between the center's of the two objects
 	//float distance = _vector3D->GetMagnitude(this->_transform->GetPosition() - other->_transform->GetPosition());
@@ -68,7 +68,7 @@ bool BoxCollider::CollidesWith(SphereCollider* other)
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool BoxCollider::CollidesWith(BoxCollider* other)
+bool BoxCollider::CollidesWith(BoxCollider* other, CollisionManifold& manifold)
 {
 	bool collided = false;
 
@@ -139,7 +139,7 @@ bool BoxCollider::CollidesWith(BoxCollider* other)
 	return true;
 }
 
-bool BoxCollider::CollidesWith(PlaneCollider* other)
+bool BoxCollider::CollidesWith(PlaneCollider* other, CollisionManifold& manifold)
 {
 	return false;
 }

@@ -585,6 +585,26 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		objectMovement->SetIsUsingFloor(true); //enables a hard check to ensure cubes don't fall through the floor
 		objectMovement->SetInertiaMatrix(halfExtents); //sets up an inertia matrix
 
+		//customises mass for each cube
+		switch (i)
+		{
+			case 0:
+				objectMovement->SetMass(5.0f);
+			break;
+
+			case 1:
+				objectMovement->SetMass(1.0f);
+				break;
+
+			case 2:
+				objectMovement->SetMass(10.0f);
+				break;
+
+			case 3:
+				objectMovement->SetMass(20.0f);
+				break;
+		}
+
 		if (i == 1)
 		{
 			objectMovement->SetIsActive(true);
@@ -873,7 +893,7 @@ void DX11PhysicsFramework::ResolveCollisions()
 						Collider* otherCollider = otherGameBody->GetCollider();
 
 						//checks if a collision occures
-						if (collider->CheckForCollission(otherCollider))
+						if (collider->CheckForCollission(otherCollider, otherCollider->GetManifold()))
 						{
 							//_debugOutputer->PrintDebugString("COLLISSION!");
 							gameBody->GetMovement()->CalculateImpulse(otherGameBody->GetMovement());
