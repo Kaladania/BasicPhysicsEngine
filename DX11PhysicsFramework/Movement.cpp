@@ -64,7 +64,7 @@ Vector3 Movement::CalculateDragForce()
 	float velocityMagnitude = _vector3D->GetMagnitude(_velocity);
 	
 	//determines the scalar drag co-efficent
-	float drag = DENSITY_OF_FLUID * ((velocityMagnitude * velocityMagnitude) * 0.5f) * DRAG_COEFFICIENT * CROSS_SECTIONAL_AREA;
+	float drag = DENSITY_OF_FLUID * ((velocityMagnitude * velocityMagnitude) * 0.5f) * _dragCoefficient * CROSS_SECTIONAL_AREA;
 
 	//creates a base drag force that is the negated normal of the current velocity
 	//multiplies base opposing force by the drag scalar to determine the intensity of drag
@@ -175,6 +175,19 @@ void Movement::SetInertiaMatrix(Vector3 halfExtents)
 	inertia = (1.0f / 12.0f) * _mass * ((halfExtents.x * halfExtents.x) + (halfExtents.y * halfExtents.y));
 	_inertiaTensorMatrix._33 = inertia;
 	//_debugOutputer->PrintDebugString("inertia is: " + std::to_string(inertia));
+}
+
+/// <summary>
+/// Updates the values of the inertia matrix
+/// </summary>
+/// <param name="radius">The radius used to populate the matrix</param>
+void Movement::SetInertiaMatrix(float radius)
+{
+	float inertia = (2.0f / 5.0f) * _mass * (pow(radius, 2));
+
+	_inertiaTensorMatrix._11 = inertia;
+	_inertiaTensorMatrix._22 = inertia;
+	_inertiaTensorMatrix._33 = inertia;
 }
 
 void Movement::CalculateAngularMovement(float deltaTime)
