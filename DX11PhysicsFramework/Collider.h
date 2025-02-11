@@ -32,7 +32,7 @@ struct ContactPoint
 struct CollisionManifold
 {
 	int contactPointCount = 0;
-	ContactPoint point[4];
+	ContactPoint points[4];
 	Vector3 collisionNormal;
 };
 

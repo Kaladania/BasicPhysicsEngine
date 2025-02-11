@@ -821,13 +821,13 @@ void DX11PhysicsFramework::GetMovementInput()
 	}
 	if (GetAsyncKeyState(0x45))
 	{
-		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'e';
 		keyPressed = true;
 	}
 	if (GetAsyncKeyState(0x52))
 	{
-		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'r';
 		keyPressed = true;
 	}
@@ -942,7 +942,7 @@ void DX11PhysicsFramework::ResolveCollisions()
 						if (collider->CheckForCollission(otherCollider, otherCollider->GetManifold()))
 						{
 							//_debugOutputer->PrintDebugString("COLLISSION!");
-							gameBody->GetMovement()->CalculateImpulse(otherGameBody->GetMovement());
+							gameBody->GetMovement()->CalculateImpulse(otherGameBody->GetMovement(), otherCollider->GetManifold());
 							//object->GetPhysicsBody()->GetMovement()->CalculateImpulse(gameBody->GetMovement());
 							//object->GetPhysicsBody()->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), object->GetPhysicsBody()->GetMovement());
 

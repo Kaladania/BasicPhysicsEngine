@@ -33,19 +33,42 @@ bool SphereCollider::CollidesWith(Collider* other, CollisionManifold& manifold)
 /// <returns>bool stating if collission occured</returns>
 bool SphereCollider::CollidesWith(SphereCollider* other, CollisionManifold& manifold)
 {
-	//calculates the distance between the center's of the two objects
-	float distance = _vector3D->GetMagnitude(this->_transform->GetPosition() - other->_transform->GetPosition());
-	//_debugOutputer->PrintDebugString("This object's center: " + _vector3D->ToString(this->_transform->GetPosition()) + "Other Object's center: " + _vector3D->ToString(other->_transform->GetPosition()) + ". Distance is: " + std::to_string(distance));
+#pragma region non-manifold code
+	////calculates the distance between the center's of the two objects
+	//float distance = _vector3D->GetMagnitude(this->_transform->GetPosition() - other->_transform->GetPosition());
 
-	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
-	float combinedRadii = this->GetCollissionRadius() + other->GetCollissionRadius();
-	//_debugOutputer->PrintDebugString("Combined Radii is: " + std::to_string(combinedRadii));
+	////calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
+	//float combinedRadii = this->GetCollissionRadius() + other->GetCollissionRadius();
 
-	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
-	if (distance < combinedRadii)
+	////if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
+	//if (distance < combinedRadii)
+	//{
+	//	return true;
+	//}
+
+#pragma endregion
+
+	manifold = CollisionManifold(); //clears the manifold each check
+
+
+	//gets the distance between the centers of the colliding objects
+	Vector3 path = _vector3D->GetMagnitude(other->GetTransform()->GetPosition() - _transform->GetPosition());
+	float distance = _vector3D->GetMagnitude(path);
+
+	//gets the combined radius of both spheres
+	float sumOfRadii = other->GetCollissionRadius() + _radius;
+
+	//if the distance between centers is less than the combined radii, a collision has occured
+	if (distance < sumOfRadii)
 	{
+		manifold.collisionNormal = _vector3D->Normalize(path); //stores direction of collision
+		manifold.contactPointCount = 1; //stores amount of points involved in collission
+		manifold.points[0].Position = _transform->GetPosition() + (manifold.collisionNormal * _radius); //stores the position of the point of collision
+		manifold.points[0].penetrationDepth = fabsf(distance - sumOfRadii); //stores the amount of overlap involved in the collision
+
 		return true;
 	}
+
 	
 	return false;
 }
@@ -57,40 +80,6 @@ bool SphereCollider::CollidesWith(SphereCollider* other, CollisionManifold& mani
 /// <returns>bool stating if collission occured</returns>
 bool SphereCollider::CollidesWith(BoxCollider* other, CollisionManifold& manifold)
 {
-	//Vector3 clampedIntersection = Vector3(0, 0, 0);
-
-	//Vector3 halfExtents = other->GetExtents();
-	//Vector3 boxCenter = other->GetTransform()->GetPosition();
-
-	////determines min and max points by finding the point along the object furthest away from center
-	//Vector3 _minPoint = Vector3(boxCenter.x - halfExtents.x, boxCenter.y - halfExtents.y, boxCenter.z - halfExtents.z);
-	//Vector3 _maxPoint = Vector3(boxCenter.x + halfExtents.x, boxCenter.y + halfExtents.y, boxCenter.z + halfExtents.z);
-
-	//Vector3 sphereCenter = other->GetTransform()->GetPosition();
-
-	//float totalSquareDistance = 0.0f;
-
-	////gets the total square distance between the center of the sphere and the minimum/maximum points of the AABB
-	//totalSquareDistance += other->GetSquareAxisDistance(sphereCenter.x, _minPoint.x, _maxPoint.x);
-	//_debugOutputer->PrintDebugString("(After X) Total Distance is now : " + std::to_string(totalSquareDistance));
-	//totalSquareDistance += other->GetSquareAxisDistance(sphereCenter.y, _minPoint.y, _maxPoint.y);
-	//_debugOutputer->PrintDebugString("(After Y) Total Distance is now : " + std::to_string(totalSquareDistance));
-	//totalSquareDistance += other->GetSquareAxisDistance(sphereCenter.z, _minPoint.z, _maxPoint.z);
-	//_debugOutputer->PrintDebugString("(After Z) Total Distance is now : " + std::to_string(totalSquareDistance));
-
-	////cache's the sphere's radius
-	////float sphereRadius = other->GetCollissionRadius();
-
-	//_debugOutputer->PrintDebugString("Squared sphere Radius is: " + std::to_string(_radius * _radius));
-
-	//if (totalSquareDistance <= (_radius * _radius))
-	//{
-	//	return true;
-	//}
-
-	//returns a bool stating if the two shapes are colliding
-	//collission occures if the distance between sphere center and AABB (totalSquareDistance) is less than the squared radius
-	//return false;
 
 	Vector3 halfExtents = other->GetExtents();
 	Vector3 boxCenter = other->GetTransform()->GetPosition();

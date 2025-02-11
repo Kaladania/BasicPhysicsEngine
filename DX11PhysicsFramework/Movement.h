@@ -5,6 +5,8 @@
 #include "Transform.h"
 #include "Component.h"
 
+#include "Collider.h"
+
 #define DENSITY_OF_FLUID 1.0f
 #define CROSS_SECTIONAL_AREA 4.0f //(for cubes, 2f * 2f = 4f
 
@@ -104,7 +106,7 @@ public:
 	Vector3 CalculateDragForce();
 	Vector3 CalulateFrictionForce();
 	void CalculateCollisionResolutionForce(const float otherCOR);
-	void CalculateImpulse(Movement* otherMovement = nullptr);
+	void CalculateImpulse(Movement* otherMovement = nullptr, CollisionManifold otherManifold = CollisionManifold());
 	void CalculateAngularMovement(float deltaTime);
 
 	virtual void Update(float deltaTime);

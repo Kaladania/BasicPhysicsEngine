@@ -110,12 +110,14 @@ void Movement::CalculateCollisionResolutionForce(const float otherCOR)
 	//_velocity = Vector3(0, 0, 0);
 }
 
-void Movement::CalculateImpulse(Movement* otherMovement)
+void Movement::CalculateImpulse(Movement* otherMovement, CollisionManifold otherManifold)
 {
 	//ApplyImpulse(Vector3(10, 0, 0));
 	//determines the collision normal
 	//the direction between the centers of the colliding objects
-	Vector3 collisionNormal = _vector3D->Normalize(_transform->GetPosition() - otherMovement->_transform->GetPosition());
+	//Vector3 collisionNormal = _vector3D->Normalize(_transform->GetPosition() - otherMovement->_transform->GetPosition());
+
+	Vector3 collisionNormal = otherManifold.collisionNormal;
 
 	//gets the relative velocity of the current object with respect to the incoming object
 	Vector3 relativeVelocity = _velocity - otherMovement->GetVeclocity();
