@@ -543,9 +543,49 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 
 	_gameObjects.push_back(gameObject);
 
+	for (int i = 0; i < 2; i++)
+	{
+
+		gameObject = new GameObject("Sphere", 5);
+
+		//adds and populates transformation component
+		gameObject->AddComponent(TransformComponent);
+		objectTransform = gameObject->GetTransform();
+		objectTransform->SetScale(1.0f, 1.0f, 1.0f);
+		objectTransform->SetPosition(-5.0f + (i * 3.0f), 5.0f, 10.0f);
+
+		//adds and populates render information
+		gameObject->AddComponent(RendererComponent);
+		objectRenderer = gameObject->GetRenderer();
+		objectRenderer->SetGeometry(sphereGeometry);
+		objectRenderer->SetMaterial(shinyMaterial);
+		objectRenderer->SetTextureRV(_StoneTextureRV);
+
+		//adds and populates physics body information
+		gameObject->AddComponent(RigidbodyComponent);
+		objectBody = gameObject->GetPhysicsBody();
+
+		//adds and populates collider information
+		objectBody->SetCollider(SPHERE_COLLISSION_COMPONENT);
+		objectCollider = objectBody->GetCollider();
+		objectCollider->SetIsActive(true);
+		objectBody->GetMovement()->SetIsStationary(false); //sets the floor as stationary
+		static_cast<SphereCollider*>(objectCollider)->SetCollissionRadius(1.0f);
+
+		//adds and populates movement information
+		objectMovement = objectBody->GetMovement();
+		objectBody->GetMovement()->SetMass(1.0f + (i * 5.0f)); //gives each sphere a gradually increasing mass
+		objectMovement->SetMovementSpeed(3.0f); //sets the object's movement speed (DELETE)
+		objectMovement->SetDragCoefficient(0.47f); //sets the shape's drag co-efficient
+		objectMovement->SetIsUsingFloor(true); //enables a hard check to ensure cubes don't fall through the floor
+		objectMovement->SetIsSimulatingGravity(true); //states if the object is influenced by gravity
+		objectMovement->SetInertiaMatrix(0.5f); //sets up an inertia matrix
+
+		_gameObjects.push_back(gameObject);
+	}
 	
 
-	for (auto i = 0; i < 4; i++)
+	for (auto i = 0; i < 2; i++)
 	{
 		gameObject = new GameObject("Cube " + i, i + 1);
 
@@ -553,7 +593,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		gameObject->AddComponent(TransformComponent);
 		objectTransform = gameObject->GetTransform();
 		objectTransform->SetScale(1.0f, 1.0f, 1.0f);
-		objectTransform->SetPosition(-2.0f + (i * 2.5f), 5.0f, 10.0f);
+		objectTransform->SetPosition(1.0f + (i * 3.0f), 5.0f, 10.0f);
 
 		//adds and populates render information
 		gameObject->AddComponent(RendererComponent);
@@ -624,39 +664,6 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	//_gameObjects.back()->GetMovement()->SetVelocity(Vector3(0, 1, 0)); //sets the last cube to constantly ascend updwards
 	//_gameObjects.back()->GetMovement()->SetAcceleration(Vector3(0, 3.0f, 0));
 
-	gameObject = new GameObject("Sphere", 5);
-
-	//adds and populates transformation component
-	gameObject->AddComponent(TransformComponent);
-	objectTransform = gameObject->GetTransform();
-	objectTransform->SetScale(1.0f, 1.0f, 1.0f);
-	objectTransform->SetPosition(-5.0f, 5.0f, 10.0f);
-
-	//adds and populates render information
-	gameObject->AddComponent(RendererComponent);
-	objectRenderer = gameObject->GetRenderer();
-	objectRenderer->SetGeometry(sphereGeometry);
-	objectRenderer->SetMaterial(shinyMaterial);
-	objectRenderer->SetTextureRV(_StoneTextureRV);
-
-	gameObject->AddComponent(RigidbodyComponent);
-	objectBody = gameObject->GetPhysicsBody();
-	objectBody->SetCollider(SPHERE_COLLISSION_COMPONENT);
-	objectCollider = objectBody->GetCollider();
-	objectCollider->SetIsActive(true);
-	objectBody->GetMovement()->SetIsStationary(false); //sets the floor as stationary
-	static_cast<SphereCollider*>(objectCollider)->SetCollissionRadius(1.0f);
-
-	objectMovement = objectBody->GetMovement();
-	objectBody->GetMovement()->SetMass(1.0f);
-	objectMovement->SetMovementSpeed(3.0f); //sets the object's movement speed (DELETE)
-	objectMovement->SetDragCoefficient(0.47f);
-
-	objectMovement->SetIsUsingFloor(true); //enables a hard check to ensure cubes don't fall through the floor
-	objectMovement->SetIsSimulatingGravity(true);
-	objectMovement->SetInertiaMatrix(0.5f); //sets up an inertia matrix
-
-	_gameObjects.push_back(gameObject);
 
 	_timer = new Timer();
 
