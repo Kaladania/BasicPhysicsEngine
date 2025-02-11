@@ -770,7 +770,8 @@ void DX11PhysicsFramework::Update()
 
 void DX11PhysicsFramework::GetMovementInput()
 {
-	char _currentMovementKeyPressed = '0'; //stores the current movement key that was pressed
+	char _currentMovementKeyPressed = '-'; //stores the current movement key that was pressed
+	bool keyPressed = false;
 
 	// Move gameobjects
 	// Add force applies an accelerational force that is intensified by the time the object has been excellerating
@@ -778,70 +779,83 @@ void DX11PhysicsFramework::GetMovementInput()
 	{
 		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -3.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '1';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('7'))
 	{
 		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 5.0f, 0) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '7';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('2'))
 	{
 		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 3.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '2';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('3'))
 	{
 		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '3';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('4'))
 	{
 		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '4';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState(0x51))
 	{
 		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddRelativeForce(Vector3(0,0,1) * _currentMovementKeyPressDuration, Vector3(1, 0, 0));
 		_currentMovementKeyPressed = 'q';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState(0x45))
 	{
 		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'e';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState(0x52))
 	{
 		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'r';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('5'))
 	{
 		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '5';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('6'))
 	{
 		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '6';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('7'))
 	{
 		_gameObjects[4]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '7';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('8'))
 	{
 		_gameObjects[4]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '8';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState(0x5A))
 	{
 		_gameObjects[5]->GetPhysicsBody()->GetMovement()->AddRelativeForce(Vector3(0, 0, 1) * _currentMovementKeyPressDuration, Vector3(1, 0, 0));
 		_currentMovementKeyPressed = 'z';
+		keyPressed = true;
 	}
 
 	//checks if the object has been told to switch movement directions (or stop moving)
-	if (_currentMovementKeyPressed == _lastMovementKeyPressed)
+	if (keyPressed && _currentMovementKeyPressed == _lastMovementKeyPressed)
 	{
 		//if not, increase acceleration intensity
 		_currentMovementKeyPressDuration += 0.2f;
@@ -856,10 +870,11 @@ void DX11PhysicsFramework::GetMovementInput()
 		}
 
 		_currentMovementKeyPressDuration = 1;
+
+		//records the key currently being pressed
+		_lastMovementKeyPressed = _currentMovementKeyPressed;
 	}
 
-	//records the key currently being pressed
-	_lastMovementKeyPressed = _currentMovementKeyPressed;
 }
 
 void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
