@@ -73,7 +73,9 @@ public:
 	void SetVelocity(Vector3 velocity) { _velocity = velocity; }
 	Vector3 GetVeclocity() const { return _velocity; }
 	void SetMass(float mass) { _mass = mass; }
+
 	float GetMass() const { return _mass; }
+	float GetInverseMass();
 	void SetAcceleration(Vector3 acceleration) { _acceleration = acceleration; }
 
 	void SetDragCoefficient(float dragCoefficient) { _dragCoefficient = dragCoefficient; }

@@ -26,5 +26,8 @@ public:
 	bool CollidesWith(BoxCollider* other, CollisionManifold& manifold) override;
 	bool CollidesWith(PlaneCollider* other, CollisionManifold& manifold) override;
 
+	float Clamp(float value = 0.0f, float min = 0.0f, float max = 0.0f);
+	float GetSquareAxisDistance(float sphereAxisValue = 0.0f, float AABBAxisValueMin = 0.0f, float AABBAxisValueMax = 0.0f);
+
 };
 

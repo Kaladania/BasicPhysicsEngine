@@ -534,6 +534,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	PhysicsBody* objectBody = gameObject->GetPhysicsBody();
 	objectBody->SetCollider(BOX_COLLISSION_COMPONET);
 	Collider* objectCollider = objectBody->GetCollider();
+	objectCollider->SetIsActive(false); //DELETE IN FUTURE | prevents objects from attempting to collide with 0 mass platform
 	objectBody->GetMovement()->SetIsStationary(true); //sets the floor as stationary
 	static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(30.0f, 0.0f, 30.0f));
 	
@@ -546,7 +547,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	for (int i = 0; i < 2; i++)
 	{
 
-		gameObject = new GameObject("Sphere", 5);
+		gameObject = new GameObject("Sphere", i);
 
 		//adds and populates transformation component
 		gameObject->AddComponent(TransformComponent);
@@ -587,7 +588,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 
 	for (auto i = 0; i < 2; i++)
 	{
-		gameObject = new GameObject("Cube " + i, i + 1);
+		gameObject = new GameObject("Cube " + i, i);
 
 		//adds and populates transformation component
 		gameObject->AddComponent(TransformComponent);
@@ -820,13 +821,13 @@ void DX11PhysicsFramework::GetMovementInput()
 	}
 	if (GetAsyncKeyState(0x45))
 	{
-		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'e';
 		keyPressed = true;
 	}
 	if (GetAsyncKeyState(0x52))
 	{
-		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'r';
 		keyPressed = true;
 	}
@@ -856,7 +857,7 @@ void DX11PhysicsFramework::GetMovementInput()
 	}
 	if (GetAsyncKeyState(0x5A))
 	{
-		_gameObjects[5]->GetPhysicsBody()->GetMovement()->AddRelativeForce(Vector3(0, 0, 1) * _currentMovementKeyPressDuration, Vector3(1, 0, 0));
+		_gameObjects[4]->GetPhysicsBody()->GetMovement()->AddRelativeForce(Vector3(0, 0, 1) * _currentMovementKeyPressDuration, Vector3(1, 0, 0));
 		_currentMovementKeyPressed = 'z';
 		keyPressed = true;
 	}

@@ -48,6 +48,22 @@ void Movement::MoveTransform(Directions direction)
 	_velocity = directionVector;
 }
 
+/// <summary>
+/// Returns the object's inverse mass
+/// </summary>
+/// <returns>Inverse mass</returns>
+float Movement::GetInverseMass()
+{
+	//function was created in order to catch attempts to find the inverse mass of objects with 0 mass
+	//prevents calculations breaking in an attempt to divide by zero
+	if (_mass == 0)
+	{
+		return 0;
+	}
+
+	return 1.0f / _mass;
+}
+
 Vector3 Movement::CalculateDisplacement(Vector3 displacement, float deltaTime)
 {
 	displacement = (_velocity * deltaTime) + ((_acceleration * (deltaTime * deltaTime)) * 0.5f);
@@ -106,7 +122,7 @@ void Movement::CalculateImpulse(Movement* otherMovement)
 
 	//float collisionDotProduct = (collisionNormal.x * relativeVelocity.x) + (collisionNormal.y * relativeVelocity.y) + (collisionNormal.z * relativeVelocity.z);
 	float collisionDotProduct = _vector3D->DotProduct(collisionNormal, relativeVelocity);
-	_debugOutputer->PrintDebugString("Collision Dot Product is" + std::to_string(collisionDotProduct));
+	//_debugOutputer->PrintDebugString("Collision Dot Product is" + std::to_string(collisionDotProduct));
 
 	if (collisionDotProduct < 0.0f)
 	{
@@ -114,22 +130,22 @@ void Movement::CalculateImpulse(Movement* otherMovement)
 		float vj = -(1 + RESTITUTION_COEFFICIENT) * collisionDotProduct;
 
 		//calculates the total impulse applied in the collision
-		float J = vj / ((1 / _mass) + (1 / otherMovement->GetMass()));
+		float J = vj / (GetInverseMass() + otherMovement->GetInverseMass());
 
-		Vector3 impulseForce = collisionNormal * (1 / _mass) * J;
+		Vector3 impulseForce = collisionNormal * GetInverseMass() * J;
 		
 		//applies an impulse to the current object to propel it away from the other object
 		ApplyImpulse(impulseForce);
-		_debugOutputer->PrintDebugString("Object Impulse is" + _vector3D->ToString(impulseForce));
+		//_debugOutputer->PrintDebugString("Object Impulse is" + _vector3D->ToString(impulseForce));
 
-		impulseForce = (collisionNormal * J * (1 / otherMovement->GetMass())) * -1;
+		impulseForce = (collisionNormal * J * otherMovement->GetInverseMass()) * -1.0f;
 
 		//applies the same impulse in the reverse direction move the other object away from the current object
 		otherMovement->ApplyImpulse(impulseForce);
-		_debugOutputer->PrintDebugString("Other Object Impulse is" +  _vector3D->ToString(impulseForce));
+		//_debugOutputer->PrintDebugString("Other Object Impulse is" +  _vector3D->ToString(impulseForce));
 	}
 
-	_debugOutputer->PrintDebugString("Velocity is now " + _vector3D->ToString(_velocity));
+	//_debugOutputer->PrintDebugString("Velocity is now " + _vector3D->ToString(_velocity));
 }
 
 /// <summary>
