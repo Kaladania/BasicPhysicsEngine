@@ -110,14 +110,14 @@ void Movement::CalculateCollisionResolutionForce(const float otherCOR)
 	//_velocity = Vector3(0, 0, 0);
 }
 
-void Movement::CalculateImpulse(Movement* otherMovement, CollisionManifold otherManifold)
+void Movement::CalculateImpulse(Movement* otherMovement, CollisionManifold manifold)
 {
 	//ApplyImpulse(Vector3(10, 0, 0));
 	//determines the collision normal
 	//the direction between the centers of the colliding objects
 	//Vector3 collisionNormal = _vector3D->Normalize(_transform->GetPosition() - otherMovement->_transform->GetPosition());
 
-	Vector3 collisionNormal = otherManifold.collisionNormal;
+	Vector3 collisionNormal = manifold.collisionNormal;
 
 	//gets the relative velocity of the current object with respect to the incoming object
 	Vector3 relativeVelocity = _velocity - otherMovement->GetVeclocity();
@@ -136,7 +136,7 @@ void Movement::CalculateImpulse(Movement* otherMovement, CollisionManifold other
 
 		Vector3 impulseForce = collisionNormal * GetInverseMass() * J;
 		
-		Vector3 offset = collisionNormal * otherManifold.points[0].penetrationDepth * GetInverseMass();
+		Vector3 offset = collisionNormal * manifold.points[0].penetrationDepth * GetInverseMass();
 
 		_transform->SetPosition(_transform->GetPosition() + offset);
 ;		//applies an impulse to the current object to propel it away from the other object
@@ -145,7 +145,7 @@ void Movement::CalculateImpulse(Movement* otherMovement, CollisionManifold other
 
 		impulseForce = (collisionNormal * J * otherMovement->GetInverseMass()) * -1.0f;
 
-		offset = (collisionNormal * otherManifold.points[0].penetrationDepth * GetInverseMass()) * -1;
+		offset = (collisionNormal * manifold.points[0].penetrationDepth * GetInverseMass()) * -1;
 
 		otherMovement->GetTransform()->SetPosition(otherMovement->GetTransform()->GetPosition() + offset);
 		//applies the same impulse in the reverse direction move the other object away from the current object

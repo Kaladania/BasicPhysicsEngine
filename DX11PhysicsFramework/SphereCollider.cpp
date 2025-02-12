@@ -154,7 +154,7 @@ bool SphereCollider::CollidesWith(BoxCollider* other)
 	float yOverlap = otherPosition.y - position.y;
 	float zOverlap = otherPosition.z - position.z;
 
-	_collisionManifold.points[0].penetrationDepth = fabsf(_vector3D->GetMagnitude(clampedIntersection - otherPosition)); //stores the smallest axis penetration as the penetration depth
+	_collisionManifold.points[0].penetrationDepth = fabsf(_vector3D->GetMagnitude(this->_transform->GetPosition() - otherPosition) - (other->GetExtents().x + _radius)); //stores the smallest axis penetration as the penetration depth
 
 	return true;
 }

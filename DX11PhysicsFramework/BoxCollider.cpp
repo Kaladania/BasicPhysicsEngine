@@ -139,7 +139,7 @@ bool BoxCollider::CollidesWith(SphereCollider* other)
 	float yOverlap = otherPosition.y - position.y;
 	float zOverlap = otherPosition.z - position.z;
 
-	_collisionManifold.points[0].penetrationDepth = fabsf(_vector3D->GetMagnitude(clampedIntersection - otherPosition)); //stores the smallest axis penetration as the penetration depth
+	_collisionManifold.points[0].penetrationDepth = fabsf(_vector3D->GetMagnitude(this->_transform->GetPosition() - otherPosition) - (_halfExtents.x + sphereRadius)); //stores the smallest axis penetration as the penetration depth
 
 	return true;
 
@@ -283,11 +283,16 @@ bool BoxCollider::CollidesWith(BoxCollider* other)
 	Vector3 otherPosition = other->GetTransform()->GetPosition();
 	Vector3 position = _transform->GetPosition();
 
-	float xOverlap = otherMinPoint.x - _maxPoint.x;
-	float yOverlap = otherMinPoint.y - _maxPoint.y;
-	float zOverlap = otherMinPoint.z - _maxPoint.z;
+	Vector3 clampedIntersection = Vector3();
 
-	_collisionManifold.points[0].penetrationDepth = fabsf(min(xOverlap, yOverlap, zOverlap)); //stores the smallest axis penetration as the penetration depth
+	float xOverlap = fabsf(otherMinPoint.x - _maxPoint.x);
+	float yOverlap = fabsf(otherMinPoint.y - _maxPoint.y);
+	float zOverlap = fabsf(otherMinPoint.z - _maxPoint.z);
+
+	//_collisionManifold.points[0].penetrationDepth = min(xOverlap, yOverlap, zOverlap); //stores the smallest axis penetration as the penetration depth
+
+
+	_collisionManifold.points[0].penetrationDepth = fabsf(_vector3D->GetMagnitude(this->_transform->GetPosition() - otherCenter) - combinedRadii); //stores the smallest axis penetration as the penetration depth
 
 	return true;
 }

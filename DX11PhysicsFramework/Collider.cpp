@@ -21,7 +21,7 @@ bool Collider::CheckForCollission(Collider* other)
 	bool collided = false;
 	if (_isActive && other->GetIsActive())
 	{
-		collided = this->CollidesWith(other);
+		collided = other->CollidesWith(this);
 		//_debugOutputer->PrintDebugString("COLLISSION!");
 	}
 
