@@ -1,5 +1,6 @@
 #include "BoxCollider.h"
 #include "SphereCollider.h"
+#include <algorithm>
 
 BoxCollider::BoxCollider(GameObject* parent, Transform* transform) : Collider(parent, transform)
 {
@@ -125,11 +126,39 @@ bool BoxCollider::CollidesWith(SphereCollider* other, CollisionManifold& manifol
 		return false; //immediately breaks out of the function and returns a failed collision check
 	}
 
+	manifold = CollisionManifold();
+
+	manifold.collisionNormal = _vector3D->Normalize(this->_transform->GetPosition() - other->GetTransform()->GetPosition()); //stores direction of collision
+	manifold.contactPointCount = 1; //stores amount of points involved in collission
+	manifold.points[0].Position = clampedIntersection; //stores the position of the point of collision
+
+	Vector3 otherPosition = other->GetTransform()->GetPosition();
+	Vector3 position = _transform->GetPosition();
+
+	float xOverlap = otherPosition.x - position.x;
+	float yOverlap = otherPosition.y - position.y;
+	float zOverlap = otherPosition.z - position.z;
+
+	manifold.points[0].penetrationDepth = fabsf(min(xOverlap, yOverlap, zOverlap)); //stores the smallest axis penetration as the penetration depth
+
 	return true;
 
 	//returns a bool stating if the two shapes are colliding
 	//collission occures if the distance between sphere center and AABB (totalSquareDistance) is less than the squared radius
 	//return false;
+}
+
+/// <summary>
+/// Uses the SAT to get the distance between two shapes on a parrallel axis
+/// </summary>
+/// <param name="aMin">Minimum point of shape A on a parrallel axis</param>
+/// <param name="aMax">Maximum point of shape A on a parrallel axis</param>
+/// <param name="bMin">Minimum point of shape B on a parrallel axis</param>
+/// <param name="bMax">Maximum point of shape B on a parrallel axis</param>
+/// <returns>The distance between the two shapes on a parrallel axis</returns>
+float CalculateDistanceBetweenAxis(float aMin = 0.0f, float aMax = 0.0f, float bMin = 0.0f, float bMax = 0.0f)
+{
+	return 0;
 }
 
 /// <summary>
@@ -238,6 +267,21 @@ bool BoxCollider::CollidesWith(BoxCollider* other, CollisionManifold& manifold)
 	{
 		return false; 
 	}
+
+	manifold = CollisionManifold();
+
+	manifold.collisionNormal = _vector3D->Normalize(this->_transform->GetPosition() - other->GetTransform()->GetPosition()); //stores direction of collision
+	manifold.contactPointCount = 1; //stores amount of points involved in collission
+	manifold.points[0].Position = Vector3(); //stores the position of the point of collision
+
+	Vector3 otherPosition = other->GetTransform()->GetPosition();
+	Vector3 position = _transform->GetPosition();
+
+	float xOverlap = otherPosition.x - position.x;
+	float yOverlap = otherPosition.y - position.y;
+	float zOverlap = otherPosition.z - position.z;
+
+	manifold.points[0].penetrationDepth = fabsf(min(xOverlap, yOverlap, zOverlap)); //stores the smallest axis penetration as the penetration depth
 
 	return true;
 }

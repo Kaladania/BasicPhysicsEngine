@@ -52,8 +52,8 @@ bool SphereCollider::CollidesWith(SphereCollider* other, CollisionManifold& mani
 
 
 	//gets the distance between the centers of the colliding objects
-	Vector3 path = _vector3D->GetMagnitude(other->GetTransform()->GetPosition() - _transform->GetPosition());
-	float distance = _vector3D->GetMagnitude(path);
+	Vector3 path = this->_transform->GetPosition() - other->_transform->GetPosition();
+	float distance = _vector3D->GetMagnitude(path) ;
 
 	//gets the combined radius of both spheres
 	float sumOfRadii = other->GetCollissionRadius() + _radius;
@@ -137,6 +137,24 @@ bool SphereCollider::CollidesWith(BoxCollider* other, CollisionManifold& manifol
 	{
 		return false; //immediately breaks out of the function and returns a failed collision check
 	}
+
+	//getting to this point means all checks have succeed and a collision has occured
+	//thus collision manifold can be updated
+
+	manifold = CollisionManifold();
+
+	manifold.collisionNormal = _vector3D->Normalize(this->_transform->GetPosition() - other->GetTransform()->GetPosition()); //stores direction of collision
+	manifold.contactPointCount = 1; //stores amount of points involved in collission
+	manifold.points[0].Position = clampedIntersection; //stores the position of the point of collision
+
+	Vector3 otherPosition = other->GetTransform()->GetPosition();
+	Vector3 position = _transform->GetPosition();
+
+	float xOverlap = otherPosition.x - position.x;
+	float yOverlap = otherPosition.y - position.y;
+	float zOverlap = otherPosition.z - position.z;
+
+	manifold.points[0].penetrationDepth = fabsf(min(xOverlap, yOverlap, zOverlap)); //stores the smallest axis penetration as the penetration depth
 
 	return true;
 }

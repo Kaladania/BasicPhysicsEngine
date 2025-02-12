@@ -28,6 +28,7 @@ public:
 
 	float Clamp(float value = 0.0f, float min = 0.0f, float max = 0.0f);
 	float GetSquareAxisDistance(float sphereAxisValue = 0.0f, float AABBAxisValueMin = 0.0f, float AABBAxisValueMax = 0.0f);
+	float CalculateDistanceBetweenAxis(float aMin = 0.0f, float aMax = 0.0f, float bMin = 0.0f, float bMax = 0.0f);
 
 };
 
