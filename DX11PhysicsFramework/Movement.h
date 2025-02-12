@@ -5,12 +5,14 @@
 #include "Transform.h"
 #include "Component.h"
 
+#include "Collider.h"
+
 #define DENSITY_OF_FLUID 1.0f
 #define CROSS_SECTIONAL_AREA 4.0f //(for cubes, 2f * 2f = 4f
 
 #define FRICTION_COEFFICIENT 1.3f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
 #define STATIC_FRICTION_COEFFICIENT 2.0f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
-#define RESTITUTION_COEFFICIENT 0.2f //determines how 'elastic' the collision is
+#define RESTITUTION_COEFFICIENT 0.7f //determines how 'elastic' the collision is
 #define ANGULAR_DAMPING 0.5f
 
 using namespace DirectX;
@@ -70,10 +72,13 @@ public:
 
 	void SetMovementSpeed(float speed) { _movementSpeed = speed; }
 	void SetTransform(Transform* transform) { _transform = transform; }
+	Transform* GetTransform() const { return _transform; }
 	void SetVelocity(Vector3 velocity) { _velocity = velocity; }
 	Vector3 GetVeclocity() const { return _velocity; }
 	void SetMass(float mass) { _mass = mass; }
+
 	float GetMass() const { return _mass; }
+	float GetInverseMass();
 	void SetAcceleration(Vector3 acceleration) { _acceleration = acceleration; }
 
 	void SetDragCoefficient(float dragCoefficient) { _dragCoefficient = dragCoefficient; }
@@ -102,7 +107,7 @@ public:
 	Vector3 CalculateDragForce();
 	Vector3 CalulateFrictionForce();
 	void CalculateCollisionResolutionForce(const float otherCOR);
-	void CalculateImpulse(Movement* otherMovement = nullptr);
+	void CalculateImpulse(Movement* otherMovement = nullptr, CollisionManifold otherManifold = CollisionManifold());
 	void CalculateAngularMovement(float deltaTime);
 
 	virtual void Update(float deltaTime);

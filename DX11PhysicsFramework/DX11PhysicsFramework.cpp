@@ -534,6 +534,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	PhysicsBody* objectBody = gameObject->GetPhysicsBody();
 	objectBody->SetCollider(BOX_COLLISSION_COMPONET);
 	Collider* objectCollider = objectBody->GetCollider();
+	objectCollider->SetIsActive(false); //DELETE IN FUTURE | prevents objects from attempting to collide with 0 mass platform
 	objectBody->GetMovement()->SetIsStationary(true); //sets the floor as stationary
 	static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(30.0f, 0.0f, 30.0f));
 	
@@ -543,17 +544,70 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 
 	_gameObjects.push_back(gameObject);
 
-	
-
-	for (auto i = 0; i < 4; i++)
+	for (int i = 0; i < 2; i++)
 	{
-		gameObject = new GameObject("Cube " + i, i + 1);
+
+		gameObject = new GameObject("Sphere", i);
 
 		//adds and populates transformation component
 		gameObject->AddComponent(TransformComponent);
 		objectTransform = gameObject->GetTransform();
 		objectTransform->SetScale(1.0f, 1.0f, 1.0f);
-		objectTransform->SetPosition(-2.0f + (i * 2.5f), 5.0f, 10.0f);
+		objectTransform->SetPosition(-5.0f + (i * 3.0f), 5.0f, 10.0f);
+
+		//adds and populates render information
+		gameObject->AddComponent(RendererComponent);
+		objectRenderer = gameObject->GetRenderer();
+		objectRenderer->SetGeometry(sphereGeometry);
+		objectRenderer->SetMaterial(shinyMaterial);
+		objectRenderer->SetTextureRV(_StoneTextureRV);
+
+		//adds and populates physics body information
+		gameObject->AddComponent(RigidbodyComponent);
+		objectBody = gameObject->GetPhysicsBody();
+
+		//adds and populates collider information
+		objectBody->SetCollider(SPHERE_COLLISSION_COMPONENT);
+		objectCollider = objectBody->GetCollider();
+		objectCollider->SetIsActive(true);
+		objectBody->GetMovement()->SetIsStationary(false); //sets the floor as stationary
+		static_cast<SphereCollider*>(objectCollider)->SetCollissionRadius(1.0f);
+
+		//adds and populates movement information
+		objectMovement = objectBody->GetMovement();
+		
+
+		//customises mass for each sphere
+		switch (i)
+		{
+		case 0:
+			objectMovement->SetMass(5.0f);
+			break;
+
+		case 1:
+			objectMovement->SetMass(1.0f);
+			break;
+		}
+
+		objectMovement->SetMovementSpeed(3.0f); //sets the object's movement speed (DELETE)
+		objectMovement->SetDragCoefficient(0.47f); //sets the shape's drag co-efficient
+		objectMovement->SetIsUsingFloor(true); //enables a hard check to ensure cubes don't fall through the floor
+		objectMovement->SetIsSimulatingGravity(true); //states if the object is influenced by gravity
+		objectMovement->SetInertiaMatrix(0.5f); //sets up an inertia matrix
+
+		_gameObjects.push_back(gameObject);
+	}
+	
+
+	for (auto i = 0; i < 2; i++)
+	{
+		gameObject = new GameObject("Cube " + i, i);
+
+		//adds and populates transformation component
+		gameObject->AddComponent(TransformComponent);
+		objectTransform = gameObject->GetTransform();
+		objectTransform->SetScale(1.0f, 1.0f, 1.0f);
+		objectTransform->SetPosition(1.0f + (i * 3.0f), 5.0f, 10.0f);
 
 		//adds and populates render information
 		gameObject->AddComponent(RendererComponent);
@@ -590,19 +644,11 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		switch (i)
 		{
 			case 0:
-				objectMovement->SetMass(5.0f);
+				objectMovement->SetMass(1.0f);
 			break;
 
 			case 1:
-				objectMovement->SetMass(1.0f);
-				break;
-
-			case 2:
-				objectMovement->SetMass(10.0f);
-				break;
-
-			case 3:
-				objectMovement->SetMass(20.0f);
+				objectMovement->SetMass(5.0f);
 				break;
 		}
 
@@ -624,39 +670,6 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	//_gameObjects.back()->GetMovement()->SetVelocity(Vector3(0, 1, 0)); //sets the last cube to constantly ascend updwards
 	//_gameObjects.back()->GetMovement()->SetAcceleration(Vector3(0, 3.0f, 0));
 
-	gameObject = new GameObject("Sphere", 5);
-
-	//adds and populates transformation component
-	gameObject->AddComponent(TransformComponent);
-	objectTransform = gameObject->GetTransform();
-	objectTransform->SetScale(1.0f, 1.0f, 1.0f);
-	objectTransform->SetPosition(-5.0f, 5.0f, 10.0f);
-
-	//adds and populates render information
-	gameObject->AddComponent(RendererComponent);
-	objectRenderer = gameObject->GetRenderer();
-	objectRenderer->SetGeometry(sphereGeometry);
-	objectRenderer->SetMaterial(shinyMaterial);
-	objectRenderer->SetTextureRV(_StoneTextureRV);
-
-	gameObject->AddComponent(RigidbodyComponent);
-	objectBody = gameObject->GetPhysicsBody();
-	objectBody->SetCollider(SPHERE_COLLISSION_COMPONENT);
-	objectCollider = objectBody->GetCollider();
-	objectCollider->SetIsActive(true);
-	objectBody->GetMovement()->SetIsStationary(false); //sets the floor as stationary
-	static_cast<SphereCollider*>(objectCollider)->SetCollissionRadius(1.0f);
-
-	objectMovement = objectBody->GetMovement();
-	objectBody->GetMovement()->SetMass(1.0f);
-	objectMovement->SetMovementSpeed(3.0f); //sets the object's movement speed (DELETE)
-	objectMovement->SetDragCoefficient(0.47f);
-
-	objectMovement->SetIsUsingFloor(true); //enables a hard check to ensure cubes don't fall through the floor
-	objectMovement->SetIsSimulatingGravity(true);
-	objectMovement->SetInertiaMatrix(0.5f); //sets up an inertia matrix
-
-	_gameObjects.push_back(gameObject);
 
 	_timer = new Timer();
 
@@ -770,7 +783,8 @@ void DX11PhysicsFramework::Update()
 
 void DX11PhysicsFramework::GetMovementInput()
 {
-	char _currentMovementKeyPressed = '0'; //stores the current movement key that was pressed
+	char _currentMovementKeyPressed = '-'; //stores the current movement key that was pressed
+	bool keyPressed = false;
 
 	// Move gameobjects
 	// Add force applies an accelerational force that is intensified by the time the object has been excellerating
@@ -778,70 +792,83 @@ void DX11PhysicsFramework::GetMovementInput()
 	{
 		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -3.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '1';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('7'))
 	{
 		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 5.0f, 0) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '7';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('2'))
 	{
 		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 3.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '2';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('3'))
 	{
 		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '3';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('4'))
 	{
 		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '4';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState(0x51))
 	{
 		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddRelativeForce(Vector3(0,0,1) * _currentMovementKeyPressDuration, Vector3(1, 0, 0));
 		_currentMovementKeyPressed = 'q';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState(0x45))
 	{
-		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'e';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState(0x52))
 	{
-		_gameObjects[1]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'r';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('5'))
 	{
 		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '5';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('6'))
 	{
 		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '6';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('7'))
 	{
 		_gameObjects[4]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, -1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '7';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState('8'))
 	{
 		_gameObjects[4]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(0, 0, 1.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = '8';
+		keyPressed = true;
 	}
 	if (GetAsyncKeyState(0x5A))
 	{
-		_gameObjects[5]->GetPhysicsBody()->GetMovement()->AddRelativeForce(Vector3(0, 0, 1) * _currentMovementKeyPressDuration, Vector3(1, 0, 0));
+		_gameObjects[4]->GetPhysicsBody()->GetMovement()->AddRelativeForce(Vector3(0, 0, 1) * _currentMovementKeyPressDuration, Vector3(1, 0, 0));
 		_currentMovementKeyPressed = 'z';
+		keyPressed = true;
 	}
 
 	//checks if the object has been told to switch movement directions (or stop moving)
-	if (_currentMovementKeyPressed == _lastMovementKeyPressed)
+	if (keyPressed && _currentMovementKeyPressed == _lastMovementKeyPressed)
 	{
 		//if not, increase acceleration intensity
 		_currentMovementKeyPressDuration += 0.2f;
@@ -856,10 +883,11 @@ void DX11PhysicsFramework::GetMovementInput()
 		}
 
 		_currentMovementKeyPressDuration = 1;
+
+		//records the key currently being pressed
+		_lastMovementKeyPressed = _currentMovementKeyPressed;
 	}
 
-	//records the key currently being pressed
-	_lastMovementKeyPressed = _currentMovementKeyPressed;
 }
 
 void DX11PhysicsFramework::UpdatePhysics(float deltaTime)
@@ -916,10 +944,10 @@ void DX11PhysicsFramework::ResolveCollisions()
 						Collider* otherCollider = otherGameBody->GetCollider();
 
 						//checks if a collision occures
-						if (collider->CheckForCollission(otherCollider, otherCollider->GetManifold()))
+						if (collider->CheckForCollission(otherCollider))
 						{
 							//_debugOutputer->PrintDebugString("COLLISSION!");
-							gameBody->GetMovement()->CalculateImpulse(otherGameBody->GetMovement());
+							gameBody->GetMovement()->CalculateImpulse(otherGameBody->GetMovement(), collider->GetManifold());
 							//object->GetPhysicsBody()->GetMovement()->CalculateImpulse(gameBody->GetMovement());
 							//object->GetPhysicsBody()->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), object->GetPhysicsBody()->GetMovement());
 

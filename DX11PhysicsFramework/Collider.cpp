@@ -16,12 +16,12 @@ Collider::~Collider()
 	_transform = nullptr;
 }
 
-bool Collider::CheckForCollission(Collider* other, CollisionManifold& manifold)
+bool Collider::CheckForCollission(Collider* other)
 {
 	bool collided = false;
 	if (_isActive && other->GetIsActive())
 	{
-		collided = this->CollidesWith(other, other->GetManifold());
+		collided = other->CollidesWith(this);
 		//_debugOutputer->PrintDebugString("COLLISSION!");
 	}
 
