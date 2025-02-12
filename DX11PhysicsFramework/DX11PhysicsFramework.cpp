@@ -577,15 +577,15 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		objectMovement = objectBody->GetMovement();
 		
 
-		//customises mass for each cube
+		//customises mass for each sphere
 		switch (i)
 		{
 		case 0:
-			objectMovement->SetMass(1.0f);
+			objectMovement->SetMass(5.0f);
 			break;
 
 		case 1:
-			objectMovement->SetMass(5.0f);
+			objectMovement->SetMass(1.0f);
 			break;
 		}
 

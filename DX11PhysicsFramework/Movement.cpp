@@ -134,7 +134,7 @@ void Movement::CalculateImpulse(Movement* otherMovement, CollisionManifold other
 		//calculates the total impulse applied in the collision
 		float J = vj / (GetInverseMass() + otherMovement->GetInverseMass());
 
-		Vector3 impulseForce = collisionNormal * GetInverseMass() * J * otherManifold.points[0].penetrationDepth;
+		Vector3 impulseForce = collisionNormal * GetInverseMass() * J;
 		
 		Vector3 offset = collisionNormal * otherManifold.points[0].penetrationDepth * GetInverseMass();
 
@@ -143,7 +143,7 @@ void Movement::CalculateImpulse(Movement* otherMovement, CollisionManifold other
 		ApplyImpulse(impulseForce);
 		//_debugOutputer->PrintDebugString("Object Impulse is" + _vector3D->ToString(impulseForce));
 
-		impulseForce = (collisionNormal * J * otherMovement->GetInverseMass()) * -1.0f * otherManifold.points[0].penetrationDepth;
+		impulseForce = (collisionNormal * J * otherMovement->GetInverseMass()) * -1.0f;
 
 		offset = (collisionNormal * otherManifold.points[0].penetrationDepth * GetInverseMass()) * -1;
 
