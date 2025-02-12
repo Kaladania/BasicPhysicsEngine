@@ -72,6 +72,7 @@ public:
 
 	void SetMovementSpeed(float speed) { _movementSpeed = speed; }
 	void SetTransform(Transform* transform) { _transform = transform; }
+	Transform* GetTransform() const { return _transform; }
 	void SetVelocity(Vector3 velocity) { _velocity = velocity; }
 	Vector3 GetVeclocity() const { return _velocity; }
 	void SetMass(float mass) { _mass = mass; }

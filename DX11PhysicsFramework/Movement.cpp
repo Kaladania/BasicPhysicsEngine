@@ -134,14 +134,20 @@ void Movement::CalculateImpulse(Movement* otherMovement, CollisionManifold other
 		//calculates the total impulse applied in the collision
 		float J = vj / (GetInverseMass() + otherMovement->GetInverseMass());
 
-		Vector3 impulseForce = collisionNormal * GetInverseMass() * J;
+		Vector3 impulseForce = collisionNormal * GetInverseMass() * J * otherManifold.points[0].penetrationDepth;
 		
-		//applies an impulse to the current object to propel it away from the other object
+		Vector3 offset = collisionNormal * otherManifold.points[0].penetrationDepth * GetInverseMass();
+
+		_transform->SetPosition(_transform->GetPosition() + offset);
+;		//applies an impulse to the current object to propel it away from the other object
 		ApplyImpulse(impulseForce);
 		//_debugOutputer->PrintDebugString("Object Impulse is" + _vector3D->ToString(impulseForce));
 
-		impulseForce = (collisionNormal * J * otherMovement->GetInverseMass()) * -1.0f;
+		impulseForce = (collisionNormal * J * otherMovement->GetInverseMass()) * -1.0f * otherManifold.points[0].penetrationDepth;
 
+		offset = (collisionNormal * otherManifold.points[0].penetrationDepth * GetInverseMass()) * -1;
+
+		otherMovement->GetTransform()->SetPosition(otherMovement->GetTransform()->GetPosition() + offset);
 		//applies the same impulse in the reverse direction move the other object away from the current object
 		otherMovement->ApplyImpulse(impulseForce);
 		//_debugOutputer->PrintDebugString("Other Object Impulse is" +  _vector3D->ToString(impulseForce));

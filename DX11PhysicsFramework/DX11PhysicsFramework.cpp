@@ -575,7 +575,20 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 
 		//adds and populates movement information
 		objectMovement = objectBody->GetMovement();
-		objectBody->GetMovement()->SetMass(1.0f + (i * 5.0f)); //gives each sphere a gradually increasing mass
+		
+
+		//customises mass for each cube
+		switch (i)
+		{
+		case 0:
+			objectMovement->SetMass(1.0f);
+			break;
+
+		case 1:
+			objectMovement->SetMass(5.0f);
+			break;
+		}
+
 		objectMovement->SetMovementSpeed(3.0f); //sets the object's movement speed (DELETE)
 		objectMovement->SetDragCoefficient(0.47f); //sets the shape's drag co-efficient
 		objectMovement->SetIsUsingFloor(true); //enables a hard check to ensure cubes don't fall through the floor
@@ -636,14 +649,6 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 
 			case 1:
 				objectMovement->SetMass(1.0f);
-				break;
-
-			case 2:
-				objectMovement->SetMass(10.0f);
-				break;
-
-			case 3:
-				objectMovement->SetMass(20.0f);
 				break;
 		}
 
@@ -821,13 +826,13 @@ void DX11PhysicsFramework::GetMovementInput()
 	}
 	if (GetAsyncKeyState(0x45))
 	{
-		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'e';
 		keyPressed = true;
 	}
 	if (GetAsyncKeyState(0x52))
 	{
-		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'r';
 		keyPressed = true;
 	}

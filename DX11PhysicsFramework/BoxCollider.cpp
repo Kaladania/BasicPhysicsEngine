@@ -272,7 +272,7 @@ bool BoxCollider::CollidesWith(BoxCollider* other, CollisionManifold& manifold)
 
 	manifold.collisionNormal = _vector3D->Normalize(this->_transform->GetPosition() - other->GetTransform()->GetPosition()); //stores direction of collision
 	manifold.contactPointCount = 1; //stores amount of points involved in collission
-	manifold.points[0].Position = Vector3(); //stores the position of the point of collision
+	manifold.points[0].Position = Vector3(); //stores the position of the point of collision //DEFAULT VALUE, CHECK INTEGRITY
 
 	Vector3 otherPosition = other->GetTransform()->GetPosition();
 	Vector3 position = _transform->GetPosition();
