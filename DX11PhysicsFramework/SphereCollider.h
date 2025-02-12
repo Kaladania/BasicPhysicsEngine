@@ -18,10 +18,10 @@ public:
 	void SetCollissionRadius(float collissionRadius = 0.0f) { _radius = collissionRadius; }
 	float GetCollissionRadius() const { return _radius; } 
 
-	bool CollidesWith(Collider* other, CollisionManifold& manifold) override;
-	bool CollidesWith(SphereCollider* other, CollisionManifold& manifold) override;
-	bool CollidesWith(BoxCollider* other, CollisionManifold& manifold) override;
-	bool CollidesWith(PlaneCollider* other, CollisionManifold& manifold) override;
+	bool CollidesWith(Collider* other) override;
+	bool CollidesWith(SphereCollider* other) override;
+	bool CollidesWith(BoxCollider* other) override;
+	bool CollidesWith(PlaneCollider* other) override;
 
 };
 

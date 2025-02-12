@@ -21,10 +21,10 @@ public:
 	void SetExtents(Vector3 extents = Vector3());
 	Vector3 GetExtents() { return _halfExtents; }
 
-	bool CollidesWith(Collider* other, CollisionManifold& manifold) override;
-	bool CollidesWith(SphereCollider* other, CollisionManifold& manifold) override;
-	bool CollidesWith(BoxCollider* other, CollisionManifold& manifold) override;
-	bool CollidesWith(PlaneCollider* other, CollisionManifold& manifold) override;
+	bool CollidesWith(Collider* other) override;
+	bool CollidesWith(SphereCollider* other) override;
+	bool CollidesWith(BoxCollider* other) override;
+	bool CollidesWith(PlaneCollider* other) override;
 
 	float Clamp(float value = 0.0f, float min = 0.0f, float max = 0.0f);
 	float GetSquareAxisDistance(float sphereAxisValue = 0.0f, float AABBAxisValueMin = 0.0f, float AABBAxisValueMax = 0.0f);

@@ -12,7 +12,7 @@
 
 #define FRICTION_COEFFICIENT 1.3f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
 #define STATIC_FRICTION_COEFFICIENT 2.0f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
-#define RESTITUTION_COEFFICIENT 1.0f //determines how 'elastic' the collision is
+#define RESTITUTION_COEFFICIENT 0.7f //determines how 'elastic' the collision is
 #define ANGULAR_DAMPING 0.5f
 
 using namespace DirectX;

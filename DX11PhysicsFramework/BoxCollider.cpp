@@ -29,11 +29,11 @@ void BoxCollider::SetExtents(Vector3 extents)
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool BoxCollider::CollidesWith(Collider* other, CollisionManifold& manifold)
+bool BoxCollider::CollidesWith(Collider* other)
 {
 	if (_isActive)
 	{
-		return other->CollidesWith(this, _collisionManifold);
+		return other->CollidesWith(this);
 	}
 
 	//defaults to no collission if component is not active
@@ -45,7 +45,7 @@ bool BoxCollider::CollidesWith(Collider* other, CollisionManifold& manifold)
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool BoxCollider::CollidesWith(SphereCollider* other, CollisionManifold& manifold)
+bool BoxCollider::CollidesWith(SphereCollider* other)
 {
 	Vector3 clampedIntersection = Vector3(0, 0, 0);
 	Vector3 sphereCenter = other->GetTransform()->GetPosition();
@@ -126,11 +126,11 @@ bool BoxCollider::CollidesWith(SphereCollider* other, CollisionManifold& manifol
 		return false; //immediately breaks out of the function and returns a failed collision check
 	}
 
-	manifold = CollisionManifold();
+	_collisionManifold = CollisionManifold();
 
-	manifold.collisionNormal = _vector3D->Normalize(this->_transform->GetPosition() - other->GetTransform()->GetPosition()); //stores direction of collision
-	manifold.contactPointCount = 1; //stores amount of points involved in collission
-	manifold.points[0].Position = clampedIntersection; //stores the position of the point of collision
+	_collisionManifold.collisionNormal = _vector3D->Normalize(this->_transform->GetPosition() - other->GetTransform()->GetPosition()); //stores direction of collision
+	_collisionManifold.contactPointCount = 1; //stores amount of points involved in collission
+	_collisionManifold.points[0].Position = _transform->GetPosition() + (_collisionManifold.collisionNormal * other->GetCollissionRadius()); //stores the position of the point of collision
 
 	Vector3 otherPosition = other->GetTransform()->GetPosition();
 	Vector3 position = _transform->GetPosition();
@@ -139,7 +139,7 @@ bool BoxCollider::CollidesWith(SphereCollider* other, CollisionManifold& manifol
 	float yOverlap = otherPosition.y - position.y;
 	float zOverlap = otherPosition.z - position.z;
 
-	manifold.points[0].penetrationDepth = fabsf(min(xOverlap, yOverlap, zOverlap)); //stores the smallest axis penetration as the penetration depth
+	_collisionManifold.points[0].penetrationDepth = fabsf(_vector3D->GetMagnitude(clampedIntersection - otherPosition)); //stores the smallest axis penetration as the penetration depth
 
 	return true;
 
@@ -211,7 +211,7 @@ float BoxCollider::GetSquareAxisDistance(float sphereAxisValue, float AABBAxisVa
 /// </summary>
 /// <param name="other">the other collider being collided with</param>
 /// <returns>bool stating if collission occured</returns>
-bool BoxCollider::CollidesWith(BoxCollider* other, CollisionManifold& manifold)
+bool BoxCollider::CollidesWith(BoxCollider* other)
 {
 	bool collided = false;
 
@@ -268,25 +268,31 @@ bool BoxCollider::CollidesWith(BoxCollider* other, CollisionManifold& manifold)
 		return false; 
 	}
 
-	manifold = CollisionManifold();
+	_collisionManifold = CollisionManifold();
 
-	manifold.collisionNormal = _vector3D->Normalize(this->_transform->GetPosition() - other->GetTransform()->GetPosition()); //stores direction of collision
-	manifold.contactPointCount = 1; //stores amount of points involved in collission
-	manifold.points[0].Position = Vector3(); //stores the position of the point of collision //DEFAULT VALUE, CHECK INTEGRITY
+	Vector3 otherCenter = other->GetTransform()->GetPosition();
+	Vector3 otherExtents = other->GetExtents();
+
+	Vector3 otherMinPoint = Vector3(otherCenter.x - otherExtents.x, otherCenter.y - otherExtents.y, otherCenter.z - otherExtents.z);
+	Vector3 otherMaxPoint = Vector3(otherCenter.x + otherExtents.x, otherCenter.y + otherExtents.y, otherCenter.z + otherExtents.z);
+
+	_collisionManifold.collisionNormal = _vector3D->Normalize(this->_transform->GetPosition() - other->GetTransform()->GetPosition()); //stores direction of collision
+	_collisionManifold.contactPointCount = 1; //stores amount of points involved in collission
+	_collisionManifold.points[0].Position = Vector3(); //stores the position of the point of collision //DEFAULT VALUE, CHECK INTEGRITY
 
 	Vector3 otherPosition = other->GetTransform()->GetPosition();
 	Vector3 position = _transform->GetPosition();
 
-	float xOverlap = otherPosition.x - position.x;
-	float yOverlap = otherPosition.y - position.y;
-	float zOverlap = otherPosition.z - position.z;
+	float xOverlap = otherMinPoint.x - _maxPoint.x;
+	float yOverlap = otherMinPoint.y - _maxPoint.y;
+	float zOverlap = otherMinPoint.z - _maxPoint.z;
 
-	manifold.points[0].penetrationDepth = fabsf(min(xOverlap, yOverlap, zOverlap)); //stores the smallest axis penetration as the penetration depth
+	_collisionManifold.points[0].penetrationDepth = fabsf(min(xOverlap, yOverlap, zOverlap)); //stores the smallest axis penetration as the penetration depth
 
 	return true;
 }
 
-bool BoxCollider::CollidesWith(PlaneCollider* other, CollisionManifold& manifold)
+bool BoxCollider::CollidesWith(PlaneCollider* other)
 {
 	return false;
 }

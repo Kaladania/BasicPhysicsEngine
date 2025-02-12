@@ -644,11 +644,11 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		switch (i)
 		{
 			case 0:
-				objectMovement->SetMass(5.0f);
+				objectMovement->SetMass(1.0f);
 			break;
 
 			case 1:
-				objectMovement->SetMass(1.0f);
+				objectMovement->SetMass(5.0f);
 				break;
 		}
 
@@ -944,10 +944,10 @@ void DX11PhysicsFramework::ResolveCollisions()
 						Collider* otherCollider = otherGameBody->GetCollider();
 
 						//checks if a collision occures
-						if (collider->CheckForCollission(otherCollider, otherCollider->GetManifold()))
+						if (collider->CheckForCollission(otherCollider))
 						{
 							//_debugOutputer->PrintDebugString("COLLISSION!");
-							gameBody->GetMovement()->CalculateImpulse(otherGameBody->GetMovement(), otherCollider->GetManifold());
+							gameBody->GetMovement()->CalculateImpulse(otherGameBody->GetMovement(), collider->GetManifold());
 							//object->GetPhysicsBody()->GetMovement()->CalculateImpulse(gameBody->GetMovement());
 							//object->GetPhysicsBody()->GetMovement()->CalculateImpulse(object->GetTransform()->GetPosition(), object->GetPhysicsBody()->GetMovement());
 
