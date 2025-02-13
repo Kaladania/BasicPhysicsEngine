@@ -84,7 +84,7 @@ bool BoxCollider::CollidesWith(SphereCollider* other)
 	//cache's the sphere's radius
 	float sphereRadius = other->GetCollissionRadius();
 
-	float distance = clampedIntersection.x - sphereCenter.x;
+	float distance = fabs(clampedIntersection.x - sphereCenter.x);
 
 	bool collided = false;
 	//distance = sqrtf(distance * distance);
@@ -102,7 +102,7 @@ bool BoxCollider::CollidesWith(SphereCollider* other)
 		return false; //immediately breaks out of the function and returns a failed collision check
 	}
 
-	distance = clampedIntersection.y - sphereCenter.y;
+	distance = fabs(clampedIntersection.y - sphereCenter.y);
 
 	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
 	if (distance < sphereRadius)
@@ -114,7 +114,7 @@ bool BoxCollider::CollidesWith(SphereCollider* other)
 		return false; //immediately breaks out of the function and returns a failed collision check
 	}
 
-	distance = clampedIntersection.z - sphereCenter.z;
+	distance = fabs(clampedIntersection.z - sphereCenter.z);
 
 	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
 	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
@@ -224,10 +224,10 @@ bool BoxCollider::CollidesWith(BoxCollider* other)
 	_maxPoint = Vector3(_center.x + _halfExtents.x, _center.y + _halfExtents.y, _center.z +_halfExtents.z);
 
 	distance = this->_transform->GetPosition().x - other->_transform->GetPosition().x;
-	distance = sqrtf(distance * distance);
+	distance = fabs(sqrtf(distance * distance));
 
 	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
-	float combinedRadii = this->_halfExtents.x + other->GetExtents().x;
+	float combinedRadii = fabs(this->_halfExtents.x + other->GetExtents().x);
 
 	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
 	if (distance < combinedRadii)
@@ -240,10 +240,10 @@ bool BoxCollider::CollidesWith(BoxCollider* other)
 	}
 
 	distance = this->_transform->GetPosition().y - other->_transform->GetPosition().y;
-	distance = sqrtf(distance * distance);
+	distance = fabs(sqrtf(distance * distance));
 
 	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
-	combinedRadii = this->_halfExtents.y + other->GetExtents().y;
+	combinedRadii = fabs(this->_halfExtents.y + other->GetExtents().y);
 
 	if (distance < combinedRadii)
 	{
@@ -255,10 +255,10 @@ bool BoxCollider::CollidesWith(BoxCollider* other)
 	}
 
 	distance = this->_transform->GetPosition().z - other->_transform->GetPosition().z;
-	distance = sqrtf(distance * distance);
+	distance = fabs(sqrtf(distance * distance));
 
 	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
-	combinedRadii = this->_halfExtents.z + other->GetExtents().z;
+	combinedRadii = fabs(this->_halfExtents.z + other->GetExtents().z);
 
 	if (distance < combinedRadii)
 	{

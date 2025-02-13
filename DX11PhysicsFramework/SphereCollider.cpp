@@ -96,7 +96,7 @@ bool SphereCollider::CollidesWith(BoxCollider* other)
 	clampedIntersection.y = other->Clamp(center.y, _minPoint.y, _maxPoint.y);
 	clampedIntersection.z = other->Clamp(center.z, _minPoint.z, _maxPoint.z);
 
-	float distance = clampedIntersection.x - center.x;
+	float distance = fabs(clampedIntersection.x - center.x);
 
 	bool collided = false;
 	//distance = sqrtf(distance * distance);
@@ -114,7 +114,7 @@ bool SphereCollider::CollidesWith(BoxCollider* other)
 		return false; //immediately breaks out of the function and returns a failed collision check
 	}
 
-	distance = clampedIntersection.y - center.y;
+	distance = fabs(clampedIntersection.y - center.y);
 
 	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
 	if (distance < _radius)
@@ -126,7 +126,7 @@ bool SphereCollider::CollidesWith(BoxCollider* other)
 		return false; //immediately breaks out of the function and returns a failed collision check
 	}
 
-	distance = clampedIntersection.z - center.z;
+	distance = fabs(clampedIntersection.z - center.z);
 
 	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
 	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
