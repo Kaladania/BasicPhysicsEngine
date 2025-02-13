@@ -50,6 +50,11 @@ void PhysicsBody::SetCollider(ColliderType colliderType)
 		_collider = new BoxCollider(_parent, _transform);
 		break;
 
+	case PLANE_COLLISSION_COMPONENT:
+
+		_collider = new PlaneCollider(_parent, _transform);
+		break;
+
 	}
 }
 

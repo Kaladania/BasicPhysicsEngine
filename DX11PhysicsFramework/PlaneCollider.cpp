@@ -1,8 +1,10 @@
 #include "PlaneCollider.h"
+#include "BoxCollider.h"
+#include "SphereCollider.h"
 
 
 
-PlaneCollider::PlaneCollider(GameObject* parent)
+PlaneCollider::PlaneCollider(GameObject* parent, Transform* transform) : Collider(parent, transform)
 {
 }
 
@@ -34,6 +36,27 @@ bool PlaneCollider::CollidesWith(Collider* other)
 /// <returns>bool stating if collission occured</returns>
 bool PlaneCollider::CollidesWith(SphereCollider* other)
 {
+	//Vector3 path = this->_transform->GetPosition() - other->GetTransform()->GetPosition();
+	//float distance = _vector3D->GetMagnitude(path);
+
+	float distance = fabs(_vector3D->DotProduct(other->GetTransform()->GetPosition(), _normal)); //gets the distance between the sphere center and plane
+	distance -= other->GetCollissionRadius(); //subtracts the radius to find the total distance from THE OUTSIDE OF THE SPHERE
+
+	if (distance <= 0.0f)
+	{
+		Vector3 path = this->_transform->GetPosition() - other->GetTransform()->GetPosition();
+		distance = _vector3D->GetMagnitude(path);
+
+		_collisionManifold.collisionNormal = _normal; //stores direction of collision
+		_collisionManifold.contactPointCount = 1; //stores amount of points involved in collission
+		_collisionManifold.points[0].Position = _transform->GetPosition() + (_collisionManifold.collisionNormal * other->GetCollissionRadius()); //stores the position of the point of collision
+		_collisionManifold.points[0].penetrationDepth = fabsf(_vector3D->GetMagnitude(this->_transform->GetPosition() - other->GetTransform()->GetPosition()) - other->GetCollissionRadius()); //stores the amount of overlap involved in the collision
+
+		return true;
+	}
+
+
+
 	////calculates the distance between the center's of the two objects
 	//float distance = _vector3D->GetMagnitude(this->_transform->GetPosition() - other->_transform->GetPosition());
 	//_debugOutputer->PrintDebugString("This object's center: " + _vector3D->ToString(this->_transform->GetPosition()) + "Other Object's center: " + _vector3D->ToString(other->_transform->GetPosition()) + ". Distance is: " + std::to_string(distance));
