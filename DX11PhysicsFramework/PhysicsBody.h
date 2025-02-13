@@ -4,6 +4,7 @@
 #include "Collider.h"
 #include "SphereCollider.h"
 #include "BoxCollider.h"
+#include "PlaneCollider.h"
 
 #include "Component.h"
 

@@ -117,6 +117,8 @@ void Movement::CalculateImpulse(Movement* otherMovement, CollisionManifold manif
 	//the direction between the centers of the colliding objects
 	//Vector3 collisionNormal = _vector3D->Normalize(_transform->GetPosition() - otherMovement->_transform->GetPosition());
 
+	_isColliding = false;
+
 	Vector3 collisionNormal = manifold.collisionNormal;
 
 	//gets the relative velocity of the current object with respect to the incoming object
@@ -145,14 +147,15 @@ void Movement::CalculateImpulse(Movement* otherMovement, CollisionManifold manif
 
 		impulseForce = (collisionNormal * J * otherMovement->GetInverseMass()) * -1.0f;
 
-		offset = (collisionNormal * manifold.points[0].penetrationDepth * GetInverseMass()) * -1;
+		offset = (collisionNormal * manifold.points[0].penetrationDepth * otherMovement->GetInverseMass()) * -1;
 
 		otherMovement->GetTransform()->SetPosition(otherMovement->GetTransform()->GetPosition() + offset);
 		//applies the same impulse in the reverse direction move the other object away from the current object
 		otherMovement->ApplyImpulse(impulseForce);
+
+		_isColliding = true;
 		//_debugOutputer->PrintDebugString("Other Object Impulse is" +  _vector3D->ToString(impulseForce));
 	}
-
 	//_debugOutputer->PrintDebugString("Velocity is now " + _vector3D->ToString(_velocity));
 }
 
@@ -311,7 +314,7 @@ void Movement::Update(float deltaTime)
 
 		CalculateAngularMovement(deltaTime);
 
-		_debugOutputer->PrintDebugString("Net Force: " + _vector3D->ToString(_netForce));
+		//_debugOutputer->PrintDebugString("Net Force: " + _vector3D->ToString(_netForce));
 
 		_acceleration += _netForce / _mass; //calculates current rate of acceleration
 
@@ -325,19 +328,26 @@ void Movement::Update(float deltaTime)
 		//calculates the distance moved during this frame and updates position
 		position += _velocity * deltaTime; 
 
-		//hard coded stop to prevent falling through platform
-		//REMOVE AFTER COLLISSION IS IMPLIMENTED
-		if (_usesForcedFloor && position.y < 1)
+		if (position.y < -5.0f)
 		{
-			position.y = 1;
-			_isColliding = true;
-		}
-		else
-		{
-			_isColliding == false;
+			position.y = 10.0f;
 		}
 
+		////hard coded stop to prevent falling through platform
+		////REMOVE AFTER COLLISSION IS IMPLIMENTED
+		//if (_usesForcedFloor && position.y < 1)
+		//{
+		//	position.y = 1;
+		//	_isColliding = true;
+		//}
+		//else
+		//{
+		//	_isColliding == false;
+		//}
+
 		_transform->SetPosition(position); //sets new transform position
+
+		_debugOutputer->PrintDebugString("Position is: " + _vector3D->ToString(position));
 
 		//resets force values to maintain intergrity of calculations
 		_netForce = Vector3(0, 0, 0);
