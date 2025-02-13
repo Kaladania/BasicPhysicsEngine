@@ -117,6 +117,8 @@ void Movement::CalculateImpulse(Movement* otherMovement, CollisionManifold manif
 	//the direction between the centers of the colliding objects
 	//Vector3 collisionNormal = _vector3D->Normalize(_transform->GetPosition() - otherMovement->_transform->GetPosition());
 
+	_isColliding = false;
+
 	Vector3 collisionNormal = manifold.collisionNormal;
 
 	//gets the relative velocity of the current object with respect to the incoming object
@@ -150,9 +152,10 @@ void Movement::CalculateImpulse(Movement* otherMovement, CollisionManifold manif
 		otherMovement->GetTransform()->SetPosition(otherMovement->GetTransform()->GetPosition() + offset);
 		//applies the same impulse in the reverse direction move the other object away from the current object
 		otherMovement->ApplyImpulse(impulseForce);
+
+		_isColliding = true;
 		//_debugOutputer->PrintDebugString("Other Object Impulse is" +  _vector3D->ToString(impulseForce));
 	}
-
 	//_debugOutputer->PrintDebugString("Velocity is now " + _vector3D->ToString(_velocity));
 }
 
