@@ -518,8 +518,11 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	//adds and populates transformation component
 	gameObject->AddComponent(TransformComponent);
 	Transform* objectTransform = gameObject->GetTransform();
-	objectTransform->SetPosition(0.0f, 0.0f, 0.0f);
 
+	Vector3 spawnPosition = Vector3(0.0f, 0.0f, 0.0f);
+
+	objectTransform->SetPosition(spawnPosition);
+	objectTransform->SetSpawnPoint(spawnPosition);
 	objectTransform->SetScale(15.0f, 15.0f, 15.0f);
 	objectTransform->SetRotation(90.0f, 0.0f, 0.0f);
 
@@ -556,7 +559,10 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		gameObject->AddComponent(TransformComponent);
 		objectTransform = gameObject->GetTransform();
 		objectTransform->SetScale(1.0f, 1.0f, 1.0f);
-		objectTransform->SetPosition(-5.0f + (i * 3.0f), 5.0f, 10.0f);
+
+		spawnPosition = Vector3( - 5.0f + (i * 3.0f), 5.0f, 10.0f);
+		objectTransform->SetPosition(spawnPosition);
+		objectTransform->SetSpawnPoint(spawnPosition);
 
 		//adds and populates render information
 		gameObject->AddComponent(RendererComponent);
@@ -610,7 +616,9 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		gameObject->AddComponent(TransformComponent);
 		objectTransform = gameObject->GetTransform();
 		objectTransform->SetScale(1.0f, 1.0f, 1.0f);
-		objectTransform->SetPosition(1.0f + (i * 3.0f), 5.0f, 10.0f);
+		spawnPosition = Vector3(1.0f + (i * 3.0f), 5.0f, 10.0f);
+		objectTransform->SetPosition(spawnPosition);
+		objectTransform->SetSpawnPoint(spawnPosition);
 
 		//adds and populates render information
 		gameObject->AddComponent(RendererComponent);

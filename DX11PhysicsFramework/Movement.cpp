@@ -330,7 +330,7 @@ void Movement::Update(float deltaTime)
 
 		if (position.y < -5.0f)
 		{
-			position.y = 10.0f;
+			position = _transform->GetSpawnPoint();
 		}
 
 		////hard coded stop to prevent falling through platform
