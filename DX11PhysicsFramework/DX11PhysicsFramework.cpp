@@ -519,6 +519,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	gameObject->AddComponent(TransformComponent);
 	Transform* objectTransform = gameObject->GetTransform();
 	objectTransform->SetPosition(0.0f, 0.0f, 0.0f);
+
 	objectTransform->SetScale(15.0f, 15.0f, 15.0f);
 	objectTransform->SetRotation(90.0f, 0.0f, 0.0f);
 
@@ -532,11 +533,13 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	//adds and populates render information
 	gameObject->AddComponent(RigidbodyComponent);
 	PhysicsBody* objectBody = gameObject->GetPhysicsBody();
-	objectBody->SetCollider(PLANE_COLLISSION_COMPONENT);
+	objectBody->SetCollider(BOX_COLLISSION_COMPONET);
 	Collider* objectCollider = objectBody->GetCollider();
 	objectCollider->SetIsActive(true); //DELETE IN FUTURE | prevents objects from attempting to collide with 0 mass platform
 	objectBody->GetMovement()->SetIsStationary(true); //sets the floor as stationary
-	static_cast<PlaneCollider*>(objectCollider)->SetPlaneNormal(Vector3(0.0f, 1.0f, 0.0f));
+	//static_cast<PlaneCollider*>(objectCollider)->SetPlaneNormal(Vector3(0.0f, 1.0f, 0.0f));
+	static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(30.0f, 0.0f, 30.0f));
+	static_cast<BoxCollider*>(objectCollider)->SetIsPlane(true);
 	
 	objectBody->GetMovement()->SetMass(0.0f);
 	Movement* objectMovement = nullptr;

@@ -51,32 +51,6 @@ bool BoxCollider::CollidesWith(SphereCollider* other)
 	Vector3 clampedIntersection = Vector3(0, 0, 0);
 	Vector3 sphereCenter = other->GetTransform()->GetPosition();
 
-	////determines min and max points by finding the point along the object furthest away from center
-	//_minPoint = Vector3(_center.x - _halfExtents.x, _center.y - _halfExtents.y, _center.z - _halfExtents.z);
-	//_maxPoint = Vector3(_center.x + _halfExtents.x, _center.y + _halfExtents.y, _center.z + _halfExtents.z);
-
-	//Vector3 sphereCenter = other->GetTransform()->GetPosition();
-
-	//float totalSquareDistance = 0.0f;
-
-	////gets the total square distance between the center of the sphere and the minimum/maximum points of the AABB
-	//totalSquareDistance += GetSquareAxisDistance(sphereCenter.x, _minPoint.x, _maxPoint.x);
-	//_debugOutputer->PrintDebugString("(After X) Total Distance is now : " + std::to_string(totalSquareDistance));
-	//totalSquareDistance += GetSquareAxisDistance(sphereCenter.y, _minPoint.y, _maxPoint.y);
-	//_debugOutputer->PrintDebugString("(After Y) Total Distance is now : " + std::to_string(totalSquareDistance));
-	//totalSquareDistance += GetSquareAxisDistance(sphereCenter.z, _minPoint.z, _maxPoint.z);
-	//_debugOutputer->PrintDebugString("(After Z) Total Distance is now : " + std::to_string(totalSquareDistance));
-
-	////cache's the sphere's radius
-	//float sphereRadius = other->GetCollissionRadius();
-
-	//_debugOutputer->PrintDebugString("Squared sphere Radius is: " + std::to_string(sphereRadius * sphereRadius));
-
-	//if (totalSquareDistance <= (sphereRadius * sphereRadius))
-	//{
-	//	return true;
-	//}
-
 	clampedIntersection.x = Clamp(sphereCenter.x, _minPoint.x, _maxPoint.x);
 	clampedIntersection.y = Clamp(sphereCenter.y, _minPoint.y, _maxPoint.y);
 	clampedIntersection.z = Clamp(sphereCenter.z, _minPoint.z, _maxPoint.z);
@@ -87,10 +61,6 @@ bool BoxCollider::CollidesWith(SphereCollider* other)
 	float distance = fabs(clampedIntersection.x - sphereCenter.x);
 
 	bool collided = false;
-	//distance = sqrtf(distance * distance);
-
-	//calculates the total (radius) size of the availble collission area (if you lay both bounding spheres next to each other)
-	//float combinedRadii = this->_halfExtents.x + other->GetExtents().x;
 
 	//if the distance is less than the combined radii, then the other object is within the collission area and is touching this object
 	if (distance < sphereRadius)
@@ -127,21 +97,42 @@ bool BoxCollider::CollidesWith(SphereCollider* other)
 		return false; //immediately breaks out of the function and returns a failed collision check
 	}
 
-	_collisionManifold = CollisionManifold();
+	if (this->GetIsPlane())
+	{
+		Vector3 normal = Vector3(0, 1, 0);
 
-	_collisionManifold.collisionNormal = _vector3D->Normalize(this->_transform->GetPosition() - other->GetTransform()->GetPosition()); //stores direction of collision
-	_collisionManifold.contactPointCount = 1; //stores amount of points involved in collission
-	_collisionManifold.points[0].Position = _transform->GetPosition() + (_collisionManifold.collisionNormal * other->GetCollissionRadius()); //stores the position of the point of collision
+		float distanceToPlane = fabs(_vector3D->DotProduct(other->GetTransform()->GetPosition(), normal)); //gets the distance between the sphere center and plane
+		distanceToPlane -= other->GetCollissionRadius(); //subtracts the radius to find the total distance from THE OUTSIDE OF THE SPHERE
 
-	Vector3 otherPosition = other->GetTransform()->GetPosition();
-	Vector3 position = _transform->GetPosition();
+		//Vector3 path = this->_transform->GetPosition() - other->GetTransform()->GetPosition();
+		//distance = _vector3D->GetMagnitude(path);
 
-	float xOverlap = otherPosition.x - position.x;
-	float yOverlap = otherPosition.y - position.y;
-	float zOverlap = otherPosition.z - position.z;
+		_collisionManifold.collisionNormal = normal; //stores direction of collision
+		_collisionManifold.contactPointCount = 1; //stores amount of points involved in collission
+		_collisionManifold.points[0].Position = _transform->GetPosition() + (_collisionManifold.collisionNormal * other->GetCollissionRadius()); //stores the position of the point of collision
 
-	_collisionManifold.points[0].penetrationDepth = fabsf(_vector3D->GetMagnitude(this->_transform->GetPosition() - otherPosition) - (_halfExtents.x + sphereRadius)); //stores the smallest axis penetration as the penetration depth
+		_collisionManifold.points[0].penetrationDepth = fabs(distanceToPlane); //stores the amount of overlap involved in the collision
+	}
+	else
+	{
+		_collisionManifold = CollisionManifold();
 
+		_collisionManifold.collisionNormal = _vector3D->Normalize(this->_transform->GetPosition() - other->GetTransform()->GetPosition()); //stores direction of collision
+		_collisionManifold.contactPointCount = 1; //stores amount of points involved in collission
+		_collisionManifold.points[0].Position = _transform->GetPosition() + (_collisionManifold.collisionNormal * other->GetCollissionRadius()); //stores the position of the point of collision
+
+		Vector3 otherPosition = other->GetTransform()->GetPosition();
+		Vector3 position = _transform->GetPosition();
+
+		float xOverlap = otherPosition.x - position.x;
+		float yOverlap = otherPosition.y - position.y;
+		float zOverlap = otherPosition.z - position.z;
+
+		_collisionManifold.points[0].penetrationDepth = fabsf(_vector3D->GetMagnitude(this->_transform->GetPosition() - otherPosition) - (_halfExtents.x + sphereRadius)); //stores the smallest axis penetration as the penetration depth
+
+	}
+
+	
 	return true;
 
 	//returns a bool stating if the two shapes are colliding
@@ -270,30 +261,61 @@ bool BoxCollider::CollidesWith(BoxCollider* other)
 	}
 
 	_collisionManifold = CollisionManifold();
+	Vector3 normal = Vector3(0, 1, 0);
 
-	Vector3 otherCenter = other->GetTransform()->GetPosition();
-	Vector3 otherExtents = other->GetExtents();
+	//if the other square being collided with is a plane
+	if (other->GetIsPlane())
+	{
+		_collisionManifold.collisionNormal = normal; //stores direction of collision
+		_collisionManifold.contactPointCount = 1; //stores amount of points involved in collission
+		_collisionManifold.points[0].Position = _transform->GetPosition() + (_collisionManifold.collisionNormal * _halfExtents.y); //stores the position of the point of collision
+		
+		float distanceFromPlane = fabs(_vector3D->DotProduct(this->GetTransform()->GetPosition(), normal)); //gets the distance between the sphere center and plane
+		distanceFromPlane -= _halfExtents.y; //subtracts the radius to find the total distance from THE OUTSIDE OF THE SPHERE
 
-	Vector3 otherMinPoint = Vector3(otherCenter.x - otherExtents.x, otherCenter.y - otherExtents.y, otherCenter.z - otherExtents.z);
-	Vector3 otherMaxPoint = Vector3(otherCenter.x + otherExtents.x, otherCenter.y + otherExtents.y, otherCenter.z + otherExtents.z);
+		
+		_collisionManifold.points[0].penetrationDepth = fabs(distanceFromPlane); //stores the amount of overlap involved in the collision
+	}
+	else if (this->GetIsPlane())
+	{
+		_collisionManifold.collisionNormal = normal; //stores direction of collision
+		_collisionManifold.contactPointCount = 1; //stores amount of points involved in collission
+		_collisionManifold.points[0].Position = _transform->GetPosition() + (_collisionManifold.collisionNormal * other->GetExtents().y); //stores the position of the point of collision
+		
+		float distanceFromPlane = fabs(_vector3D->DotProduct(this->GetTransform()->GetPosition(), normal)); //gets the distance between the sphere center and plane
+		distanceFromPlane -= _halfExtents.y; //subtracts the radius to find the total distance from THE OUTSIDE OF THE SPHERE
 
-	_collisionManifold.collisionNormal = _vector3D->Normalize(this->_transform->GetPosition() - other->GetTransform()->GetPosition()); //stores direction of collision
-	_collisionManifold.contactPointCount = 1; //stores amount of points involved in collission
-	_collisionManifold.points[0].Position = Vector3(); //stores the position of the point of collision //DEFAULT VALUE, CHECK INTEGRITY
+		
+		_collisionManifold.points[0].penetrationDepth = fabs(distanceFromPlane); //stores the amount of overlap involved in the collision
+	}
+	else
+	{
 
-	Vector3 otherPosition = other->GetTransform()->GetPosition();
-	Vector3 position = _transform->GetPosition();
+		Vector3 otherCenter = other->GetTransform()->GetPosition();
+		Vector3 otherExtents = other->GetExtents();
 
-	Vector3 clampedIntersection = Vector3();
+		Vector3 otherMinPoint = Vector3(otherCenter.x - otherExtents.x, otherCenter.y - otherExtents.y, otherCenter.z - otherExtents.z);
+		Vector3 otherMaxPoint = Vector3(otherCenter.x + otherExtents.x, otherCenter.y + otherExtents.y, otherCenter.z + otherExtents.z);
 
-	float xOverlap = fabsf(otherMinPoint.x - _maxPoint.x);
-	float yOverlap = fabsf(otherMinPoint.y - _maxPoint.y);
-	float zOverlap = fabsf(otherMinPoint.z - _maxPoint.z);
+		_collisionManifold.collisionNormal = _vector3D->Normalize(this->_transform->GetPosition() - other->GetTransform()->GetPosition()); //stores direction of collision
+		_collisionManifold.contactPointCount = 1; //stores amount of points involved in collission
+		_collisionManifold.points[0].Position = Vector3(); //stores the position of the point of collision //DEFAULT VALUE, CHECK INTEGRITY
 
-	//_collisionManifold.points[0].penetrationDepth = min(xOverlap, yOverlap, zOverlap); //stores the smallest axis penetration as the penetration depth
+		Vector3 otherPosition = other->GetTransform()->GetPosition();
+		Vector3 position = _transform->GetPosition();
+
+		Vector3 clampedIntersection = Vector3();
+
+		float xOverlap = fabsf(otherMinPoint.x - _maxPoint.x);
+		float yOverlap = fabsf(otherMinPoint.y - _maxPoint.y);
+		float zOverlap = fabsf(otherMinPoint.z - _maxPoint.z);
+
+		//_collisionManifold.points[0].penetrationDepth = min(xOverlap, yOverlap, zOverlap); //stores the smallest axis penetration as the penetration depth
 
 
-	_collisionManifold.points[0].penetrationDepth = fabsf(_vector3D->GetMagnitude(this->_transform->GetPosition() - otherCenter) - combinedRadii); //stores the smallest axis penetration as the penetration depth
+		_collisionManifold.points[0].penetrationDepth = fabsf(_vector3D->GetMagnitude(this->_transform->GetPosition() - otherCenter) - combinedRadii); //stores the smallest axis penetration as the penetration depth
+
+	}
 
 	return true;
 }
