@@ -44,13 +44,13 @@ bool PlaneCollider::CollidesWith(SphereCollider* other)
 
 	if (distance <= 0.0f)
 	{
-		Vector3 path = this->_transform->GetPosition() - other->GetTransform()->GetPosition();
-		distance = _vector3D->GetMagnitude(path);
+		//Vector3 path = this->_transform->GetPosition() - other->GetTransform()->GetPosition();
+		//distance = _vector3D->GetMagnitude(path);
 
 		_collisionManifold.collisionNormal = _normal; //stores direction of collision
 		_collisionManifold.contactPointCount = 1; //stores amount of points involved in collission
 		_collisionManifold.points[0].Position = _transform->GetPosition() + (_collisionManifold.collisionNormal * other->GetCollissionRadius()); //stores the position of the point of collision
-		_collisionManifold.points[0].penetrationDepth = fabsf(_vector3D->GetMagnitude(this->_transform->GetPosition() - other->GetTransform()->GetPosition()) - other->GetCollissionRadius()); //stores the amount of overlap involved in the collision
+		_collisionManifold.points[0].penetrationDepth = fabs(distance); //stores the amount of overlap involved in the collision
 
 		return true;
 	}
