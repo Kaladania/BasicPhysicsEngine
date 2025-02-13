@@ -311,7 +311,7 @@ void Movement::Update(float deltaTime)
 
 		CalculateAngularMovement(deltaTime);
 
-		_debugOutputer->PrintDebugString("Net Force: " + _vector3D->ToString(_netForce));
+		//_debugOutputer->PrintDebugString("Net Force: " + _vector3D->ToString(_netForce));
 
 		_acceleration += _netForce / _mass; //calculates current rate of acceleration
 
@@ -343,6 +343,8 @@ void Movement::Update(float deltaTime)
 		//}
 
 		_transform->SetPosition(position); //sets new transform position
+
+		_debugOutputer->PrintDebugString("Position is: " + _vector3D->ToString(position));
 
 		//resets force values to maintain intergrity of calculations
 		_netForce = Vector3(0, 0, 0);

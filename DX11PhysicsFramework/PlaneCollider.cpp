@@ -81,7 +81,23 @@ bool PlaneCollider::CollidesWith(SphereCollider* other)
 /// <returns>bool stating if collission occured</returns>
 bool PlaneCollider::CollidesWith(BoxCollider* other)
 {
-	Vector3 objectDirection = other->GetTransform()->GetPosition();
+	//Vector3 objectDirection = other->GetTransform()->GetPosition();
+
+	float distance = fabs(_vector3D->DotProduct(other->GetTransform()->GetPosition(), _normal)); //gets the distance between the sphere center and plane
+	distance -= other->GetExtents().y; //subtracts the radius to find the total distance from THE OUTSIDE OF THE SPHERE
+
+	if (distance <= 0.0f)
+	{
+		//Vector3 path = this->_transform->GetPosition() - other->GetTransform()->GetPosition();
+		//distance = _vector3D->GetMagnitude(path);
+
+		_collisionManifold.collisionNormal = _normal; //stores direction of collision
+		_collisionManifold.contactPointCount = 1; //stores amount of points involved in collission
+		_collisionManifold.points[0].Position = _transform->GetPosition() + (_collisionManifold.collisionNormal * other->GetExtents().y); //stores the position of the point of collision
+		_collisionManifold.points[0].penetrationDepth = fabs(distance); //stores the amount of overlap involved in the collision
+
+		return true;
+	}
 
 	return false;
 }

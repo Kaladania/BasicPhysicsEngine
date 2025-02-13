@@ -1,5 +1,6 @@
 #include "BoxCollider.h"
 #include "SphereCollider.h"
+#include "PlaneCollider.h"
 #include <algorithm>
 
 BoxCollider::BoxCollider(GameObject* parent, Transform* transform) : Collider(parent, transform)
@@ -299,5 +300,20 @@ bool BoxCollider::CollidesWith(BoxCollider* other)
 
 bool BoxCollider::CollidesWith(PlaneCollider* other)
 {
+	float distance = fabs(_vector3D->DotProduct(this->GetTransform()->GetPosition(), other->GetPlaneNormal())); //gets the distance between the sphere center and plane
+	distance -= _halfExtents.y; //subtracts the radius to find the total distance from THE OUTSIDE OF THE SPHERE
+
+	if (distance <= 0.0f)
+	{
+		//Vector3 path = this->_transform->GetPosition() - other->GetTransform()->GetPosition();
+		//distance = _vector3D->GetMagnitude(path);
+
+		_collisionManifold.collisionNormal = other->GetPlaneNormal(); //stores direction of collision
+		_collisionManifold.contactPointCount = 1; //stores amount of points involved in collission
+		_collisionManifold.points[0].Position = _transform->GetPosition() + (_collisionManifold.collisionNormal * _halfExtents.y); //stores the position of the point of collision
+		_collisionManifold.points[0].penetrationDepth = fabs(distance); //stores the amount of overlap involved in the collision
+
+		return true;
+	}
 	return false;
 }
