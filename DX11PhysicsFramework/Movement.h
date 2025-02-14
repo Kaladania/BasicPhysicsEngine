@@ -12,7 +12,6 @@
 
 #define FRICTION_COEFFICIENT 1.3f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
 #define STATIC_FRICTION_COEFFICIENT 2.0f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
-#define RESTITUTION_COEFFICIENT 0.7f //determines how 'elastic' the collision is
 #define ANGULAR_DAMPING 0.5f
 
 using namespace DirectX;
@@ -43,7 +42,6 @@ private:
 	Vector3 _oldVelocity = Vector3(); //holds the amount of drag being applied to the parent object
 
 	float _mass = 1.0f; //holds the current mass of the parent object
-	float _COR = 0.0f; //holds the objects co-efficient of resitution
 
 	bool _isSimulatingGravity = false; //states if the object is being influenced by gravity
 	bool _isStationary = false; //states if the object is currently supposed to be stationary
@@ -56,6 +54,7 @@ private:
 	bool _isColliding = false; //states if the object is currently colliding (REPLACE WITH A FUNCTION CALL TO THE COLLIDER)
 
 	float _dragCoefficient = 0.04f; //holds the current drag co-efficient. Defaults to 0.04f for a generic streamlined body
+	float _COR = 0.0f; //holds the current co-efficient of resitution
 
 	Vector3 _angularVelocity = Vector3(0, 0, 0);
 
@@ -76,6 +75,9 @@ public:
 	void SetVelocity(Vector3 velocity) { _velocity = velocity; }
 	Vector3 GetVeclocity() const { return _velocity; }
 	void SetMass(float mass) { _mass = mass; }
+
+	void SetCOR(float COR);
+	float GetCOR() const { return _COR; }
 
 	float GetMass() const { return _mass; }
 	float GetInverseMass();

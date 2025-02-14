@@ -17,15 +17,8 @@ Renderer::Renderer()
 /// </summary>
 Renderer::~Renderer()
 {
-	if (_textureRV != nullptr)
-	{
-		delete _textureRV;
-		_textureRV = nullptr;
-	}
 
-	delete _geometry.indexBuffer;
-	delete _geometry.vertexBuffer;
-
+	_textureRV = nullptr;
 	_geometry.indexBuffer = nullptr;
 	_geometry.vertexBuffer = nullptr;
 }

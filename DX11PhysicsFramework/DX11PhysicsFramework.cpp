@@ -591,10 +591,12 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		{
 		case 0:
 			objectMovement->SetMass(5.0f);
+			objectMovement->SetCOR(0.7f);
 			break;
 
 		case 1:
 			objectMovement->SetMass(1.0f);
+			objectMovement->SetCOR(1.0f);
 			break;
 		}
 
@@ -656,10 +658,12 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		{
 			case 0:
 				objectMovement->SetMass(1.0f);
+				objectMovement->SetCOR(0.3f);
 			break;
 
 			case 1:
-				objectMovement->SetMass(5.0f);
+				objectMovement->SetMass(15.0f);
+				objectMovement->SetCOR(0.0f);
 				break;
 		}
 
@@ -837,13 +841,13 @@ void DX11PhysicsFramework::GetMovementInput()
 	}
 	if (GetAsyncKeyState(0x45))
 	{
-		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'e';
 		keyPressed = true;
 	}
 	if (GetAsyncKeyState(0x52))
 	{
-		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'r';
 		keyPressed = true;
 	}
