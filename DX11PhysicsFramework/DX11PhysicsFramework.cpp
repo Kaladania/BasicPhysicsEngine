@@ -518,7 +518,11 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	//adds and populates transformation component
 	gameObject->AddComponent(TransformComponent);
 	Transform* objectTransform = gameObject->GetTransform();
-	objectTransform->SetPosition(0.0f, 0.0f, 0.0f);
+
+	Vector3 spawnPosition = Vector3(0.0f, 0.0f, 0.0f);
+
+	objectTransform->SetPosition(spawnPosition);
+	objectTransform->SetSpawnPoint(spawnPosition);
 	objectTransform->SetScale(15.0f, 15.0f, 15.0f);
 	objectTransform->SetRotation(90.0f, 0.0f, 0.0f);
 
@@ -532,11 +536,13 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 	//adds and populates render information
 	gameObject->AddComponent(RigidbodyComponent);
 	PhysicsBody* objectBody = gameObject->GetPhysicsBody();
-	objectBody->SetCollider(PLANE_COLLISSION_COMPONENT);
+	objectBody->SetCollider(BOX_COLLISSION_COMPONET);
 	Collider* objectCollider = objectBody->GetCollider();
 	objectCollider->SetIsActive(true); //DELETE IN FUTURE | prevents objects from attempting to collide with 0 mass platform
 	objectBody->GetMovement()->SetIsStationary(true); //sets the floor as stationary
-	static_cast<PlaneCollider*>(objectCollider)->SetPlaneNormal(Vector3(0.0f, 1.0f, 0.0f));
+	//static_cast<PlaneCollider*>(objectCollider)->SetPlaneNormal(Vector3(0.0f, 1.0f, 0.0f));
+	static_cast<BoxCollider*>(objectCollider)->SetExtents(Vector3(30.0f, 0.0f, 30.0f));
+	static_cast<BoxCollider*>(objectCollider)->SetIsPlane(true);
 	
 	objectBody->GetMovement()->SetMass(0.0f);
 	Movement* objectMovement = nullptr;
@@ -553,7 +559,10 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		gameObject->AddComponent(TransformComponent);
 		objectTransform = gameObject->GetTransform();
 		objectTransform->SetScale(1.0f, 1.0f, 1.0f);
-		objectTransform->SetPosition(-5.0f + (i * 3.0f), 5.0f, 10.0f);
+
+		spawnPosition = Vector3( - 5.0f + (i * 3.0f), 5.0f, 10.0f);
+		objectTransform->SetPosition(spawnPosition);
+		objectTransform->SetSpawnPoint(spawnPosition);
 
 		//adds and populates render information
 		gameObject->AddComponent(RendererComponent);
@@ -582,10 +591,12 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		{
 		case 0:
 			objectMovement->SetMass(5.0f);
+			objectMovement->SetCOR(0.7f);
 			break;
 
 		case 1:
 			objectMovement->SetMass(1.0f);
+			objectMovement->SetCOR(1.0f);
 			break;
 		}
 
@@ -607,7 +618,9 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		gameObject->AddComponent(TransformComponent);
 		objectTransform = gameObject->GetTransform();
 		objectTransform->SetScale(1.0f, 1.0f, 1.0f);
-		objectTransform->SetPosition(1.0f + (i * 3.0f), 5.0f, 10.0f);
+		spawnPosition = Vector3(1.0f + (i * 3.0f), 5.0f, 10.0f);
+		objectTransform->SetPosition(spawnPosition);
+		objectTransform->SetSpawnPoint(spawnPosition);
 
 		//adds and populates render information
 		gameObject->AddComponent(RendererComponent);
@@ -645,10 +658,12 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		{
 			case 0:
 				objectMovement->SetMass(1.0f);
+				objectMovement->SetCOR(0.3f);
 			break;
 
 			case 1:
-				objectMovement->SetMass(5.0f);
+				objectMovement->SetMass(15.0f);
+				objectMovement->SetCOR(0.0f);
 				break;
 		}
 
@@ -826,13 +841,13 @@ void DX11PhysicsFramework::GetMovementInput()
 	}
 	if (GetAsyncKeyState(0x45))
 	{
-		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(-3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'e';
 		keyPressed = true;
 	}
 	if (GetAsyncKeyState(0x52))
 	{
-		_gameObjects[2]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
+		_gameObjects[3]->GetPhysicsBody()->GetMovement()->AddForce(Vector3(3.0f, 0, 0.0f) * _currentMovementKeyPressDuration);
 		_currentMovementKeyPressed = 'r';
 		keyPressed = true;
 	}

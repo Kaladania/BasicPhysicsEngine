@@ -12,7 +12,8 @@ class Transform : public Component
 private:
 
 	//object transformation vectors
-	Vector3 _position;
+	Vector3 _position; //holds the current position of the object
+	Vector3 _spawnPoint = Vector3(0, 0, 0); //holds the original spawn point of the object
 
 	//for improved readability, publicly reffered to as a 'rotation' when expecting Euler Angles from the user
 	//class converts and uses Quaternions - refered to as 'orientation' - for improved performance
@@ -27,6 +28,10 @@ public:
 	// Setters and Getters for position/rotation/scale
 	void SetPosition(Vector3 position) { _position = position; }
 	void SetPosition(float x, float y, float z) { _position.x = x; _position.y = y; _position.z = z; }
+
+	void SetSpawnPoint(Vector3 position) { _spawnPoint = position; }
+	Vector3 GetSpawnPoint() const { return _spawnPoint; }
+
 
 	Vector3 GetPosition() const { return _position; }
 

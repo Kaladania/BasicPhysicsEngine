@@ -4,11 +4,31 @@ Movement::Movement(GameObject* parent) : Component(parent)
 {
 	_gravity = Vector3(0, -9.81f, 0); //sets gravity to be a downward force of 9.81
 	DirectX::XMStoreFloat3x3(&_inertiaTensorMatrix, XMMatrixIdentity()); //defaults the inertia matrix to an identiy matrix
+	_COR = 0.5f;
 }
 
 Movement::~Movement()
 {
 	_transform = nullptr;
+}
+
+/// <summary>
+/// Sets the co-efficient of resitution
+/// </summary>
+/// <param name="COR">co-efficient of resititution</param>
+void Movement::SetCOR(float COR)
+{
+	//CAPS COR at expected range of 0 - 1
+	if (COR > 1)
+	{
+		COR = 1;
+	}
+	else if (COR < 0)
+	{
+		COR = 0;
+	}
+
+	_COR = COR;
 }
 
 /// <summary>
@@ -131,7 +151,7 @@ void Movement::CalculateImpulse(Movement* otherMovement, CollisionManifold manif
 	if (collisionDotProduct < 0.0f)
 	{
 		//velocity impulse
-		float vj = -(1 + RESTITUTION_COEFFICIENT) * collisionDotProduct;
+		float vj = -(1 + _COR) * collisionDotProduct;
 
 		//calculates the total impulse applied in the collision
 		float J = vj / (GetInverseMass() + otherMovement->GetInverseMass());
@@ -330,7 +350,7 @@ void Movement::Update(float deltaTime)
 
 		if (position.y < -5.0f)
 		{
-			position.y = 10.0f;
+			position = _transform->GetSpawnPoint();
 		}
 
 		////hard coded stop to prevent falling through platform

@@ -12,6 +12,8 @@ private:
 	Vector3 _center = Vector3(); //position of object center
 	Vector3 _halfExtents = Vector3(); //position of the length of the object along each axis
 
+	bool _isPlane = false; //states if the current box collider is attached to a plane
+
 
 public:
 	BoxCollider(GameObject* parent, Transform* transform);
@@ -20,6 +22,9 @@ public:
 	//gets the current collission radius of the collider
 	void SetExtents(Vector3 extents = Vector3());
 	Vector3 GetExtents() { return _halfExtents; }
+
+	void SetIsPlane(bool isPlane) { _isPlane = isPlane; }
+	bool GetIsPlane() const { return _isPlane; }
 
 	bool CollidesWith(Collider* other) override;
 	bool CollidesWith(SphereCollider* other) override;
