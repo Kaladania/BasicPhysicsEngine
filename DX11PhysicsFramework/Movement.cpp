@@ -100,7 +100,7 @@ Vector3 Movement::CalculateDragForce()
 	float velocityMagnitude = _vector3D->GetMagnitude(_velocity);
 	
 	//determines the scalar drag co-efficent
-	float drag = DENSITY_OF_FLUID * ((velocityMagnitude * velocityMagnitude) * 0.5f) * _dragCoefficient * CROSS_SECTIONAL_AREA;
+	float drag = DENSITY_OF_FLUID * ((velocityMagnitude * velocityMagnitude) * 0.5f) * _dragCoefficient * _crossSectionalArea;
 
 	//creates a base drag force that is the negated normal of the current velocity
 	//multiplies base opposing force by the drag scalar to determine the intensity of drag

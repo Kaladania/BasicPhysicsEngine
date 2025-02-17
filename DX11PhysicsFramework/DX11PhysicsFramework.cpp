@@ -584,6 +584,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 
 		//adds and populates movement information
 		objectMovement = objectBody->GetMovement();
+		objectMovement->SetCrossSectionalArea(3.1416f);
 		
 
 		//customises mass for each sphere
@@ -592,6 +593,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		case 0:
 			objectMovement->SetMass(5.0f);
 			objectMovement->SetCOR(0.7f);
+
 			break;
 
 		case 1:
@@ -649,6 +651,7 @@ HRESULT DX11PhysicsFramework::InitRunTimeData()
 		objectMovement->SetIsSimulatingGravity(true); //states second object is going to be influenced by gravity
 		objectMovement->SetMovementSpeed(3.0f); //sets the object's movement speed (DELETE)
 		objectMovement->SetDragCoefficient(1.05f);
+		objectMovement->SetCrossSectionalArea(4.0f);
 
 		objectMovement->SetIsUsingFloor(true); //enables a hard check to ensure cubes don't fall through the floor
 		objectMovement->SetInertiaMatrix(halfExtents); //sets up an inertia matrix

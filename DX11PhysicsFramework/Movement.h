@@ -8,7 +8,7 @@
 #include "Collider.h"
 
 #define DENSITY_OF_FLUID 1.0f
-#define CROSS_SECTIONAL_AREA 4.0f //(for cubes, 2f * 2f = 4f
+//#define CROSS_SECTIONAL_AREA 4.0f //(for cubes, 2f * 2f = 4f
 
 #define FRICTION_COEFFICIENT 1.3f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
 #define STATIC_FRICTION_COEFFICIENT 2.0f //determines rate of de-celeration due to friction (the lower the value, the slower the object decelerates - makes it more 'slippy'
@@ -54,6 +54,7 @@ private:
 	bool _isColliding = false; //states if the object is currently colliding (REPLACE WITH A FUNCTION CALL TO THE COLLIDER)
 
 	float _dragCoefficient = 0.04f; //holds the current drag co-efficient. Defaults to 0.04f for a generic streamlined body
+	float _crossSectionalArea = 0.0f; //holds the current drag co-efficient. Defaults to 0.04f for a generic streamlined body
 	float _COR = 0.0f; //holds the current co-efficient of resitution
 
 	Vector3 _angularVelocity = Vector3(0, 0, 0);
@@ -78,6 +79,9 @@ public:
 
 	void SetCOR(float COR);
 	float GetCOR() const { return _COR; }
+
+	void SetCrossSectionalArea(float area) { _crossSectionalArea = area; }
+	//float GetCrossSectionalArea() const { return _crossSectionalArea; }
 
 	float GetMass() const { return _mass; }
 	float GetInverseMass();
